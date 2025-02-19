@@ -1,0 +1,23 @@
+{
+  "name": "EmploySync_UI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nirusan03/EmploySync_UI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nirusan03/EmploySync_UI/issues"
+  },
+  "homepage": "https://github.com/Nirusan03/EmploySync_UI#readme",
+  "dependencies": {
+    "angular": "^1.8.2"
+  }
+}
