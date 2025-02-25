@@ -1,5 +1,70 @@
 @import 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css';
 
+/* Hide elements in collapsed mode */
 .hidden {
   display: none;
+}
+
+/* Menu Item Styling */
+.menu-item {
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.2s ease-in-out;
+}
+
+/* Hover Effect */
+.menu-item:hover {
+  background: rgba(255, 235, 205, 0.6); /* Light Orange Background */
+}
+
+/* Corrected Sidebar Toggle Button */
+.toggle-btn {
+  background: white;
+  padding: 6px 8px;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-btn:hover {
+  background: #f4f4f4;
+}
+
+/* Proper Spacing for Search Bar */
+.search-container {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+/* Profile Container Styling */
+.profile-container {
+  margin-top: 1.5rem;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Profile Image */
+.profile-img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
+/* Fix Mat-Menu Placement */
+mat-menu {
+  min-width: 200px;
+}
+
+mat-menu-item {
+  display: flex;
+  align-items: center;
+}
+
+mat-menu-item mat-icon {
+  margin-right: 8px;
 }

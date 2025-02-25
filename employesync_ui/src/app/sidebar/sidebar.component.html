@@ -1,32 +1,30 @@
-<div class="h-screen bg-white shadow-lg p-4 flex flex-col w-64 transition-all duration-300"
-     [ngClass]="{ 'w-20': isCollapsed }">
-  
-  <!-- Sidebar Toggle Button -->
-  <button class="absolute top-4 right-2 p-2 rounded-full bg-gray-200" (click)="toggleSidebar()">
-    <mat-icon *ngIf="isCollapsed">menu</mat-icon>
-    <mat-icon *ngIf="!isCollapsed">chevron_left</mat-icon>
-  </button>
+<div class="h-screen bg-white shadow-lg p-4 flex flex-col transition-all duration-300"
+     [ngClass]="{ 'w-64': !isCollapsed, 'w-20': isCollapsed }">
 
-  <!-- Logo & Company Dropdown -->
-  <div class="flex items-center space-x-2 mb-4">
-    <mat-icon>apps</mat-icon> <!-- 9-Dot Panel Icon -->
-    <select class="bg-transparent text-blue-900 font-bold text-lg"
-            [ngClass]="{ 'hidden': isCollapsed }">
-      <option selected>Ascentic AB</option>
-    </select>
+  <!-- Sidebar Header with Toggle Button -->
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center space-x-2">
+      <mat-icon class="cursor-pointer text-gray-500">apps</mat-icon> <!-- 9-Dot Panel -->
+      <span class="font-bold text-blue-900" [ngClass]="{ 'hidden': isCollapsed }">{{ organizationName }}</span>
+    </div>
+    
+    <!-- Double Arrow Sidebar Toggle Button -->
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
   </div>
 
   <!-- Navigation Links -->
-  <ul class="space-y-3">
-    <li class="flex items-center space-x-2">
+  <ul class="space-y-1">
+    <li class="flex items-center space-x-2 menu-item">
       <mat-icon>description</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Proposals</a>
     </li>
-    <li class="flex items-center space-x-2">
+    <li class="flex items-center space-x-2 menu-item">
       <mat-icon>group</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Team</a>
     </li>
-    <li class="flex items-center space-x-2 font-bold text-blue-900">
+    <li class="flex items-center space-x-2 menu-item">
       <mat-icon>business</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Company</a>
     </li>
@@ -35,16 +33,16 @@
   <!-- Line Below Company -->
   <hr class="my-3 border-gray-300">
 
-  <ul class="space-y-3">
-    <li class="flex items-center space-x-2">
+  <ul class="space-y-1">
+    <li class="flex items-center space-x-2 menu-item">
       <mat-icon>dashboard</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">My Space</a>
     </li>
-    <li class="flex items-center space-x-2">
+    <li class="flex items-center space-x-2 menu-item">
       <mat-icon>mail</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Requests</a>
     </li>
-    <li class="flex items-center space-x-2">
+    <li class="flex items-center space-x-2 menu-item">
       <mat-icon>post_add</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Post Jobs</a>
     </li>
@@ -52,29 +50,46 @@
 
   <!-- Move My Network & Notifications to Bottom -->
   <div class="mt-auto">
-    <ul class="space-y-3">
-      <li class="flex items-center space-x-2">
+    <ul class="space-y-1">
+      <li class="flex items-center space-x-2 menu-item">
         <mat-icon>link</mat-icon>
         <a href="#" [ngClass]="{ 'hidden': isCollapsed }">My Network</a>
       </li>
-      <li class="flex items-center space-x-2">
+      <li class="flex items-center space-x-2 menu-item">
         <mat-icon>notifications</mat-icon>
         <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Notifications</a>
       </li>
     </ul>
 
+    <!-- Proper Margin Below Notifications -->
+    <div class="mt-6"></div>
+
     <!-- Search Bar -->
-    <div class="mt-4">
+    <div class="search-container w-full" [ngClass]="{ 'hidden': isCollapsed }">
       <mat-form-field class="w-full">
         <mat-label>Search</mat-label>
-        <input matInput type="text" [ngClass]="{ 'hidden': isCollapsed }">
+        <input matInput type="text">
       </mat-form-field>
     </div>
   </div>
 
-  <!-- User Profile at Bottom -->
-  <div class="mt-6 flex items-center space-x-2">
-    <img src="https://via.placeholder.com/40" class="rounded-full w-10 h-10">
-    <span [ngClass]="{ 'hidden': isCollapsed }">Patrik Alm</span>
+  <!-- User Profile Section -->
+  <div class="profile-container flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <img [src]="userProfileImage" alt="User Profile" class="profile-img">
+      <span class="ml-2" [ngClass]="{ 'hidden': isCollapsed }">{{ userName }}</span>
+    </div>
+    
+    <!-- Three-Dot Menu for Profile (Hidden when Sidebar is Collapsed) -->
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="!isCollapsed">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <!-- Mat-Menu for Changing Profile Picture -->
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item (click)="selectProfileImage()">
+        <mat-icon>photo_camera</mat-icon> Change Profile Picture
+      </button>
+    </mat-menu>
   </div>
 </div>
