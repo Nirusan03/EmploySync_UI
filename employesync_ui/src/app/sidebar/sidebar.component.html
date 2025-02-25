@@ -1,0 +1,80 @@
+<div class="h-screen bg-white shadow-lg p-4 flex flex-col w-64 transition-all duration-300"
+     [ngClass]="{ 'w-20': isCollapsed }">
+  
+  <!-- Sidebar Toggle Button -->
+  <button class="absolute top-4 right-2 p-2 rounded-full bg-gray-200" (click)="toggleSidebar()">
+    <mat-icon *ngIf="isCollapsed">menu</mat-icon>
+    <mat-icon *ngIf="!isCollapsed">chevron_left</mat-icon>
+  </button>
+
+  <!-- Logo & Company Dropdown -->
+  <div class="flex items-center space-x-2 mb-4">
+    <mat-icon>apps</mat-icon> <!-- 9-Dot Panel Icon -->
+    <select class="bg-transparent text-blue-900 font-bold text-lg"
+            [ngClass]="{ 'hidden': isCollapsed }">
+      <option selected>Ascentic AB</option>
+    </select>
+  </div>
+
+  <!-- Navigation Links -->
+  <ul class="space-y-3">
+    <li class="flex items-center space-x-2">
+      <mat-icon>description</mat-icon>
+      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Proposals</a>
+    </li>
+    <li class="flex items-center space-x-2">
+      <mat-icon>group</mat-icon>
+      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Team</a>
+    </li>
+    <li class="flex items-center space-x-2 font-bold text-blue-900">
+      <mat-icon>business</mat-icon>
+      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Company</a>
+    </li>
+  </ul>
+
+  <!-- Line Below Company -->
+  <hr class="my-3 border-gray-300">
+
+  <ul class="space-y-3">
+    <li class="flex items-center space-x-2">
+      <mat-icon>dashboard</mat-icon>
+      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">My Space</a>
+    </li>
+    <li class="flex items-center space-x-2">
+      <mat-icon>mail</mat-icon>
+      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Requests</a>
+    </li>
+    <li class="flex items-center space-x-2">
+      <mat-icon>post_add</mat-icon>
+      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Post Jobs</a>
+    </li>
+  </ul>
+
+  <!-- Move My Network & Notifications to Bottom -->
+  <div class="mt-auto">
+    <ul class="space-y-3">
+      <li class="flex items-center space-x-2">
+        <mat-icon>link</mat-icon>
+        <a href="#" [ngClass]="{ 'hidden': isCollapsed }">My Network</a>
+      </li>
+      <li class="flex items-center space-x-2">
+        <mat-icon>notifications</mat-icon>
+        <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Notifications</a>
+      </li>
+    </ul>
+
+    <!-- Search Bar -->
+    <div class="mt-4">
+      <mat-form-field class="w-full">
+        <mat-label>Search</mat-label>
+        <input matInput type="text" [ngClass]="{ 'hidden': isCollapsed }">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- User Profile at Bottom -->
+  <div class="mt-6 flex items-center space-x-2">
+    <img src="https://via.placeholder.com/40" class="rounded-full w-10 h-10">
+    <span [ngClass]="{ 'hidden': isCollapsed }">Patrik Alm</span>
+  </div>
+</div>
