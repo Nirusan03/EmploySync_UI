@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { MatIconModule } from '@angular/material/icon';
+import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sidebar
 
 @Component({
   selector: 'app-company',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule], 
+  imports: [CommonModule, FormsModule, MatIconModule, SidebarComponent], // Include Sidebar
   templateUrl: './company.component.html',
   styleUrls: ['./company.component.css']
 })
@@ -38,7 +39,7 @@ export class CompanyComponent {
       reader.onload = () => {
         this.companyLogo = reader.result as string;
       };
-      reader.readAsDataURL(file); // Convert image file to Base64
+      reader.readAsDataURL(file);
     }
   }
 }

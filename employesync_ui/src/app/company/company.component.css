@@ -1,9 +1,21 @@
+.main-container {
+  display: flex;
+  height: 100vh;
+}
+
+app-sidebar {
+  flex-shrink: 0; /* Sidebar stays fixed */
+}
+
 .company-container {
-  margin: auto;
+  flex-grow: 1;
   padding: 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  max-width: 900px;
+  margin: auto;
+  position: relative;
 }
 
 .header {
@@ -11,13 +23,21 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 900px;
-  margin-bottom: 20px;
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  padding: 0 40px;
 }
 
 .header h2 {
   font-size: 22px;
   font-weight: 600;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 15px;
 }
 
 .company-content {
@@ -26,6 +46,7 @@
   align-items: center;
   text-align: center;
   width: 100%;
+  margin-top: 80px; /* Ensures space below header */
 }
 
 .company-logo {
@@ -33,12 +54,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 .company-logo img {
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   border-radius: 10px;
   border: 1px solid #ddd;
   object-fit: cover;
@@ -51,8 +72,8 @@
   background: #fff;
   border-radius: 50%;
   border: none;
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -65,10 +86,11 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
 label {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   margin-bottom: 5px;
   text-align: left;
@@ -76,11 +98,10 @@ label {
 
 .input-field {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  margin-bottom: 20px;
 }
 
 .discard-btn {
@@ -89,13 +110,14 @@ label {
   color: #0073e6;
   cursor: pointer;
   font-size: 16px;
+  padding: 10px 15px;
 }
 
 .save-btn {
   background: #0073e6;
   border: none;
   color: white;
-  padding: 12px 18px;
+  padding: 12px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
