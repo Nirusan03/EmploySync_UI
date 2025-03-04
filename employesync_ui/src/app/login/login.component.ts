@@ -10,10 +10,10 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  email: string = '';
+  userName: string = '';
   password: string = '';
   isLoading: boolean = false;
-  apiUrl: string = 'http://localhost:5000/api/login'; // Dummy API Endpoint
+  apiUrl: string = 'http://127.0.0.1:3000/api/v1/auth'; // Dummy API Endpoint
 
   constructor(private http: HttpClient) {}
 
@@ -21,14 +21,13 @@ export class LoginComponent {
     this.isLoading = true;
 
     const loginData = {
-      email: this.email,
+      userName: this.userName,
       password: this.password
     };
 
     this.http.post(this.apiUrl, loginData).subscribe({
       next: (response) => {
         console.log('Login successful', response);
-        alert('Login successful!');
         this.isLoading = false;
       },
       error: (error) => {
