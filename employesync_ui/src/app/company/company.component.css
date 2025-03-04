@@ -1,29 +1,102 @@
 .company-container {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 800px; /* ✅ Ensures centered alignment */
+  margin: auto;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 22px;
+  font-weight: 600;
 }
 
 .company-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.company-logo {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .company-logo img {
-  width: 120px;
-  height: 120px;
+  width: 180px;
+  height: 180px;
   border-radius: 10px;
+  border: 1px solid #ddd;
+  object-fit: cover;
+}
+
+.edit-logo-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #fff;
+  border-radius: 50%;
+  border: none;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .company-details {
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 5px;
+  text-align: left;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.discard-btn {
+  background: transparent;
+  border: none;
+  color: #0073e6;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.save-btn {
+  background: #0073e6;
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }

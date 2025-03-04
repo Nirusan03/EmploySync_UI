@@ -10,7 +10,12 @@
   <div class="company-content">
     <div class="company-logo">
       <img [src]="companyLogo" alt="Company Logo">
-      <button class="edit-logo-btn" (click)="changeCompanyLogo()">
+
+      <!-- Hidden file input for selecting images -->
+      <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
+
+      <!-- Camera button triggers file input -->
+      <button class="edit-logo-btn" (click)="triggerFileInput()">
         <mat-icon>photo_camera</mat-icon>
       </button>
     </div>

@@ -13,7 +13,7 @@ export class LoginComponent {
   userName: string = '';
   password: string = '';
   isLoading: boolean = false;
-  apiUrl: string = 'http://127.0.0.1:3000/api/v1/auth'; // Dummy API Endpoint
+  apiUrl: string = 'http://127.0.0.1:3000/api/v1/auth';
 
   constructor(private http: HttpClient) {}
 

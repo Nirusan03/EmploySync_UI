@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { RouterModule } from '@angular/router';
+import { CompanyComponent } from './company/company.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, RouterModule], // ✅ Ensure RouterModule is imported
-  templateUrl: './app.component.html',
+  imports: [CompanyComponent],
+  template: `<app-company></app-company>`,
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'DigiRecruitez'; 
-}
+export class AppComponent { }
