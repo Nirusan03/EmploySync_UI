@@ -11,15 +11,23 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatFormFieldModule, MatInputModule, MatMenuModule, MatButtonModule, HttpClientModule],
+  imports: [
+    CommonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatMenuModule,
+    MatButtonModule,
+    HttpClientModule
+  ],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent implements OnInit {
   isCollapsed: boolean = false;
-  userProfileImage: string = ""; // API will update this
-  userName: string = ""; // API will update this
-  organizationName: string = ""; // API will update this
+  userProfileImage: string = '';
+  userName: string = '';
+  organizationName: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -35,16 +43,15 @@ export class SidebarComponent implements OnInit {
     // Dummy Node.js API call (Replace with your real API later)
     this.http.get<any>('http://localhost:5000/api/user-profile').subscribe(
       (data) => {
-        this.userProfileImage = data.profileImage;
-        this.userName = data.name;
-        this.organizationName = data.organization;
+        this.userProfileImage = data.profileImage || 'https://via.placeholder.com/40';
+        this.userName = data.name || 'Default User';
+        this.organizationName = data.organization || 'Default Organization';
       },
       (error) => {
-        console.error("Error fetching user data:", error);
-        // Use default data in case of error
-        this.userProfileImage = "https://via.placeholder.com/40";
-        this.userName = "Default User";
-        this.organizationName = "Default Organization";
+        console.error('Error fetching user data:', error);
+        this.userProfileImage = 'https://via.placeholder.com/40';
+        this.userName = 'Default User';
+        this.organizationName = 'Default Organization';
       }
     );
   }
@@ -66,7 +73,16 @@ export class SidebarComponent implements OnInit {
     input.click();
   }
 
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('authToken');
+  }
+
   navigateTo(route: string) {
-    this.router.navigate([route]);
+    if (this.isAuthenticated()) {
+      this.router.navigate([route]);
+    } else {
+      alert('You need to log in first.');
+      this.router.navigate(['/login']);
+    }
   }
 }

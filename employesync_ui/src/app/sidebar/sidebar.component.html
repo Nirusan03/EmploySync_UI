@@ -4,11 +4,10 @@
   <!-- Sidebar Header with Toggle Button -->
   <div class="flex justify-between items-center mb-4">
     <div class="flex items-center space-x-2">
-      <mat-icon class="cursor-pointer text-gray-500">apps</mat-icon> <!-- 9-Dot Panel -->
+      <mat-icon class="cursor-pointer text-gray-500">apps</mat-icon> 
       <span class="font-bold text-blue-900" [ngClass]="{ 'hidden': isCollapsed }">{{ organizationName }}</span>
     </div>
     
-    <!-- Double Arrow Sidebar Toggle Button -->
     <button class="toggle-btn" (click)="toggleSidebar()">
       <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </button>
@@ -24,13 +23,12 @@
       <mat-icon>group</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Team</a>
     </li>
-    <li class="flex items-center space-x-2 menu-item">
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/company')">
       <mat-icon>business</mat-icon>
-      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Company</a>
+      <span [ngClass]="{ 'hidden': isCollapsed }">Company</span>
     </li>
   </ul>
 
-  <!-- Line Below Company -->
   <hr class="my-3 border-gray-300">
 
   <ul class="space-y-1">
@@ -38,17 +36,16 @@
       <mat-icon>dashboard</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">My Space</a>
     </li>
-    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('requests')">
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/requests')">
       <mat-icon>mail</mat-icon>
       <span [ngClass]="{ 'hidden': isCollapsed }">Requests</span>
     </li>    
-    <li class="flex items-center space-x-2 menu-item">
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/post-job/step-1')">
       <mat-icon>post_add</mat-icon>
-      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Post Jobs</a>
+      <span [ngClass]="{ 'hidden': isCollapsed }">Post Jobs</span>
     </li>
   </ul>
 
-  <!-- Move My Network & Notifications to Bottom -->
   <div class="mt-auto">
     <ul class="space-y-1">
       <li class="flex items-center space-x-2 menu-item">
@@ -61,10 +58,8 @@
       </li>
     </ul>
 
-    <!-- Proper Margin Below Notifications -->
     <div class="mt-6"></div>
 
-    <!-- Search Bar -->
     <div class="search-container w-full" [ngClass]="{ 'hidden': isCollapsed }">
       <mat-form-field class="w-full">
         <mat-label>Search</mat-label>
@@ -80,12 +75,10 @@
       <span class="ml-2" [ngClass]="{ 'hidden': isCollapsed }">{{ userName }}</span>
     </div>
     
-    <!-- Three-Dot Menu for Profile (Hidden when Sidebar is Collapsed) -->
     <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="!isCollapsed">
       <mat-icon>more_vert</mat-icon>
     </button>
 
-    <!-- Mat-Menu for Changing Profile Picture -->
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item (click)="selectProfileImage()">
         <mat-icon>photo_camera</mat-icon> Change Profile Picture

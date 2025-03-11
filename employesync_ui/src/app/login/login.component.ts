@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router'; // Import Router for redirection
 
 @Component({
   selector: 'app-login',
@@ -15,20 +16,25 @@ export class LoginComponent {
   isLoading: boolean = false;
   apiUrl: string = 'http://127.0.0.1:3000/api/v1/auth';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {} // Inject Router
 
   onSubmit() {
     this.isLoading = true;
-
+  
     const loginData = {
       userName: this.userName,
       password: this.password
     };
-
+  
     this.http.post(this.apiUrl, loginData).subscribe({
-      next: (response) => {
+      next: (response: any) => {
         console.log('Login successful', response);
+  
+        // Store token in localStorage
+        localStorage.setItem('authToken', response.token); // Assuming the API sends a token
+  
         this.isLoading = false;
+        this.router.navigate(['/company']); // Redirect to company page
       },
       error: (error) => {
         console.error('Login failed', error);
@@ -36,5 +42,5 @@ export class LoginComponent {
         this.isLoading = false;
       }
     });
-  }
+  }  
 }

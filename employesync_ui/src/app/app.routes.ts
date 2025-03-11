@@ -6,6 +6,7 @@ import { RecruiterViewJobComponent } from './recruiter-view-job/recruiter-view-j
 import { RecruiterRequestViewComponent } from './recruiter-request-view/recruiter-request-view.component';
 import { RecruiterJobApplicantViewComponent } from './recruiter-job-applicant-view/recruiter-job-applicant-view.component';
 import { RecruiterMeetingDetailsDialogComponent } from './recruiter-meeting-details-dialog/recruiter-meeting-details-dialog.component';
+import { LoginComponent } from './login/login.component';
 
 // Import Job Posting Form Steps
 import { RecruiterPostJobForm1Component } from './recruiter-post-job-form-1/recruiter-post-job-form-1.component';
@@ -14,7 +15,9 @@ import { RecruiterPostJobForm3Component } from './recruiter-post-job-form-3/recr
 import { RecruiterPostJobForm4Component } from './recruiter-post-job-form-4/recruiter-post-job-form-4.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'post-job/step-1', pathMatch: 'full' }, 
+  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirects to login initially
+  { path: 'login', component: LoginComponent }, // Login page
+
   { path: 'company', component: CompanyComponent },
   { path: 'team', component: RecruiterTeamComponent },
   { path: 'jobs', component: RecruiterViewJobComponent },
