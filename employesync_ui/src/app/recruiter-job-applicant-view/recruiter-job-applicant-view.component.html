@@ -7,16 +7,14 @@
             <button mat-button color="primary" (click)="goBack()">← Back to Requests</button>
         </div>
 
-        <!-- Show loading spinner while fetching data -->
         <div *ngIf="isLoading" class="loading-container">
             <mat-spinner></mat-spinner>
         </div>
 
-        <mat-tab-group *ngIf="!isLoading">
+        <mat-tab-group *ngIf="!isLoading" (selectedIndexChange)="setActiveTab($event)">
             <!-- New Applicants Tab -->
             <mat-tab label="New">
                 <table mat-table [dataSource]="applicants" class="mat-elevation-z8 full-width-table">
-                    <!-- Profile Column -->
                     <ng-container matColumnDef="profile">
                         <th mat-header-cell *matHeaderCellDef> Name </th>
                         <td mat-cell *matCellDef="let applicant">
@@ -27,21 +25,20 @@
                         </td>
                     </ng-container>
 
-                    <!-- Email Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef> Email </th>
                         <td mat-cell *matCellDef="let applicant">{{ applicant.email }}</td>
                     </ng-container>
 
-                    <!-- Actions Column -->
                     <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef> View CV </th>
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let applicant">
-                            <button mat-button color="primary" (click)="viewApplicantProfile(applicant.id)">View</button>
+                            <button mat-button color="primary" (click)="viewApplicantProfile(applicant.id)">
+                                View CV
+                            </button>
                         </td>
                     </ng-container>
 
-                    <!-- Table Rows -->
                     <tr mat-header-row *matHeaderRowDef="['profile', 'email', 'actions']"></tr>
                     <tr mat-row *matRowDef="let row; columns: ['profile', 'email', 'actions'];"></tr>
                 </table>
@@ -50,7 +47,6 @@
             <!-- Short Listed Applicants Tab -->
             <mat-tab label="Short Listed">
                 <table mat-table [dataSource]="shortlistedApplicants" class="mat-elevation-z8 full-width-table">
-                    <!-- Profile Column -->
                     <ng-container matColumnDef="profile">
                         <th mat-header-cell *matHeaderCellDef> Name </th>
                         <td mat-cell *matCellDef="let applicant">
@@ -61,21 +57,20 @@
                         </td>
                     </ng-container>
 
-                    <!-- Email Column -->
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef> Email </th>
                         <td mat-cell *matCellDef="let applicant">{{ applicant.email }}</td>
                     </ng-container>
 
-                    <!-- Actions Column -->
                     <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef> View CV </th>
+                        <th mat-header-cell *matHeaderCellDef> Action </th>
                         <td mat-cell *matCellDef="let applicant">
-                            <button mat-button color="primary" (click)="viewApplicantProfile(applicant.id)">View</button>
+                            <button mat-button color="primary" (click)="openMeetingDetails(applicant.id)">
+                                Schedule Meeting
+                            </button>
                         </td>
                     </ng-container>
 
-                    <!-- Table Rows -->
                     <tr mat-header-row *matHeaderRowDef="['profile', 'email', 'actions']"></tr>
                     <tr mat-row *matRowDef="let row; columns: ['profile', 'email', 'actions'];"></tr>
                 </table>

@@ -1,1 +1,22 @@
-<p>recruiter-meeting-details-dialog works!</p>
+<div class="meeting-dialog">
+    <h2>Meeting Details</h2>
+  
+    <div>
+      <label>Meeting at:</label>
+      <input matInput [(ngModel)]="meetingDetails.location" placeholder="Enter location" />
+    </div>
+  
+    <div>
+      <label>Date and Time:</label>
+      <input matInput type="datetime-local" [(ngModel)]="meetingDetails.dateTime" />
+    </div>
+  
+    <div>
+      <label>Attendees:</label>
+      <input matInput [(ngModel)]="meetingDetails.attendees" placeholder="Enter attendees" />
+    </div>
+  
+    <button mat-button color="primary" (click)="saveMeeting()">Add to Calendar</button>
+    <button mat-button color="warn" (click)="closeDialog()">Cancel</button>
+  </div>
+  

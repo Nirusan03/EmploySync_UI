@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RecruiterApplicantCvDialogComponent } from '../recruiter-applicant-cv-dialog/recruiter-applicant-cv-dialog.component';
+import { RecruiterMeetingDetailsDialogComponent } from '../recruiter-meeting-details-dialog/recruiter-meeting-details-dialog.component';
 
 @Component({
   selector: 'app-recruiter-job-applicant-view',
@@ -39,6 +40,7 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   shortlistedApplicants: any[] = [];
   isLoading = true;
   jobTitle = '';
+  isShortlistedTab = false;
 
   constructor(
     private http: HttpClient,
@@ -48,11 +50,10 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.fetchApplicants();
     this.route.queryParams.subscribe(params => {
       this.jobTitle = params['jobTitle'] || 'Job Applicants';
     });
-
-    this.fetchApplicants();
   }
 
   fetchApplicants() {
@@ -64,11 +65,10 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
           name: applicant.userName,
           email: applicant.email,
           profileImage: applicant.profileImage || 'https://via.placeholder.com/40',
-          appliedJobs: Array.isArray(applicant.appliedjobs) ? applicant.appliedjobs.length : 0,
-          shortlistedJobs: Array.isArray(applicant.shortlistedjobs) ? applicant.shortlistedjobs.length : 0
+          appliedJobs: applicant.appliedjobs?.length || 0,
+          shortlistedJobs: applicant.shortlistedjobs?.length || 0
         }));
 
-        // Filter shortlisted applicants correctly
         this.shortlistedApplicants = this.applicants.filter(a => a.shortlistedJobs > 0);
         this.isLoading = false;
       },
@@ -93,6 +93,17 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
         console.error('Error fetching CV:', error);
       }
     });
+  }
+
+  openMeetingDetails(applicantId: string) {
+    this.dialog.open(RecruiterMeetingDetailsDialogComponent, {
+      width: '600px',
+      data: { applicantId }
+    });
+  }
+
+  setActiveTab(event: any) {
+    this.isShortlistedTab = event.index === 1; 
   }
 
   goBack() {

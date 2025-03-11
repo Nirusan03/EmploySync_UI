@@ -5,6 +5,7 @@ import { RecruiterTeamComponent } from './recruiter-team/recruiter-team.componen
 import { RecruiterViewJobComponent } from './recruiter-view-job/recruiter-view-job.component';
 import { RecruiterRequestViewComponent } from './recruiter-request-view/recruiter-request-view.component';
 import { RecruiterJobApplicantViewComponent } from './recruiter-job-applicant-view/recruiter-job-applicant-view.component';
+import { RecruiterMeetingDetailsDialogComponent } from './recruiter-meeting-details-dialog/recruiter-meeting-details-dialog.component';
 
 // Import Job Posting Form Steps
 import { RecruiterPostJobForm1Component } from './recruiter-post-job-form-1/recruiter-post-job-form-1.component';
@@ -19,7 +20,11 @@ export const routes: Routes = [
   { path: 'jobs', component: RecruiterViewJobComponent },
   { path: 'requests', component: RecruiterRequestViewComponent },
 
-  { path: 'post-job/applicants', component: RecruiterJobApplicantViewComponent },
+  // Route for viewing job applicants by job ID
+  { path: 'requests/:jobId/applicants', component: RecruiterJobApplicantViewComponent },
+
+  // Route for meeting details dialog for shortlisted candidates
+  { path: 'requests/:jobId/meeting-details', component: RecruiterMeetingDetailsDialogComponent },
 
   { path: 'post-job/step-1', component: RecruiterPostJobForm1Component },
   { path: 'post-job/step-2', component: RecruiterPostJobForm2Component },

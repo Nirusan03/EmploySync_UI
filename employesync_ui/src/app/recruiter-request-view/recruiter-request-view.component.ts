@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Added for mat-spinner
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // For loading spinner
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
@@ -18,7 +18,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     MatIconModule,
     MatTabsModule,
     MatTableModule,
-    MatProgressSpinnerModule, // Import added
+    MatProgressSpinnerModule, // Ensure MatProgressSpinnerModule is imported
     SidebarComponent
   ],
   templateUrl: './recruiter-request-view.component.html',
@@ -59,6 +59,6 @@ export class RecruiterRequestViewComponent implements OnInit {
   }
 
   viewApplications(jobId: string, jobTitle: string) {
-    this.router.navigate(['/post-job/applicants'], { queryParams: { jobId, jobTitle } });
+    this.router.navigate([`/requests/${jobId}/applicants`], { queryParams: { jobTitle } });
   }  
 }
