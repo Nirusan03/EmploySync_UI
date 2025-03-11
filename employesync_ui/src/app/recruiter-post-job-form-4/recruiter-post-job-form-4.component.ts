@@ -9,21 +9,30 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
 })
 export class RecruiterPostJobForm4Component {
   jobDescription = '';
+  isLoading = false;
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
-    this.jobDescription = savedData.jobDescription;
+    this.jobDescription = savedData.description;
   }
 
   postJob() {
-    this.jobService.updateJobData({ jobDescription: this.jobDescription });
+    this.isLoading = true;
+    this.jobService.updateJobData({ description: this.jobDescription });
 
-    // Simulate API Call
-    console.log('Job Posted:', this.jobService.getJobData());
-    alert('Job successfully posted!');
-
-    // Navigate back to job listing or dashboard
-    this.router.navigate(['/jobs']);
+    this.jobService.postJob().subscribe({
+      next: (response) => {
+        console.log('Job successfully posted:', response);
+        alert('Job successfully posted!');
+        this.isLoading = false;
+        this.router.navigate(['/jobs']); // Redirect to job listings page
+      },
+      error: (error) => {
+        console.error('Error posting job:', error);
+        alert('Failed to post job. Please try again.');
+        this.isLoading = false;
+      }
+    });
   }
 
   previousStep() {
