@@ -19,7 +19,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sideb
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    SidebarComponent // Add Sidebar
+    SidebarComponent // Include Sidebar Component
   ],
   templateUrl: './recruiter-post-job-form-4.component.html',
   styleUrls: ['./recruiter-post-job-form-4.component.css']
@@ -35,6 +35,8 @@ export class RecruiterPostJobForm4Component {
 
   postJob() {
     this.isLoading = true;
+    
+    // Update only required fields before posting
     this.jobService.updateJobData({ description: this.jobDescription });
 
     this.jobService.postJob().subscribe({

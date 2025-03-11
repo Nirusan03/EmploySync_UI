@@ -27,6 +27,14 @@ export class RecruiterPostJobService {
   }
 
   postJob(): Observable<any> {
-    return this.http.post(this.apiUrl, this.jobData);
+    // Ensure only the required API fields are sent
+    const payload = {
+      title: this.jobData.title,
+      description: this.jobData.description,
+      location: this.jobData.location,
+      salary: this.jobData.salary,
+      status: this.jobData.status
+    };
+    return this.http.post(this.apiUrl, payload);
   }
 }

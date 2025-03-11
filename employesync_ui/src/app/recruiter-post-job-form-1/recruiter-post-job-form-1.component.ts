@@ -25,14 +25,14 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
   styleUrls: ['./recruiter-post-job-form-1.component.css']
 })
 export class RecruiterPostJobForm1Component {
-  jobTitle = '';
+  title = ''; // Fix: Change from jobTitle to title
   position = 'Remote';
   jobType = 'Full-time';
   minEducation = '';
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
-    this.jobTitle = savedData.jobTitle;
+    this.title = savedData.title; // Fix: Ensure it retrieves 'title'
     this.position = savedData.position;
     this.jobType = savedData.jobType;
     this.minEducation = savedData.minEducation;
@@ -40,11 +40,12 @@ export class RecruiterPostJobForm1Component {
 
   nextStep() {
     this.jobService.updateJobData({
-      jobTitle: this.jobTitle,
+      title: this.title, // Fix: Use 'title' instead of 'jobTitle'
       position: this.position,
       jobType: this.jobType,
       minEducation: this.minEducation
     });
+
     this.router.navigate(['/post-job/step-2']);
   }
 }
