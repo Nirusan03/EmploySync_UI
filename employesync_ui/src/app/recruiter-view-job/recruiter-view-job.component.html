@@ -1,1 +1,78 @@
-<p>recruiter-view-job works!</p>
+<div class="main-container">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+  
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Page Header -->
+      <div class="header">
+        <h2>Jobs</h2>
+        <button mat-button class="add-btn" (click)="addNewJob()">
+          <mat-icon>add</mat-icon> Add new Job
+        </button>
+      </div>
+  
+      <!-- Filter Section -->
+      <div class="filter-container">
+        <button class="filter-btn">All</button>
+        <button class="filter-btn archived">Archived</button>
+      </div>
+  
+      <!-- Loader -->
+      <div *ngIf="isLoading" class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading job listings...</p>
+      </div>
+  
+      <!-- Table (Only show if data exists) -->
+      <div *ngIf="!isLoading && jobs.length > 0" class="table-container">
+        <table mat-table [dataSource]="jobs" class="mat-elevation-z1">
+          
+          <!-- Job Title Column -->
+          <ng-container matColumnDef="title">
+            <th mat-header-cell *matHeaderCellDef>JOB TITLE</th>
+            <td mat-cell *matCellDef="let job">
+              <div class="job-info">
+                <strong>{{ job.title }}</strong>
+                <br>
+                <small class="text-gray"># {{ job._id }}</small>
+              </div>
+            </td>
+          </ng-container>
+  
+          <!-- Shortlisted Column -->
+          <ng-container matColumnDef="shortlisted">
+            <th mat-header-cell *matHeaderCellDef>SHORTLISTED</th>
+            <td mat-cell *matCellDef="let job">{{ job.shortlisted }}</td>
+          </ng-container>
+  
+          <!-- Selected Column -->
+          <ng-container matColumnDef="selected">
+            <th mat-header-cell *matHeaderCellDef>SELECTED</th>
+            <td mat-cell *matCellDef="let job">{{ job.selected }}</td>
+          </ng-container>
+  
+          <!-- Start Date Column -->
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell *matHeaderCellDef>START DATE</th>
+            <td mat-cell *matCellDef="let job">{{ job.startDate }}</td>
+          </ng-container>
+  
+          <!-- Last Activity Column -->
+          <ng-container matColumnDef="lastActivity">
+            <th mat-header-cell *matHeaderCellDef>LAST ACTIVITY</th>
+            <td mat-cell *matCellDef="let job">{{ job.lastActivity }}</td>
+          </ng-container>
+  
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
+  
+      <!-- No Data Message -->
+      <div *ngIf="!isLoading && jobs.length === 0" class="no-data">
+        <p>No job listings found.</p>
+      </div>
+    </div>
+  </div>
+  

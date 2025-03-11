@@ -1,0 +1,93 @@
+.main-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  app-sidebar {
+    flex-shrink: 0;
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 20px;
+    background: white;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .add-btn {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .add-btn mat-icon {
+    margin-right: 5px;
+  }
+  
+  .filter-container {
+    margin-bottom: 15px;
+  }
+  
+  .filter-btn {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+  
+  .archived {
+    color: #555;
+  }
+  
+  .loading-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .no-data {
+    text-align: center;
+    color: gray;
+    font-size: 14px;
+  }
+  
+  .table-container {
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th {
+    background: #f5f5f5;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  td {
+    padding: 10px;
+  }
+  
+  .job-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .text-gray {
+    color: gray;
+    font-size: 12px;
+  }
+  
