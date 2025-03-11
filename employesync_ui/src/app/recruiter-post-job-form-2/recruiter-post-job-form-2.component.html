@@ -1,45 +1,48 @@
 <div class="container">
-
   <app-sidebar></app-sidebar>
 
   <div class="form-container">
     <h2>Education & Salary</h2>
-    
-    
+
     <h3>Salary</h3>
     <mat-form-field class="full-width">
       <mat-label>Salary Type</mat-label>
       <mat-select [(ngModel)]="salaryType">
-        <mat-option value="per Hour">per Hour</mat-option>
-        <mat-option value="per Month">per Month</mat-option>
-        <mat-option value="per Year">per Year</mat-option>
+        <mat-option value="per Hour">Per Hour</mat-option>
+        <mat-option value="per Month">Per Month</mat-option>
+        <mat-option value="per Year">Per Year</mat-option>
       </mat-select>
     </mat-form-field>
-  
-    <mat-slider [(ngModel)]="salaryMin" min="0" max="5000" step="50" thumbLabel></mat-slider>
-    <mat-slider [(ngModel)]="salaryMax" min="0" max="5000" step="50" thumbLabel></mat-slider>
-    <p>${{ salaryMin }} - ${{ salaryMax }}</p>
-  
+
+    <div class="salary-range">
+      <mat-slider
+        class="full-width"
+        [(ngModel)]="salary"
+        min="50"
+        max="100000"
+        step="100"
+        thumbLabel
+      ></mat-slider>
+      <p>Salary: ${{ salary }}</p>
+    </div>
+
     <h3>Skill, Tools, and Technology</h3>
-  
     <h4>Relevant Skills</h4>
     <div class="skill-chips">
       <span *ngFor="let skill of skills; let i = index" class="skill-chip">
-        {{ skill }} <button mat-icon-button (click)="removeSkill(i)">
-          <mat-icon>close</mat-icon>
-        </button>
+        {{ skill }}
+        <button mat-button color="warn" (click)="removeSkill(i)">✖</button>
       </span>
     </div>
-  
+
     <mat-form-field class="full-width">
-      <mat-label>Add Skills</mat-label>
-      <input matInput [(ngModel)]="skillInput" (keyup.enter)="addSkill()">
+      <input matInput [(ngModel)]="skillInput" placeholder="Add Skills" />
     </mat-form-field>
-    <button mat-button (click)="addSkill()">Add Skill</button>
-  
+    <button mat-button color="primary" (click)="addSkill()">Add Skill</button>
+
     <div class="button-group">
-      <button mat-button (click)="previousStep()">Previous</button>
-      <button mat-button color="primary" (click)="nextStep()">Continue</button>
+      <button mat-button color="warn" (click)="previousStep()">Previous</button>
+      <button mat-raised-button color="primary" (click)="nextStep()">Continue</button>
     </div>
   </div>
 </div>
