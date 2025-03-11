@@ -6,6 +6,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sidebar
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
 
 @Component({
@@ -17,7 +18,8 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
     MatRadioModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    SidebarComponent // Add Sidebar
   ],
   templateUrl: './recruiter-post-job-form-1.component.html',
   styleUrls: ['./recruiter-post-job-form-1.component.css']

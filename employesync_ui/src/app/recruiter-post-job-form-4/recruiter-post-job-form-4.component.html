@@ -1,6 +1,10 @@
-<div class="form-container">
+<div class="container">
+
+  <app-sidebar></app-sidebar>
+
+  <div class="form-container">
     <h2>Lastly, add a Job Description</h2>
-  
+
     <h3>Job Description <span class="optional">(Optional)</span></h3>
     <mat-form-field class="full-width">
       <textarea matInput [(ngModel)]="jobDescription" rows="5"></textarea>
@@ -13,5 +17,5 @@
         <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
       </button>
     </div>
-  </div>
-  
+    </div>
+</div>

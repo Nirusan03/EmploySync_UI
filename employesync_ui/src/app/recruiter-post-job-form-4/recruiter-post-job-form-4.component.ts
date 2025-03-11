@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
+import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sidebar
 
 @Component({
   selector: 'app-recruiter-post-job-form-4',
@@ -17,7 +18,8 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    SidebarComponent // Add Sidebar
   ],
   templateUrl: './recruiter-post-job-form-4.component.html',
   styleUrls: ['./recruiter-post-job-form-4.component.css']
