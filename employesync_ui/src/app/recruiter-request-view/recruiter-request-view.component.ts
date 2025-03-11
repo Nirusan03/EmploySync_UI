@@ -58,7 +58,7 @@ export class RecruiterRequestViewComponent implements OnInit {
     this.router.navigate(['/post-job/step-1']); // Adjust this route as per your app routing config
   }
 
-  viewApplications(jobTitle: string) {
-    this.router.navigate(['/post-job/applicants'], { queryParams: { jobTitle } });
+  viewApplications(jobId: string, jobTitle: string) {
+    this.router.navigate(['/post-job/applicants'], { queryParams: { jobId, jobTitle } });
   }  
 }

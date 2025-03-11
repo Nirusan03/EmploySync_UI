@@ -6,10 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { RecruiterApplicantCvDialogComponent } from '../recruiter-applicant-cv-dialog/recruiter-applicant-cv-dialog.component';
 
 @Component({
   selector: 'app-recruiter-job-applicant-view',
@@ -20,9 +23,11 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     MatIconModule,
     MatTabsModule,
     MatTableModule,
+    MatDialogModule,
     MatCardModule,
     MatChipsModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     SidebarComponent
   ],
   templateUrl: './recruiter-job-applicant-view.component.html',
@@ -35,16 +40,23 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   isLoading = true;
   jobTitle = '';
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
-    this.fetchApplicants();
     this.route.queryParams.subscribe(params => {
       this.jobTitle = params['jobTitle'] || 'Job Applicants';
     });
+
+    this.fetchApplicants();
   }
 
   fetchApplicants() {
+    this.isLoading = true;
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
         this.applicants = data.map(applicant => ({
@@ -52,10 +64,11 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
           name: applicant.userName,
           email: applicant.email,
           profileImage: applicant.profileImage || 'https://via.placeholder.com/40',
-          appliedJobs: applicant.appliedjobs.length,
-          shortlistedJobs: applicant.shortlistedjobs.length
+          appliedJobs: Array.isArray(applicant.appliedjobs) ? applicant.appliedjobs.length : 0,
+          shortlistedJobs: Array.isArray(applicant.shortlistedjobs) ? applicant.shortlistedjobs.length : 0
         }));
 
+        // Filter shortlisted applicants correctly
         this.shortlistedApplicants = this.applicants.filter(a => a.shortlistedJobs > 0);
         this.isLoading = false;
       },
@@ -67,12 +80,22 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   }
 
   viewApplicantProfile(applicantId: string) {
-    console.log('Viewing profile for applicant ID:', applicantId);
-    // Implement navigation or detailed view logic if required
+    const cvApiUrl = `http://127.0.0.1:3000/api/v1/users/${applicantId}/cv`;
+
+    this.http.get<any>(cvApiUrl).subscribe({
+      next: (cvData) => {
+        this.dialog.open(RecruiterApplicantCvDialogComponent, {
+          width: '700px',
+          data: cvData
+        });
+      },
+      error: (error) => {
+        console.error('Error fetching CV:', error);
+      }
+    });
   }
 
   goBack() {
     this.router.navigate(['/requests']);
   }
 }
-  

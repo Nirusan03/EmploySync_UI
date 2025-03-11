@@ -19,7 +19,6 @@ export const routes: Routes = [
   { path: 'jobs', component: RecruiterViewJobComponent },
   { path: 'requests', component: RecruiterRequestViewComponent },
 
-  // Add New Route for Job Applicants View
   { path: 'post-job/applicants', component: RecruiterJobApplicantViewComponent },
 
   { path: 'post-job/step-1', component: RecruiterPostJobForm1Component },

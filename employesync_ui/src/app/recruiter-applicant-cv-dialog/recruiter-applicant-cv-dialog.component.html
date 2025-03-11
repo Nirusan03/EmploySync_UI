@@ -1,1 +1,28 @@
-<p>recruiter-applicant-cv-dialog works!</p>
+<div class="cv-dialog">
+  <h2>{{ data?.fullName || 'Unknown' }}</h2>
+  <p>{{ data?.email || 'No Email' }}</p>
+  <p>{{ data?.phone || 'No Phone' }}</p>
+
+  <mat-divider></mat-divider>
+
+  <h3>Skills</h3>
+  <div class="chip-container">
+    <mat-chip *ngFor="let skill of data?.skills || []">{{ skill }}</mat-chip>
+  </div>
+
+  <h3>Experience</h3>
+  <ul>
+    <li *ngFor="let exp of data?.experience || []">
+      <strong>{{ exp.jobTitle }}</strong> - {{ exp.company }} ({{ exp.startDate }} - {{ exp.endDate }})
+    </li>
+  </ul>
+
+  <h3>Education</h3>
+  <ul>
+    <li *ngFor="let edu of data?.education || []">
+      <strong>{{ edu.degree }}</strong> - {{ edu.institution }}
+    </li>
+  </ul>
+
+  <button mat-button (click)="closeDialog()">Close</button>
+</div>
