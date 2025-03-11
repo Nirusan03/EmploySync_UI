@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
-import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sidebar
 
 @Component({
   selector: 'app-recruiter-post-job-form-3',
@@ -16,30 +16,34 @@ import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sideb
   imports: [
     CommonModule,
     FormsModule,
-    MatSliderModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
-    SidebarComponent // Add Sidebar
+    MatSelectModule,
+    SidebarComponent
   ],
   templateUrl: './recruiter-post-job-form-3.component.html',
   styleUrls: ['./recruiter-post-job-form-3.component.css']
 })
 export class RecruiterPostJobForm3Component {
-  experienceMin = 1;
-  experienceMax = 5;
+  experienceMin = 0;
+  experienceMax = 20;
   screeningQuestions: string[] = [];
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
-    this.experienceMin = savedData.experienceMin;
-    this.experienceMax = savedData.experienceMax;
-    this.screeningQuestions = savedData.screeningQuestions;
+    this.experienceMin = savedData.experienceMin || 0;
+    this.experienceMax = savedData.experienceMax || 20;
+    this.screeningQuestions = savedData.screeningQuestions || [];
   }
 
   addQuestion() {
     this.screeningQuestions.push('');
+  }
+
+  updateQuestion(index: number, value: string) {
+    this.screeningQuestions[index] = value;
   }
 
   removeQuestion(index: number) {

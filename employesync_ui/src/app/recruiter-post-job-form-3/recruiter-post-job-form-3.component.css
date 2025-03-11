@@ -8,7 +8,7 @@
   padding: 20px;
   width: 100%;
 }
-  
+
 h2 {
   font-size: 22px;
   font-weight: 600;
@@ -20,9 +20,15 @@ h3 {
   font-weight: 500;
 }
 
-mat-slider {
-  width: 100%;
-  margin-top: 10px;
+.experience-range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.experience-select {
+  width: 100px;
 }
 
 .full-width {
@@ -34,4 +40,13 @@ mat-slider {
   justify-content: space-between;
   margin-top: 20px;
 }
-  
+
+.question-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.question-container mat-form-field {
+  flex-grow: 1;
+}
