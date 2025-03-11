@@ -54,6 +54,10 @@ export class RecruiterRequestViewComponent implements OnInit {
     });
   }
 
+  navigateToAddJob() {
+    this.router.navigate(['/post-job/step-1']); // Adjust this route as per your app routing config
+  }
+
   viewApplications(jobId: string) {
     console.log('Viewing applications for Job ID:', jobId);
     // Implement navigation or detailed view logic
