@@ -1,11 +1,26 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
 
 @Component({
   selector: 'app-recruiter-post-job-form-4',
-  templateUrl: './recruiter-post-job-form_4.component.html',
-  styleUrls: ['./recruiter-post-job-form_4.component.css']
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
+  ],
+  templateUrl: './recruiter-post-job-form-4.component.html',
+  styleUrls: ['./recruiter-post-job-form-4.component.css']
 })
 export class RecruiterPostJobForm4Component {
   jobDescription = '';

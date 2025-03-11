@@ -1,11 +1,28 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
 
 @Component({
   selector: 'app-recruiter-post-job-form-3',
-  templateUrl: './recruiter-post-job-form_3.component.html',
-  styleUrls: ['./recruiter-post-job-form_3.component.css']
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatSliderModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  templateUrl: './recruiter-post-job-form-3.component.html',
+  styleUrls: ['./recruiter-post-job-form-3.component.css']
 })
 export class RecruiterPostJobForm3Component {
   experienceMin = 1;
@@ -28,7 +45,11 @@ export class RecruiterPostJobForm3Component {
   }
 
   nextStep() {
-    this.jobService.updateJobData({ experienceMin: this.experienceMin, experienceMax: this.experienceMax, screeningQuestions: this.screeningQuestions });
+    this.jobService.updateJobData({
+      experienceMin: this.experienceMin,
+      experienceMax: this.experienceMax,
+      screeningQuestions: this.screeningQuestions
+    });
     this.router.navigate(['/post-job/step-4']);
   }
 

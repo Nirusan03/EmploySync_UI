@@ -1,11 +1,26 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
 
 @Component({
   selector: 'app-recruiter-post-job-form-1',
-  templateUrl: './recruiter-post-job-form_1.component.html',
-  styleUrls: ['./recruiter-post-job-form_1.component.css']
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatRadioModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
+  ],
+  templateUrl: './recruiter-post-job-form-1.component.html',
+  styleUrls: ['./recruiter-post-job-form-1.component.css']
 })
 export class RecruiterPostJobForm1Component {
   jobTitle = '';
@@ -22,7 +37,12 @@ export class RecruiterPostJobForm1Component {
   }
 
   nextStep() {
-    this.jobService.updateJobData({ jobTitle: this.jobTitle, position: this.position, jobType: this.jobType, minEducation: this.minEducation });
+    this.jobService.updateJobData({
+      jobTitle: this.jobTitle,
+      position: this.position,
+      jobType: this.jobType,
+      minEducation: this.minEducation
+    });
     this.router.navigate(['/post-job/step-2']);
   }
 }
