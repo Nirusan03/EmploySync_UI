@@ -3,6 +3,7 @@ import { provideRouter } from '@angular/router';
 import { CompanyComponent } from './company/company.component';
 import { RecruiterTeamComponent } from './recruiter-team/recruiter-team.component';
 import { RecruiterViewJobComponent } from './recruiter-view-job/recruiter-view-job.component';
+import { RecruiterRequestViewComponent } from './recruiter-request-view/recruiter-request-view.component';
 
 // Import Job Posting Form Steps
 import { RecruiterPostJobForm1Component } from './recruiter-post-job-form-1/recruiter-post-job-form-1.component';
@@ -15,6 +16,7 @@ export const routes: Routes = [
   { path: 'company', component: CompanyComponent },
   { path: 'team', component: RecruiterTeamComponent },
   { path: 'jobs', component: RecruiterViewJobComponent },
+  { path: 'requests', component: RecruiterRequestViewComponent },
 
   { path: 'post-job/step-1', component: RecruiterPostJobForm1Component },
   { path: 'post-job/step-2', component: RecruiterPostJobForm2Component },

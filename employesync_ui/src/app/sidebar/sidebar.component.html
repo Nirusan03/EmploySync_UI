@@ -38,10 +38,10 @@
       <mat-icon>dashboard</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">My Space</a>
     </li>
-    <li class="flex items-center space-x-2 menu-item">
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('requests')">
       <mat-icon>mail</mat-icon>
-      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Requests</a>
-    </li>
+      <span [ngClass]="{ 'hidden': isCollapsed }">Requests</span>
+    </li>    
     <li class="flex items-center space-x-2 menu-item">
       <mat-icon>post_add</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Post Jobs</a>

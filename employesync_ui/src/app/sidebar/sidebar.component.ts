@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,7 +21,7 @@ export class SidebarComponent implements OnInit {
   userName: string = ""; // API will update this
   organizationName: string = ""; // API will update this
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.fetchUserData();
@@ -63,5 +64,9 @@ export class SidebarComponent implements OnInit {
       }
     });
     input.click();
+  }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
   }
 }
