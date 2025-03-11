@@ -53,9 +53,9 @@ export class RecruiterViewJobComponent implements OnInit {
         this.jobs = data.map(job => ({
           ...job,
           startDate: new Date(job.createdAt).toLocaleDateString(),
-          lastActivity: '5 days ago', // Replace with actual logic if needed
-          shortlisted: Math.floor(Math.random() * 10), // Dummy value for now
-          selected: Math.floor(Math.random() * 5) // Dummy value for now
+          lastActivity: '5 days ago',
+          shortlisted: Math.floor(Math.random() * 10),
+          selected: Math.floor(Math.random() * 5)
         }));
         this.isLoading = false;
       },

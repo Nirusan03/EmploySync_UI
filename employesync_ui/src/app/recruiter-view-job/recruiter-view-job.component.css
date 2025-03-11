@@ -1,93 +1,143 @@
+/* Global Font for this Component */
+* {
+  font-family: "Inter", "SF Pro Display", "Arial", sans-serif;
+}
+
+/* Main Layout */
 .main-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  app-sidebar {
-    flex-shrink: 0;
-  }
-  
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    background: white;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .add-btn {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px 12px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .add-btn mat-icon {
-    margin-right: 5px;
-  }
-  
-  .filter-container {
-    margin-bottom: 15px;
-  }
-  
-  .filter-btn {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-  }
-  
-  .archived {
-    color: #555;
-  }
-  
-  .loading-container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .no-data {
-    text-align: center;
-    color: gray;
-    font-size: 14px;
-  }
-  
-  .table-container {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th {
-    background: #f5f5f5;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  td {
-    padding: 10px;
-  }
-  
-  .job-info {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .text-gray {
-    color: gray;
-    font-size: 12px;
-  }
-  
+  display: flex;
+  height: 100vh;
+}
+
+app-sidebar {
+  flex-shrink: 0;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 30px;
+  background: white;
+  margin-left: 10px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Button Styling */
+.add-btn {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-btn mat-icon {
+  margin-right: 6px;
+}
+
+.add-btn:hover {
+  background: #f5f5f5;
+}
+
+/* Filters */
+.filter-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s ease-in-out;
+}
+
+.filter-btn:hover {
+  background: #f5f5f5;
+}
+
+/* Table Styling */
+.table-container {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  background: white;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+th {
+  background: #f8f9fa;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Job Title */
+.job-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.job-info strong {
+  font-weight: 600;
+  font-size: 15px;
+  color: #222;
+}
+
+.job-info small {
+  font-weight: 400;
+  color: #666;
+  font-size: 12px;
+}
+
+/* Row Hover Effect */
+tr:hover {
+  background: #f8f9fa;
+}
+
+/* Loader */
+.loading-container {
+  text-align: center;
+  padding: 20px;
+  font-size: 15px;
+}
+
+.no-data {
+  text-align: center;
+  color: gray;
+  font-size: 14px;
+}
