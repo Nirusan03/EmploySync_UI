@@ -40,7 +40,6 @@ export class SidebarComponent implements OnInit {
   }
 
   fetchUserData() {
-    // Dummy Node.js API call (Replace with your real API later)
     this.http.get<any>('http://localhost:5000/api/user-profile').subscribe(
       (data) => {
         this.userProfileImage = data.profileImage || 'https://via.placeholder.com/40';

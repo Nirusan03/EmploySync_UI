@@ -19,9 +19,9 @@
       <mat-icon>description</mat-icon>
       <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Proposals</a>
     </li>
-    <li class="flex items-center space-x-2 menu-item">
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/team')">
       <mat-icon>group</mat-icon>
-      <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Team</a>
+      <span [ngClass]="{ 'hidden': isCollapsed }">Team</span>
     </li>
     <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/company')">
       <mat-icon>business</mat-icon>

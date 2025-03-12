@@ -1,132 +1,167 @@
+/* General Layout */
 .main-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  app-sidebar {
-    flex-shrink: 0;
-  }
-  
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    background: white;
-    margin-left: 10px;
-  }
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .add-btn {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 8px 12px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .add-btn mat-icon {
-    margin-right: 5px;
-  }
-  
-  .filter-container {
-    margin-bottom: 15px;
-  }
-  
-  .filter-btn {
-    background: white;
-    border: 1px solid #ddd;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 14px;
-  }
-  
-  .table-container {
-    border-radius: 10px;
-    overflow: hidden;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  th {
-    background: #f5f5f5;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  td {
-    padding: 10px;
-  }
+  display: flex;
+  height: 100vh;
+}
 
-  .loading-container {
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .no-data {
-    text-align: center;
-    color: gray;
-    font-size: 14px;
-  }
-  
-  /* Recruiter Role Badge */
-  .role-badge {
-    display: inline-block;
-    padding: 6px 12px;
-    font-size: 14px;
-    border-radius: 20px;
-    background:  grey;
-    color: white;
-    text-align: center;
-  }
-  
-  
-  /* Glowing effect on hover */
-  .role-badge:hover {
-    box-shadow: 0px 0px 15px rgba(0, 102, 255, 1);
-  }
-  
-  
-  .team-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .owner-label {
-    color: #555;
-    font-size: 12px;
-  }
-  
-  .role-chip {
-    display: inline-block;
-    padding: 4px 8px;
-    font-size: 12px;
-    border-radius: 5px;
-  }
-  
-  .admin {
-    background: #e0f8e4;
-    color: #008000;
-  }
-  
-  .sales {
-    background: #f0f0f5;
-    color: #555;
-  }
-  
+app-sidebar {
+  flex-shrink: 0;
+}
+
+.content {
+  flex-grow: 1;
+  padding: 24px;
+  /* background: #FAFAFA; */
+  border-radius: 8px;
+  margin: 20px;
+}
+
+/* Page Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+.add-btn {
+  background: #0073E6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.add-btn mat-icon {
+  margin-right: 6px;
+}
+
+.add-btn:hover {
+  background: #005BB5;
+}
+
+/* Filter Container */
+.filter-container {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: #0073E6;
+  color: white;
+  border: none;
+}
+
+/* Table Styling */
+.table-container {
+  border-radius: 10px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: #F5F5F5;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #444;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #E0E0E0;
+  color: #555;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Recruiter Role Badge */
+.role-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 20px;
+  background: #D9D9D9;
+  color: black;
+  text-align: center;
+}
+
+.role-badge.admin {
+  background: #E0F8E4;
+  color: #008000;
+}
+
+.role-badge.sales {
+  background: #F0F0F5;
+  color: #555;
+}
+
+/* Hover Effect on Role Badges */
+.role-badge:hover {
+  box-shadow: 0px 0px 10px rgba(0, 102, 255, 0.8);
+}
+
+/* Team Member Profile */
+.team-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+
+.owner-label {
+  color: #777;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* Loading and No Data States */
+.loading-container {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #777;
+}
+
+.no-data {
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  padding: 20px;
+}

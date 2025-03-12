@@ -10,14 +10,15 @@
   padding: 10px;
   border-radius: 10px;
   transition: background 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 /* Hover Effect */
 .menu-item:hover {
-  background: rgba(255, 235, 205, 0.6); /* Light Orange Background */
+  background: rgba(255, 235, 205, 0.6);
 }
 
-/* Corrected Sidebar Toggle Button */
+/* Sidebar Toggle Button */
 .toggle-btn {
   background: white;
   padding: 6px 8px;
@@ -29,7 +30,7 @@
   background: #f4f4f4;
 }
 
-/* Proper Spacing for Search Bar */
+/* Search Bar */
 .search-container {
   background: white;
   padding: 10px;
@@ -37,7 +38,7 @@
   width: 100%;
 }
 
-/* Profile Container Styling */
+/* Profile Container */
 .profile-container {
   margin-top: 1.5rem;
   padding: 10px;
@@ -53,18 +54,4 @@
   width: 40px;
   height: 40px;
   object-fit: cover;
-}
-
-/* Fix Mat-Menu Placement */
-mat-menu {
-  min-width: 200px;
-}
-
-mat-menu-item {
-  display: flex;
-  align-items: center;
-}
-
-mat-menu-item mat-icon {
-  margin-right: 8px;
 }
