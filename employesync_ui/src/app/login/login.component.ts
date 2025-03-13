@@ -31,10 +31,12 @@ export class LoginComponent {
         console.log('Login successful', response);
   
         // Store token in localStorage
-        localStorage.setItem('authToken', response.token); // Assuming the API sends a token
+        // Assuming the API sends a token
+        localStorage.setItem('authToken', response.token); 
   
+        // Redirect to company page
         this.isLoading = false;
-        this.router.navigate(['/company']); // Redirect to company page
+        this.router.navigate(['/company']); 
       },
       error: (error) => {
         console.error('Login failed', error);
