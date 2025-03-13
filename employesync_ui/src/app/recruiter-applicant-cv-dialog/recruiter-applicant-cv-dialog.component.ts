@@ -17,7 +17,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatChipsModule, // Use MatChipsModule
+    MatChipsModule,
     MatDividerModule
   ]
 })
