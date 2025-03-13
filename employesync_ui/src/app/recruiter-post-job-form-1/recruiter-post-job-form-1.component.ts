@@ -19,20 +19,20 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    SidebarComponent // Add Sidebar
+    SidebarComponent
   ],
   templateUrl: './recruiter-post-job-form-1.component.html',
   styleUrls: ['./recruiter-post-job-form-1.component.css']
 })
 export class RecruiterPostJobForm1Component {
-  title = ''; // Fix: Change from jobTitle to title
+  title = '';
   position = 'Remote';
   jobType = 'Full-time';
   minEducation = '';
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
-    this.title = savedData.title; // Fix: Ensure it retrieves 'title'
+    this.title = savedData.title;
     this.position = savedData.position;
     this.jobType = savedData.jobType;
     this.minEducation = savedData.minEducation;
@@ -40,7 +40,7 @@ export class RecruiterPostJobForm1Component {
 
   nextStep() {
     this.jobService.updateJobData({
-      title: this.title, // Fix: Use 'title' instead of 'jobTitle'
+      title: this.title,
       position: this.position,
       jobType: this.jobType,
       minEducation: this.minEducation
