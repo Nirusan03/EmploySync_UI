@@ -14,7 +14,7 @@
 
     <div class="company-content">
       <div class="company-logo">
-        <img [src]="companyLogo" alt="Company Logo">
+        <img [src]="companyService.companyLogo" alt="Company Logo">
 
         <!-- Hidden file input for selecting images -->
         <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
@@ -27,10 +27,10 @@
 
       <div class="company-details">
         <label for="companyName">Name</label>
-        <input matInput type="text" [(ngModel)]="companyName" id="companyName" class="input-field">
+        <input matInput type="text" [(ngModel)]="companyService.companyName" id="companyName" class="input-field">
 
         <label for="companyUrl">URL</label>
-        <input matInput type="text" [(ngModel)]="companyUrl" id="companyUrl" class="input-field">
+        <input matInput type="text" [(ngModel)]="companyService.companyUrl" id="companyUrl" class="input-field">
       </div>
     </div>
   </div>
