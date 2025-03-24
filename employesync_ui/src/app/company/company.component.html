@@ -21,11 +21,19 @@
 
       <div class="company-details">
         <label for="companyName">Name</label>
-        <input matInput type="text" [(ngModel)]="companyName" id="companyName" class="input-field" />
-
+        <input matInput type="text"
+               [(ngModel)]="companyName"
+               (ngModelChange)="saveToLocalStorage()"
+               id="companyName"
+               class="input-field" />
+      
         <label for="companyUrl">URL</label>
-        <input matInput type="text" [(ngModel)]="companyUrl" id="companyUrl" class="input-field" />
-      </div>
+        <input matInput type="text"
+               [(ngModel)]="companyUrl"
+               (ngModelChange)="saveToLocalStorage()"
+               id="companyUrl"
+               class="input-field" />
+      </div>      
     </div>
   </div>
 </div>

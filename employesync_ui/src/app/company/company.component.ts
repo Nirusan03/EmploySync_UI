@@ -15,31 +15,36 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 export class CompanyComponent implements OnInit {
   companyName: string = '';
   companyUrl: string = '';
-  companyLogo: string = 'assets/default-company.png'; // fallback logo
+  companyLogo: string = 'assets/default-company.png';
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const orgId = localStorage.getItem('organizationId');
-  
-    if (!orgId) {
-      console.warn('Organization ID not found in localStorage');
-      return;
+    // 1. Load from localStorage first (if any)
+    const localData = localStorage.getItem('companyData');
+    if (localData) {
+      const parsed = JSON.parse(localData);
+      this.companyName = parsed.companyName || '';
+      this.companyUrl = parsed.companyUrl || '';
+      this.companyLogo = parsed.companyLogo || 'assets/default-company.png';
     }
-  
+
+    // 2. Fetch org data from API and override if available
+    const orgId = localStorage.getItem('organizationId');
+    if (!orgId) return;
+
     this.http.get<any>(`http://127.0.0.1:3000/api/v1/organization/${orgId}`).subscribe({
       next: (org) => {
-        console.log('Fetched organization:', org);
-        this.companyName = org.name || '';
-        this.companyUrl = org.url || '';
-        this.companyLogo = org.image || 'assets/default-company.png';
+        this.companyName = org.name || this.companyName;
+        this.companyUrl = org.url || this.companyUrl;
+        this.companyLogo = org.image || this.companyLogo;
+        this.saveToLocalStorage(); // Optional: sync localStorage after API fetch
       },
       error: (err) => {
-        console.error('Error fetching organization data:', err);
+        console.error('Failed to fetch organization data:', err);
       }
     });
   }
-  
 
   triggerFileInput() {
     const fileInput = document.getElementById('fileInput') as HTMLInputElement;
@@ -58,8 +63,18 @@ export class CompanyComponent implements OnInit {
       const reader = new FileReader();
       reader.onload = () => {
         this.companyLogo = reader.result as string;
+        this.saveToLocalStorage(); // Save change
       };
       reader.readAsDataURL(file);
     }
+  }
+
+  saveToLocalStorage() {
+    const data = {
+      companyName: this.companyName,
+      companyUrl: this.companyUrl,
+      companyLogo: this.companyLogo
+    };
+    localStorage.setItem('companyData', JSON.stringify(data));
   }
 }
