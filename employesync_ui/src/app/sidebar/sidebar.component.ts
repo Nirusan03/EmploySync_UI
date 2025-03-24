@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,30 +29,20 @@ export class SidebarComponent implements OnInit {
   userName: string = '';
   organizationName: string = '';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.fetchUserData();
+    this.loadUserData();
+  }
+
+  loadUserData() {
+    this.userProfileImage = localStorage.getItem('profileImage') || 'https://via.placeholder.com/40';
+    this.userName = localStorage.getItem('userName') || 'Default User';
+    this.organizationName = localStorage.getItem('organizationName') || 'Default Organization';
   }
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
-  }
-
-  fetchUserData() {
-    this.http.get<any>('http://localhost:5000/api/user-profile').subscribe(
-      (data) => {
-        this.userProfileImage = data.profileImage || 'https://via.placeholder.com/40';
-        this.userName = data.name || 'Default User';
-        this.organizationName = data.organization || 'Default Organization';
-      },
-      (error) => {
-        console.error('Error fetching user data:', error);
-        this.userProfileImage = 'https://via.placeholder.com/40';
-        this.userName = 'Default User';
-        this.organizationName = 'Default Organization';
-      }
-    );
   }
 
   selectProfileImage() {
@@ -65,6 +55,7 @@ export class SidebarComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = () => {
           this.userProfileImage = reader.result as string;
+          localStorage.setItem('profileImage', this.userProfileImage); // Optional: update storage
         };
         reader.readAsDataURL(file);
       }

@@ -1,8 +1,6 @@
 <div class="main-container">
-  <!-- Sidebar Component -->
   <app-sidebar></app-sidebar>
 
-  <!-- Company Page Content -->
   <div class="company-container">
     <div class="header">
       <h2>Company <a href="#">Preview</a></h2>
@@ -14,12 +12,8 @@
 
     <div class="company-content">
       <div class="company-logo">
-        <img [src]="companyService.companyLogo" alt="Company Logo">
-
-        <!-- Hidden file input for selecting images -->
-        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
-
-        <!-- Camera button triggers file input -->
+        <img [src]="companyLogo" alt="Company Logo" />
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden />
         <button class="edit-logo-btn" (click)="triggerFileInput()">
           <mat-icon>photo_camera</mat-icon>
         </button>
@@ -27,10 +21,10 @@
 
       <div class="company-details">
         <label for="companyName">Name</label>
-        <input matInput type="text" [(ngModel)]="companyService.companyName" id="companyName" class="input-field">
+        <input matInput type="text" [(ngModel)]="companyName" id="companyName" class="input-field" />
 
         <label for="companyUrl">URL</label>
-        <input matInput type="text" [(ngModel)]="companyService.companyUrl" id="companyUrl" class="input-field">
+        <input matInput type="text" [(ngModel)]="companyUrl" id="companyUrl" class="input-field" />
       </div>
     </div>
   </div>

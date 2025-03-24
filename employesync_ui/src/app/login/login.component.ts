@@ -28,13 +28,31 @@ export class LoginComponent {
   
     this.http.post(this.apiUrl, loginData).subscribe({
       next: (response: any) => {
-        console.log('Login successful', response);
+        const user = response.user;
+        const organizationId = user.organization;
   
-        localStorage.setItem('authToken', response.token); 
+        // ✅ Save token and user details
+        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('userName', user.userName || 'Default User');
+        localStorage.setItem('profileImage', user.profileImage || 'assets/default-user.png');
+        localStorage.setItem('organizationId', organizationId); // ✅ CRUCIAL
   
-        // Redirect to company page
-        this.isLoading = false;
-        this.router.navigate(['/company']); 
+        // ✅ Fetch organization details and store name (optional use in sidebar)
+        this.http.get<any>(`http://127.0.0.1:3000/api/v1/organization/${organizationId}`).subscribe({
+          next: (orgResponse) => {
+            localStorage.setItem('organizationName', orgResponse.name || 'Default Organization');
+  
+            this.isLoading = false;
+            this.router.navigate(['/company']);
+          },
+          error: (orgError) => {
+            console.error('Failed to fetch organization name', orgError);
+  
+            localStorage.setItem('organizationName', 'Default Organization');
+            this.isLoading = false;
+            this.router.navigate(['/company']);
+          }
+        });
       },
       error: (error) => {
         console.error('Login failed', error);

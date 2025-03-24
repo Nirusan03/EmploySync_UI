@@ -1,42 +1,33 @@
-<div class="container mx-auto p-4">
-    <div class="bg-white rounded-lg shadow-md p-4">
-      <!-- Header -->
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-bold text-gray-800">Jobs</h2>
-        <button class="bg-blue-500 text-white px-4 py-2 rounded flex items-center">
-          <span class="mr-2">+</span> Add new Job
+<div class="main-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="company-container">
+    <div class="header">
+      <h2>Company <a href="#">Preview</a></h2>
+      <div>
+        <button class="discard-btn">Discard</button>
+        <button class="save-btn">Save changes</button>
+      </div>
+    </div>
+
+    <div class="company-content">
+      <div class="company-logo">
+        <img [src]="companyLogo" alt="Company Logo">
+
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*" hidden>
+
+        <button class="edit-logo-btn" (click)="triggerFileInput()">
+          <mat-icon>photo_camera</mat-icon>
         </button>
       </div>
-  
-      <!-- Filters -->
-      <div class="flex space-x-2 mb-4">
-        <span class="bg-gray-200 text-gray-800 px-4 py-2 rounded">All</span>
-        <span class="bg-gray-200 text-gray-800 px-4 py-2 rounded">Archived</span>
-      </div>
-  
-      <!-- Jobs Table -->
-      <div class="bg-white rounded-lg shadow-md p-4">
-        <!-- Header Row -->
-        <div class="flex justify-between bg-gray-100 p-2 border-b">
-          <div class="text-gray-600 font-semibold w-1/5">Job Title</div>
-          <div class="text-gray-600 font-semibold w-1/5">Shortlisted</div>
-          <div class="text-gray-600 font-semibold w-1/5">Selected</div>
-          <div class="text-gray-600 font-semibold w-1/5">Start Date</div>
-          <div class="text-gray-600 font-semibold w-1/5">Last Activity</div>
-        </div>
-  
-        <!-- Data Rows -->
-        <div *ngFor="let job of jobs" class="flex justify-between py-2 border-b last:border-b-0">
-          <div class="w-1/5 text-gray-800">
-            <div class="font-semibold">{{ job.title }}</div>
-            <div class="text-sm text-gray-500"># {{ job.id }}</div>
-          </div>
-          <div class="w-1/5 text-gray-600">{{ job.shortlisted }}</div>
-          <div class="w-1/5 text-gray-600">{{ job.selected }}</div>
-          <div class="w-1/5 text-gray-600">{{ job.startDate }}</div>
-          <div class="w-1/5 text-gray-600">{{ job.lastActivity }}</div>
-        </div>
+
+      <div class="company-details">
+        <label for="companyName">Name</label>
+        <input matInput type="text" [(ngModel)]="companyName" id="companyName" class="input-field">
+
+        <label for="companyUrl">URL</label>
+        <input matInput type="text" [(ngModel)]="companyUrl" id="companyUrl" class="input-field">
       </div>
     </div>
   </div>
-  
+</div>
