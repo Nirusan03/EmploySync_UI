@@ -31,13 +31,13 @@ export class LoginComponent {
         const user = response.user;
         const organizationId = user.organization;
   
-        // ✅ Save token and user details
+        // Save token and user details
         localStorage.setItem('authToken', response.token);
         localStorage.setItem('userName', user.userName || 'Default User');
         localStorage.setItem('profileImage', user.profileImage || 'assets/default-user.png');
-        localStorage.setItem('organizationId', organizationId); // ✅ CRUCIAL
+        localStorage.setItem('organizationId', organizationId); // CRUCIAL
   
-        // ✅ Fetch organization details and store name (optional use in sidebar)
+        // Fetch organization details and store name (optional use in sidebar)
         this.http.get<any>(`http://127.0.0.1:3000/api/v1/organization/${organizationId}`).subscribe({
           next: (orgResponse) => {
             localStorage.setItem('organizationName', orgResponse.name || 'Default Organization');

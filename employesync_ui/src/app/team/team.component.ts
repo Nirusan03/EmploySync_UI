@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CommonModule } from '@angular/common'; // ✅ Import CommonModule
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-team',
   standalone: true,
-  imports: [CommonModule], // ✅ Add CommonModule here
+  imports: [CommonModule],
   templateUrl: './team.component.html',
   styleUrl: './team.component.css'
 })
