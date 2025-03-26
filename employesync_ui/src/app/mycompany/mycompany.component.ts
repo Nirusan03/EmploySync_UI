@@ -20,7 +20,6 @@ export class MyCompanyComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    // Fetch dummy company logo
     this.http.get<any>('https://randomuser.me/api/')
       .subscribe(response => {
         this.company.logo = response.results[0].picture.large;
