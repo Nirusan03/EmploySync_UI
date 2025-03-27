@@ -15,19 +15,23 @@ interface Job {
   organization: string;
   status: string;
   createdAt: string;
+  startDate?: string;
+  lastActivity?: string;
+  shortlisted?: number;
+  selected?: number;
 }
 
 @Component({
   selector: 'app-recruiter-view-job',
   standalone: true,
   imports: [
-    CommonModule, 
-    MatTableModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    MatChipsModule, 
-    MatProgressSpinnerModule, 
-    HttpClientModule, 
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    HttpClientModule,
     SidebarComponent
   ],
   templateUrl: './recruiter-view-job.component.html',
@@ -36,7 +40,6 @@ interface Job {
 export class RecruiterViewJobComponent implements OnInit {
   displayedColumns: string[] = ['title', 'shortlisted', 'selected', 'startDate', 'lastActivity'];
   jobs: Job[] = [];
-  apiUrl: string = 'http://127.0.0.1:3000/api/v1/organization/67c2d88d86f598e77d91c631/jobs';
   isLoading: boolean = false;
 
   constructor(private http: HttpClient) {}
@@ -46,14 +49,22 @@ export class RecruiterViewJobComponent implements OnInit {
   }
 
   fetchJobs() {
+    const orgId = localStorage.getItem('organizationId');
+    if (!orgId) {
+      alert('Organization ID not found. Please log in again.');
+      return;
+    }
+
+    const apiUrl = `http://127.0.0.1:3000/api/v1/organization/${orgId}/jobs`;
+    console.log(apiUrl + " url ")
     this.isLoading = true;
 
-    this.http.get<Job[]>(this.apiUrl).subscribe({
+    this.http.get<Job[]>(apiUrl).subscribe({
       next: (data) => {
         this.jobs = data.map(job => ({
           ...job,
           startDate: new Date(job.createdAt).toLocaleDateString(),
-          lastActivity: '5 days ago',
+          lastActivity: '5 days ago', // Replace with real data if available
           shortlisted: Math.floor(Math.random() * 10),
           selected: Math.floor(Math.random() * 5)
         }));

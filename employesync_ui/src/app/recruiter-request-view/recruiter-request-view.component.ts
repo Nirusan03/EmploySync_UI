@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // For loading spinner
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 
 @Component({
@@ -18,14 +18,13 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
     MatIconModule,
     MatTabsModule,
     MatTableModule,
-    MatProgressSpinnerModule, // Ensure MatProgressSpinnerModule is imported
+    MatProgressSpinnerModule,
     SidebarComponent
   ],
   templateUrl: './recruiter-request-view.component.html',
   styleUrls: ['./recruiter-request-view.component.css']
 })
 export class RecruiterRequestViewComponent implements OnInit {
-  apiUrl = 'http://127.0.0.1:3000/api/v1/organization/67c2d88d86f598e77d91c631/jobs';
   displayedColumns: string[] = ['title', 'status', 'createdAt', 'view'];
   jobRequests: any[] = [];
   isLoading = true;
@@ -37,7 +36,17 @@ export class RecruiterRequestViewComponent implements OnInit {
   }
 
   fetchJobs() {
-    this.http.get<any[]>(this.apiUrl).subscribe({
+    const orgId = localStorage.getItem('organizationId');
+
+    if (!orgId) {
+      alert('Organization ID not found. Please log in again.');
+      this.isLoading = false;
+      return;
+    }
+
+    const apiUrl = `http://127.0.0.1:3000/api/v1/organization/${orgId}/jobs`;
+
+    this.http.get<any[]>(apiUrl).subscribe({
       next: (data) => {
         this.jobRequests = data.map(job => ({
           title: job.title,
@@ -55,10 +64,10 @@ export class RecruiterRequestViewComponent implements OnInit {
   }
 
   navigateToAddJob() {
-    this.router.navigate(['/post-job/step-1']); // Adjust this route as per your app routing config
+    this.router.navigate(['/post-job/step-1']);
   }
 
   viewApplications(jobId: string, jobTitle: string) {
     this.router.navigate([`/requests/${jobId}/applicants`], { queryParams: { jobTitle } });
-  }  
+  }
 }

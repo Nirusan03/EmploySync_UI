@@ -1,48 +1,68 @@
 <div class="container">
+    <!-- Sidebar -->
     <app-sidebar></app-sidebar>
-
+  
+    <!-- Main Content -->
     <div class="main-content">
-        <div class="header">
+      <!-- Header -->
+      <div class="header">
         <h2>Jobs</h2>
         <button mat-button color="primary" (click)="navigateToAddJob()">
-            + Add new Job
-        </button>          
-        </div>
-
-        <mat-tab-group>
+          + Add new Job
+        </button>
+      </div>
+  
+      <!-- Tabs -->
+      <mat-tab-group>
         <mat-tab label="All"></mat-tab>
         <mat-tab label="Archived"></mat-tab>
-        </mat-tab-group>
-
-        <div *ngIf="isLoading" class="loading-container">
+      </mat-tab-group>
+  
+      <!-- Loading Spinner -->
+      <div *ngIf="isLoading" class="loading-container">
         <mat-spinner></mat-spinner>
-        </div>
-
-        <table mat-table [dataSource]="jobRequests" class="mat-elevation-z8" *ngIf="!isLoading">
+      </div>
+  
+      <!-- Job Table -->
+      <table mat-table [dataSource]="jobRequests" class="mat-elevation-z8" *ngIf="!isLoading && jobRequests.length > 0">
+        
+        <!-- Job Title Column -->
         <ng-container matColumnDef="title">
-            <th mat-header-cell *matHeaderCellDef>JOB TITLE</th>
-            <td mat-cell *matCellDef="let job">{{ job.title }}</td>
+          <th mat-header-cell *matHeaderCellDef>JOB TITLE</th>
+          <td mat-cell *matCellDef="let job">{{ job.title }}</td>
         </ng-container>
-
+  
+        <!-- Status Column -->
         <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>STATUS</th>
-            <td mat-cell *matCellDef="let job">{{ job.status }}</td>
+          <th mat-header-cell *matHeaderCellDef>STATUS</th>
+          <td mat-cell *matCellDef="let job">{{ job.status }}</td>
         </ng-container>
-
+  
+        <!-- Created Date Column -->
         <ng-container matColumnDef="createdAt">
-            <th mat-header-cell *matHeaderCellDef>CREATED DATE</th>
-            <td mat-cell *matCellDef="let job">{{ job.createdAt }}</td>
+          <th mat-header-cell *matHeaderCellDef>CREATED DATE</th>
+          <td mat-cell *matCellDef="let job">{{ job.createdAt }}</td>
         </ng-container>
-
+  
+        <!-- View Applications Column -->
         <ng-container matColumnDef="view">
-            <th mat-header-cell *matHeaderCellDef>VIEW APPLICATIONS</th>
-            <td mat-cell *matCellDef="let job">
-            <button mat-button color="primary" (click)="viewApplications(job.id, job.title)">View</button>
-            </td>
+          <th mat-header-cell *matHeaderCellDef>VIEW APPLICATIONS</th>
+          <td mat-cell *matCellDef="let job">
+            <button mat-button color="primary" (click)="viewApplications(job.jobId, job.title)">
+              View
+            </button>
+          </td>
         </ng-container>
-
+  
+        <!-- Table Rows -->
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+      </table>
+  
+      <!-- No Data Message -->
+      <div *ngIf="!isLoading && jobRequests.length === 0" class="no-data">
+        <p>No jobs found for your organization.</p>
+      </div>
     </div>
-</div>
+  </div>
+  
