@@ -56,14 +56,21 @@ export class ApplicantSidebarComponent implements OnInit {
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          this.userProfileImage = reader.result as string;
-          localStorage.setItem('profileImage', this.userProfileImage);
+          const imageData = reader.result as string;
+          this.userProfileImage = imageData;
+  
+          localStorage.setItem('profileImage', imageData);
+  
+          const user = JSON.parse(localStorage.getItem('user') || '{}');
+          user.profileImage = imageData;
+          localStorage.setItem('user', JSON.stringify(user));
         };
         reader.readAsDataURL(file);
       }
     });
     input.click();
   }
+  
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('authToken');

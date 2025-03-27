@@ -39,13 +39,13 @@ export class ApplicantUserProfileComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    const storedUserObject = localStorage.getItem('user');
-    if (storedUserObject) {
-      const user = JSON.parse(storedUserObject);
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      const user = JSON.parse(storedUser);
       this.userId = user._id;
   
       if (!this.userId) {
-        alert('User ID not found in token. Please log in again.');
+        alert('User ID not found. Please log in again.');
         return;
       }
   
@@ -56,10 +56,8 @@ export class ApplicantUserProfileComponent implements OnInit {
       alert('User info not found. Please log in again.');
     }
   
-    // Load skills into input
     this.skillsInput = this.profile.skills?.join(', ') || '';
-  }
-  
+  }  
 
   toggleEdit() {
     this.isEditMode = true;
