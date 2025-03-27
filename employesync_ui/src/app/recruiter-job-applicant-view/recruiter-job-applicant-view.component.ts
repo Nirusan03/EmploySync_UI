@@ -40,6 +40,7 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   shortlistedApplicants: any[] = [];
   isLoading = true;
   jobTitle = '';
+  jobId: string = '';
   isShortlistedTab = false;
 
   constructor(
@@ -50,7 +51,11 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.fetchApplicants();
+    this.route.params.subscribe(params => {
+      this.jobId = params['jobId']; // Get jobId from route
+      this.fetchApplicants();
+    });
+
     this.route.queryParams.subscribe(params => {
       this.jobTitle = params['jobTitle'] || 'Job Applicants';
     });
@@ -60,13 +65,18 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
     this.isLoading = true;
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
-        this.applicants = data.map(applicant => ({
+        // Filter only applicants who applied to this jobId
+        const filtered = data.filter(applicant =>
+          applicant.appliedjobs?.includes(this.jobId)
+        );
+
+        this.applicants = filtered.map(applicant => ({
           id: applicant._id,
           name: applicant.userName,
           email: applicant.email,
           profileImage: applicant.profileImage || 'https://via.placeholder.com/40',
           appliedJobs: applicant.appliedjobs?.length || 0,
-          shortlistedJobs: applicant.shortlistedjobs?.length || 0
+          shortlistedJobs: applicant.shortlistedjobs?.filter((id: string) => id === this.jobId).length || 0
         }));
 
         this.shortlistedApplicants = this.applicants.filter(a => a.shortlistedJobs > 0);
@@ -103,7 +113,7 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   }
 
   setActiveTab(event: any) {
-    this.isShortlistedTab = event.index === 1; 
+    this.isShortlistedTab = event.index === 1;
   }
 
   goBack() {
