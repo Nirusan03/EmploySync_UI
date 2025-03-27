@@ -1,1 +1,59 @@
-<p>applicant-job-view works!</p>
+<div class="flex min-h-screen bg-gray-100">
+    <app-applicant-sidebar></app-applicant-sidebar>
+  
+    <div class="flex-1 p-6">
+      <div *ngIf="isLoading">Loading...</div>
+  
+      <div *ngIf="!isLoading && job" class="bg-white rounded-xl p-6 shadow-md">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h2 class="text-2xl font-semibold">{{ job.title }}</h2>
+            <p class="text-gray-600">{{ job.organization?.name }}</p>
+            <p class="text-gray-500 text-sm">{{ job.location || 'Onsite' }}</p>
+          </div>
+  
+          <div class="space-x-2">
+            <button class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm">1 Click Apply</button>
+            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm">Pass</button>
+          </div>
+        </div>
+  
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <div class="bg-gray-50 p-3 rounded text-sm">
+            <strong class="block text-gray-600">Experience</strong>
+            <span>Less than 1 Years</span>
+          </div>
+          <div class="bg-gray-50 p-3 rounded text-sm">
+            <strong class="block text-gray-600">Type</strong>
+            <span>{{ job.jobType || 'Fulltime' }}</span>
+          </div>
+          <div class="bg-gray-50 p-3 rounded text-sm">
+            <strong class="block text-gray-600">Salary</strong>
+            <span>${{ job.salaryPerHour || 'Negotiable' }}</span>
+          </div>
+        </div>
+  
+        <div class="space-y-4 text-sm">
+          <div>
+            <h4 class="font-semibold text-gray-800">Job Summary:</h4>
+            <p class="text-gray-700">{{ job.description }}</p>
+          </div>
+  
+          <div *ngIf="job.requirements?.length">
+            <h4 class="font-semibold text-gray-800">Requirements:</h4>
+            <ul class="list-disc ml-6 text-gray-700">
+              <li *ngFor="let item of job.requirements">{{ item }}</li>
+            </ul>
+          </div>
+  
+          <div *ngIf="job.responsibilities?.length">
+            <h4 class="font-semibold text-gray-800">Responsibilities:</h4>
+            <ul class="list-disc ml-6 text-gray-700">
+              <li *ngFor="let item of job.responsibilities">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  

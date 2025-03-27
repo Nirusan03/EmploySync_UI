@@ -7,6 +7,7 @@ import { RecruiterRequestViewComponent } from './recruiter-request-view/recruite
 import { RecruiterJobApplicantViewComponent } from './recruiter-job-applicant-view/recruiter-job-applicant-view.component';
 import { RecruiterMeetingDetailsDialogComponent } from './recruiter-meeting-details-dialog/recruiter-meeting-details-dialog.component';
 import { ApplicantApplyJobComponent } from './applicant-apply-job/applicant-apply-job.component';
+import { ApplicantJobViewComponent } from './applicant-job-view/applicant-job-view.component';
 import { LoginComponent } from './login/login.component';
 
 // Import Job Posting Form Steps
@@ -21,6 +22,7 @@ export const routes: Routes = [
 
   // New Route for Applicant
   { path: 'apply-job', component: ApplicantApplyJobComponent },
+  { path: 'job-view/:jobId', component: ApplicantJobViewComponent },
 
   // Recruiter Routes
   { path: 'company', component: CompanyComponent },

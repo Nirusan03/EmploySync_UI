@@ -45,10 +45,10 @@ export class ApplicantApplyJobComponent implements OnInit {
 
   onToggle(jobId: string) {
     console.log('Toggle clicked for job:', jobId);
-    // future: handle job application logic
   }
 
-  navigateToJob(jobId: string) {
-    this.router.navigate(['/job-view', jobId]);
+  navigateToJob(job: any) {
+    localStorage.setItem('selectedJob', JSON.stringify(job));
+    this.router.navigate(['/job-view', job._id]);
   }
 }
