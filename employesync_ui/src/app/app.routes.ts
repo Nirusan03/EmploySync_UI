@@ -7,6 +7,7 @@ import { RecruiterRequestViewComponent } from './recruiter-request-view/recruite
 import { RecruiterJobApplicantViewComponent } from './recruiter-job-applicant-view/recruiter-job-applicant-view.component';
 import { RecruiterMeetingDetailsDialogComponent } from './recruiter-meeting-details-dialog/recruiter-meeting-details-dialog.component';
 import { ApplicantApplyJobComponent } from './applicant-apply-job/applicant-apply-job.component';
+import { ApplicantAppliedJobComponent } from './applicant-applied-job/applicant-applied-job.component';
 import { ApplicantJobViewComponent } from './applicant-job-view/applicant-job-view.component';
 import { LoginComponent } from './login/login.component';
 
@@ -25,8 +26,9 @@ export const routes: Routes = [
 
   // Applicant Routes
   { path: 'apply-job', component: ApplicantApplyJobComponent },
+  { path: 'applied-jobs', component: ApplicantAppliedJobComponent },
   { path: 'job-view/:jobId', component: ApplicantJobViewComponent },
-  { path: 'user-profile', component: ApplicantUserProfileComponent }, // ✅ New profile route
+  { path: 'user-profile', component: ApplicantUserProfileComponent },
 
   // Recruiter Routes
   { path: 'company', component: CompanyComponent },

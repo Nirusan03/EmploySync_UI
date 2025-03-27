@@ -31,53 +31,30 @@ export class ApplicantSidebarComponent implements OnInit {
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadUserData();
   }
 
-  loadUserData() {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    this.userProfileImage = user.profileImage || 'https://via.placeholder.com/40';
-    this.userName = user.userName || 'Default User';
-    this.organizationName = localStorage.getItem('organizationName') || 'DigiRecruitez';
-  }
-  
+  loadUserData(): void {
+    const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
 
-  toggleSidebar() {
+    this.userName = storedUser.userName || localStorage.getItem('userName') || 'Default User';
+    this.organizationName = localStorage.getItem('organizationName') || 'Independent User';
+
+    // Profile image: check user object first, then localStorage
+    this.userProfileImage =
+      storedUser.profileImage ||
+      localStorage.getItem('profileImage') ||
+      'https://via.placeholder.com/150';
+  }
+
+  toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
   }
 
-  selectProfileImage() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.addEventListener('change', (event: any) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const imageData = reader.result as string;
-          this.userProfileImage = imageData;
-  
-          localStorage.setItem('profileImage', imageData);
-  
-          const user = JSON.parse(localStorage.getItem('user') || '{}');
-          user.profileImage = imageData;
-          localStorage.setItem('user', JSON.stringify(user));
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-    input.click();
-  }
-  
-
-  isAuthenticated(): boolean {
-    return !!localStorage.getItem('authToken');
-  }
-
-  navigateTo(route: string) {
-    if (this.isAuthenticated()) {
+  navigateTo(route: string): void {
+    const isLoggedIn = !!localStorage.getItem('authToken');
+    if (isLoggedIn) {
       this.router.navigate([route]);
     } else {
       alert('You need to log in first.');
@@ -85,7 +62,34 @@ export class ApplicantSidebarComponent implements OnInit {
     }
   }
 
-  goToUserProfile() {
+  goToUserProfile(): void {
     this.navigateTo('/user-profile');
+  }
+
+  selectProfileImage(): void {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+
+    input.addEventListener('change', (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64Image = reader.result as string;
+          this.userProfileImage = base64Image;
+
+          // Save to localStorage and update the user object
+          localStorage.setItem('profileImage', base64Image);
+
+          const user = JSON.parse(localStorage.getItem('user') || '{}');
+          user.profileImage = base64Image;
+          localStorage.setItem('user', JSON.stringify(user));
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    input.click();
   }
 }

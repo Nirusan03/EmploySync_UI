@@ -1,1 +1,42 @@
-<p>applicant-applied-job works!</p>
+<div class="flex min-h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <app-applicant-sidebar></app-applicant-sidebar>
+  
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+      <h2 class="text-xl font-semibold mb-4">Applied Jobs</h2>
+  
+      <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+        <table class="w-full text-left">
+          <thead class="border-b bg-gray-100">
+            <tr>
+              <th class="p-3">Job Title</th>
+              <th class="p-3">Company</th>
+              <th class="p-3">Status</th>
+              <th class="p-3">Applied Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of appliedJobDetails" class="border-b hover:bg-gray-50">
+              <td class="p-3 text-blue-900 font-medium">{{ job.title }}</td>
+              <td class="p-3 text-sm text-gray-700">{{ job.organization?.name || 'N/A' }}</td>
+              <td class="p-3">
+                <span class="px-2 py-1 rounded text-white"
+                      [ngClass]="{
+                        'bg-green-500': job.status === 'Reviewed',
+                        'bg-red-500': job.status === 'Unopened',
+                        'bg-yellow-500': job.status === 'Pending'
+                      }">
+                  {{ job.status || 'Pending' }}
+                </span>
+              </td>
+              <td class="p-3 text-gray-600">
+                {{ job.createdAt | date: 'MMM d, y' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+  
