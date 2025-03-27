@@ -16,43 +16,53 @@ export class LoginComponent {
   isLoading: boolean = false;
   apiUrl: string = 'http://127.0.0.1:3000/api/v1/auth';
 
+  // Recruiter Role ID from backend
+  readonly RECRUITER_ROLE_ID = '67c3214d74f3d06251dd28c3';
+
   constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
     this.isLoading = true;
-  
+
     const loginData = {
       userName: this.userName,
       password: this.password
     };
-  
+
     this.http.post(this.apiUrl, loginData).subscribe({
       next: (response: any) => {
         const user = response.user;
+        const token = response.token;
+        const role = user.role;
         const organizationId = user.organization;
-  
-        // Save token and user details
-        localStorage.setItem('authToken', response.token);
+
+        // Store common fields
+        localStorage.setItem('authToken', token);
         localStorage.setItem('userName', user.userName || 'Default User');
         localStorage.setItem('profileImage', user.profileImage || 'assets/default-user.png');
-        localStorage.setItem('organizationId', organizationId); // CRUCIAL
-  
-        // Fetch organization details and store name (optional use in sidebar)
-        this.http.get<any>(`http://127.0.0.1:3000/api/v1/organization/${organizationId}`).subscribe({
-          next: (orgResponse) => {
-            localStorage.setItem('organizationName', orgResponse.name || 'Default Organization');
-  
-            this.isLoading = false;
-            this.router.navigate(['/company']);
-          },
-          error: (orgError) => {
-            console.error('Failed to fetch organization name', orgError);
-  
-            localStorage.setItem('organizationName', 'Default Organization');
-            this.isLoading = false;
-            this.router.navigate(['/company']);
-          }
-        });
+
+        // Save role info (handle recruiter vs applicant)
+        const roleId = role?._id || null;
+        const roleName = role?.name?.toLowerCase() || 'applicant'; // fallback to 'applicant'
+        localStorage.setItem('role', roleName);
+
+        // If recruiter → fetch organization name
+        if (roleId === this.RECRUITER_ROLE_ID && organizationId) {
+          localStorage.setItem('organizationId', organizationId);
+          this.http.get<any>(`http://127.0.0.1:3000/api/v1/organization/${organizationId}`).subscribe({
+            next: (orgResponse) => {
+              localStorage.setItem('organizationName', orgResponse.name || 'Default Organization');
+              this.redirectUser(roleName);
+            },
+            error: () => {
+              localStorage.setItem('organizationName', 'Default Organization');
+              this.redirectUser(roleName);
+            }
+          });
+        } else {
+          localStorage.setItem('organizationName', 'Independent User');
+          this.redirectUser(roleName);
+        }
       },
       error: (error) => {
         console.error('Login failed', error);
@@ -60,5 +70,15 @@ export class LoginComponent {
         this.isLoading = false;
       }
     });
-  }  
+  }
+
+  redirectUser(roleName: string) {
+    this.isLoading = false;
+
+    if (roleName === 'recruiter') {
+      this.router.navigate(['/company']);
+    } else {
+      this.router.navigate(['/posted-jobs']); // Ensure this route/component exists
+    }
+  }
 }
