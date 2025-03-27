@@ -1,59 +1,63 @@
 <div class="flex min-h-screen bg-gray-100">
-    <app-applicant-sidebar></app-applicant-sidebar>
-  
-    <div class="flex-1 p-6">
-      <div *ngIf="isLoading">Loading...</div>
-  
-      <div *ngIf="!isLoading && job" class="bg-white rounded-xl p-6 shadow-md">
-        <div class="flex justify-between items-start mb-4">
-          <div>
-            <h2 class="text-2xl font-semibold">{{ job.title }}</h2>
-            <p class="text-gray-600">{{ job.organization?.name }}</p>
-            <p class="text-gray-500 text-sm">{{ job.location || 'Onsite' }}</p>
-          </div>
-  
-          <div class="space-x-2">
-            <button class="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded-md text-sm">1 Click Apply</button>
-            <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md text-sm">Pass</button>
-          </div>
+  <app-applicant-sidebar></app-applicant-sidebar>
+
+  <div class="flex-1 p-8 overflow-y-auto animate-slide-fade-in">
+    <div *ngIf="isLoading" class="text-lg text-gray-500 animate-pulse">Loading job details...</div>
+
+    <div *ngIf="!isLoading && job"
+      class="bg-white rounded-2xl p-8 shadow-xl transition duration-300 hover:shadow-2xl transform hover:-translate-y-1 relative group">
+
+      <!-- Header -->
+      <div class="flex justify-between items-start mb-6">
+        <div>
+          <h1 class="text-3xl font-extrabold text-gray-900 mb-1 tracking-tight">{{ job.title }}</h1>
+          <p class="text-indigo-600 font-semibold">{{ job.organization?.name }}</p>
+          <p class="text-sm text-gray-400 mt-1">Onsite</p>
         </div>
-  
-        <div class="grid grid-cols-3 gap-4 mb-6">
-          <div class="bg-gray-50 p-3 rounded text-sm">
-            <strong class="block text-gray-600">Experience</strong>
-            <span>Less than 1 Years</span>
-          </div>
-          <div class="bg-gray-50 p-3 rounded text-sm">
-            <strong class="block text-gray-600">Type</strong>
-            <span>{{ job.jobType || 'Fulltime' }}</span>
-          </div>
-          <div class="bg-gray-50 p-3 rounded text-sm">
-            <strong class="block text-gray-600">Salary</strong>
-            <span>${{ job.salaryPerHour || 'Negotiable' }}</span>
-          </div>
+
+        <div class="space-x-2 mt-2">
+          <button class="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-5 py-2 rounded-md text-sm font-medium shadow-lg transition-transform duration-200 transform hover:scale-105">1 Click Apply</button>
+          <button (click)="handlePass()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-5 py-2 rounded-md text-sm font-medium transition-transform duration-200 transform hover:scale-105">Pass</button>
         </div>
-  
-        <div class="space-y-4 text-sm">
-          <div>
-            <h4 class="font-semibold text-gray-800">Job Summary:</h4>
-            <p class="text-gray-700">{{ job.description }}</p>
-          </div>
-  
-          <div *ngIf="job.requirements?.length">
-            <h4 class="font-semibold text-gray-800">Requirements:</h4>
-            <ul class="list-disc ml-6 text-gray-700">
-              <li *ngFor="let item of job.requirements">{{ item }}</li>
-            </ul>
-          </div>
-  
-          <div *ngIf="job.responsibilities?.length">
-            <h4 class="font-semibold text-gray-800">Responsibilities:</h4>
-            <ul class="list-disc ml-6 text-gray-700">
-              <li *ngFor="let item of job.responsibilities">{{ item }}</li>
-            </ul>
-          </div>
+      </div>
+
+      <!-- Highlights -->
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:bg-indigo-50 transition-colors duration-200">
+          <p class="text-sm text-gray-500 font-semibold">Experience</p>
+          <p class="text-gray-800 font-medium mt-1">Less than 1 Year</p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:bg-indigo-50 transition-colors duration-200">
+          <p class="text-sm text-gray-500 font-semibold">Type</p>
+          <p class="text-gray-800 font-medium mt-1">{{ job.jobType || 'Fulltime' }}</p>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:bg-indigo-50 transition-colors duration-200">
+          <p class="text-sm text-gray-500 font-semibold">Salary</p>
+          <p class="text-gray-800 font-medium mt-1">${{ job.salaryPerHour || 'Negotiable' }}</p>
+        </div>
+      </div>
+
+      <!-- Job Description -->
+      <div class="space-y-6 text-gray-700 text-sm leading-relaxed transition-all duration-300">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900">Job Summary:</h2>
+          <p class="mt-1">{{ job.description }}</p>
+        </div>
+
+        <div *ngIf="job.requirements?.length">
+          <h2 class="text-lg font-semibold text-gray-900">Requirements:</h2>
+          <ul class="list-disc ml-6 mt-1 space-y-1">
+            <li *ngFor="let item of job.requirements">{{ item }}</li>
+          </ul>
+        </div>
+
+        <div *ngIf="job.responsibilities?.length">
+          <h2 class="text-lg font-semibold text-gray-900">Responsibilities:</h2>
+          <ul class="list-disc ml-6 mt-1 space-y-1">
+            <li *ngFor="let item of job.responsibilities">{{ item }}</li>
+          </ul>
         </div>
       </div>
     </div>
+  </div>
 </div>
-  

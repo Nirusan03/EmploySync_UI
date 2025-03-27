@@ -1,3 +1,15 @@
-@import 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css';
-
-/* Optional visual polish */
+@keyframes slide-fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-slide-fade-in {
+    animation: slide-fade-in 0.6s ease-out;
+  }
+  
