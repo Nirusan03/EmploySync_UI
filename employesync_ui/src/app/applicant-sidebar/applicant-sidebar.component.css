@@ -1,0 +1,50 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css';
+
+.hidden {
+  display: none;
+}
+
+.menu-item {
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: rgba(255, 235, 205, 0.6);
+}
+
+.toggle-btn {
+  background: white;
+  padding: 6px 8px;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.toggle-btn:hover {
+  background: #f4f4f4;
+}
+
+.search-container {
+  background: white;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.profile-container {
+  margin-top: 1.5rem;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-img {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}

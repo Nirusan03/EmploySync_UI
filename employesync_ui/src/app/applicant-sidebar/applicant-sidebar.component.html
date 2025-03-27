@@ -1,1 +1,63 @@
-<p>applicant-sidebar works!</p>
+<div class="h-screen bg-white shadow-lg p-4 flex flex-col transition-all duration-300"
+     [ngClass]="{ 'w-64': !isCollapsed, 'w-20': isCollapsed }">
+
+  <!-- Sidebar Header -->
+  <div class="flex justify-between items-center mb-4">
+    <div class="flex items-center space-x-2">
+      <mat-icon class="cursor-pointer text-gray-500">apps</mat-icon>
+      <span class="font-bold text-blue-900" [ngClass]="{ 'hidden': isCollapsed }">{{ organizationName }}</span>
+    </div>
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
+  </div>
+
+  <!-- Navigation -->
+  <ul class="space-y-1">
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/applied-jobs')">
+      <mat-icon>work_outline</mat-icon>
+      <span [ngClass]="{ 'hidden': isCollapsed }">Applied Jobs</span>
+    </li>
+    <li class="flex items-center space-x-2 menu-item" (click)="navigateTo('/apply-job')">
+      <mat-icon>post_add</mat-icon>
+      <span [ngClass]="{ 'hidden': isCollapsed }">Apply For Jobs</span>
+    </li>
+  </ul>
+
+  <div class="mt-auto">
+    <!-- Notifications -->
+    <ul class="space-y-1">
+      <li class="flex items-center space-x-2 menu-item">
+        <mat-icon>notifications</mat-icon>
+        <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Notifications</a>
+      </li>
+    </ul>
+
+    <!-- Search -->
+    <div class="mt-6"></div>
+    <div class="search-container w-full" [ngClass]="{ 'hidden': isCollapsed }">
+      <mat-form-field class="w-full">
+        <mat-label>Search</mat-label>
+        <input matInput type="text">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="profile-container flex items-center justify-between">
+    <div class="flex items-center space-x-2">
+      <img [src]="userProfileImage" alt="User Profile" class="profile-img">
+      <span class="ml-2" [ngClass]="{ 'hidden': isCollapsed }">{{ userName }}</span>
+    </div>
+
+    <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="!isCollapsed">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #profileMenu="matMenu">
+      <button mat-menu-item (click)="selectProfileImage()">
+        <mat-icon>photo_camera</mat-icon> Change Profile Picture
+      </button>
+    </mat-menu>
+  </div>
+</div>
