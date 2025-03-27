@@ -44,9 +44,33 @@ export class ApplicantApplyJobComponent implements OnInit {
   }
 
   onToggle(jobId: string) {
-    console.log('Toggle clicked for job:', jobId);
-  }
-
+    const storedUser = localStorage.getItem('user');
+    if (!storedUser) {
+      alert('User not found. Please log in again.');
+      return;
+    }
+  
+    const user = JSON.parse(storedUser);
+    const userId = user._id;
+  
+    const apiUrl = `http://127.0.0.1:3000/api/v1/job/${jobId}/apply`;
+  
+    const body = {
+      userId: userId
+    };
+  
+    this.http.post(apiUrl, body).subscribe({
+      next: (res) => {
+        console.log('Application submitted:', res);
+        alert('Successfully applied for the job!');
+      },
+      error: (err) => {
+        console.error('Error applying to job:', err);
+        alert('Failed to apply. Please try again.');
+      }
+    });
+  }  
+  
   navigateToJob(job: any) {
     localStorage.setItem('selectedJob', JSON.stringify(job));
     this.router.navigate(['/job-view', job._id]);
