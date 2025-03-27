@@ -6,6 +6,7 @@ import { RecruiterViewJobComponent } from './recruiter-view-job/recruiter-view-j
 import { RecruiterRequestViewComponent } from './recruiter-request-view/recruiter-request-view.component';
 import { RecruiterJobApplicantViewComponent } from './recruiter-job-applicant-view/recruiter-job-applicant-view.component';
 import { RecruiterMeetingDetailsDialogComponent } from './recruiter-meeting-details-dialog/recruiter-meeting-details-dialog.component';
+import { ApplicantApplyJobComponent } from './applicant-apply-job/applicant-apply-job.component';
 import { LoginComponent } from './login/login.component';
 
 // Import Job Posting Form Steps
@@ -15,18 +16,18 @@ import { RecruiterPostJobForm3Component } from './recruiter-post-job-form-3/recr
 import { RecruiterPostJobForm4Component } from './recruiter-post-job-form-4/recruiter-post-job-form-4.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirects to login initially
-  { path: 'login', component: LoginComponent }, // Login page
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
 
+  // New Route for Applicant
+  { path: 'apply-job', component: ApplicantApplyJobComponent },
+
+  // Recruiter Routes
   { path: 'company', component: CompanyComponent },
   { path: 'team', component: RecruiterTeamComponent },
   { path: 'jobs', component: RecruiterViewJobComponent },
   { path: 'requests', component: RecruiterRequestViewComponent },
-
-  // Route for viewing job applicants by job ID
   { path: 'requests/:jobId/applicants', component: RecruiterJobApplicantViewComponent },
-
-  // Route for meeting details dialog for shortlisted candidates
   { path: 'requests/:jobId/meeting-details', component: RecruiterMeetingDetailsDialogComponent },
 
   { path: 'post-job/step-1', component: RecruiterPostJobForm1Component },

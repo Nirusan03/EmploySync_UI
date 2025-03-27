@@ -74,11 +74,11 @@ export class LoginComponent {
 
   redirectUser(roleName: string) {
     this.isLoading = false;
-
+  
     if (roleName === 'recruiter') {
       this.router.navigate(['/company']);
     } else {
-      this.router.navigate(['/posted-jobs']); // Ensure this route/component exists
+      this.router.navigate(['/apply-job']);
     }
   }
 }
