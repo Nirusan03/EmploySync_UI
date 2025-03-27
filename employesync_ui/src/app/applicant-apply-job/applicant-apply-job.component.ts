@@ -65,12 +65,12 @@ export class ApplicantApplyJobComponent implements OnInit {
         alert('Successfully applied for the job!');
       },
       error: (err) => {
-        console.error('Error applying to job:', err);
-        alert('Failed to apply. Please try again.');
+        console.error('You had applied to the job already:', err);
+        alert('You had applied to the job already.');
       }
     });
   }  
-  
+
   navigateToJob(job: any) {
     localStorage.setItem('selectedJob', JSON.stringify(job));
     this.router.navigate(['/job-view', job._id]);
