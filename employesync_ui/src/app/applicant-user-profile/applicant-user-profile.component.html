@@ -1,1 +1,85 @@
-<p>applicant-user-profile works!</p>
+<div class="flex min-h-screen bg-gray-100">
+    <app-applicant-sidebar></app-applicant-sidebar>
+  
+    <div class="flex-1 p-6">
+      <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-6">
+          <div class="flex items-center gap-4">
+            <img [src]="profile.profileImage" alt="Profile Image" class="w-16 h-16 rounded-full object-cover border" />
+            <div>
+              <h2 class="text-xl font-semibold">{{ profile.fullName || 'Full Name' }}</h2>
+              <p class="text-sm text-gray-500">{{ profile.jobTitle || 'Not Specified' }}</p>
+            </div>
+          </div>
+          <button
+            *ngIf="isEditMode"
+            class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1 rounded-md"
+            type="button"
+            (click)="cancelEdit()"
+          >
+            Cancel
+          </button>
+          <button
+            *ngIf="!isEditMode"
+            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-md"
+            type="button"
+            (click)="toggleEdit()"
+          >
+            Edit Details
+          </button>
+        </div>
+  
+        <!-- Form -->
+        <form class="space-y-6" *ngIf="isEditMode" (ngSubmit)="saveProfile()">
+          <!-- Personal Information -->
+          <div>
+            <h3 class="text-lg font-medium text-gray-800 mb-2">Personal Information</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input class="input" placeholder="Full Name" [(ngModel)]="profile.fullName" name="fullName" />
+              <input class="input" placeholder="Email" [(ngModel)]="profile.email" name="email" />
+              <input class="input" placeholder="Job Title" [(ngModel)]="profile.jobTitle" name="jobTitle" />
+              <input class="input" placeholder="Phone Number" [(ngModel)]="profile.phone" name="phone" />
+              <input class="input" placeholder="Location" [(ngModel)]="profile.location" name="location" />
+            </div>
+          </div>
+  
+          <!-- Skills -->
+          <div>
+            <h3 class="text-lg font-medium text-gray-800 mb-2">Skills</h3>
+            <input
+              class="input w-full"
+              placeholder="Comma separated skills"
+              [(ngModel)]="skillsInput"
+              (ngModelChange)="onSkillsChange($event)"
+              name="skills"
+            />
+          </div>
+  
+          <!-- Job Preferences -->
+          <div>
+            <h3 class="text-lg font-medium text-gray-800 mb-2">Job Preferences</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input class="input" placeholder="Position" [(ngModel)]="profile.lookingFor.position" name="position" />
+              <input class="input" placeholder="Job Location" [(ngModel)]="profile.lookingFor.location" name="locationPref" />
+              <input class="input" placeholder="Job Type" [(ngModel)]="profile.lookingFor.jobType" name="jobType" />
+              <input class="input" placeholder="Compensation Expectation" [(ngModel)]="profile.lookingFor.compensationExpectation" name="comp" />
+              <input class="input" placeholder="Sector" [(ngModel)]="profile.lookingFor.sector" name="sector" />
+              <input class="input" placeholder="Desired Job" [(ngModel)]="profile.lookingFor.desiredJob" name="desiredJob" />
+            </div>
+          </div>
+  
+          <!-- Buttons -->
+          <div class="text-right">
+            <button
+              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-all duration-200"
+              type="submit"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

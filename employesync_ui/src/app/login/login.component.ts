@@ -23,30 +23,29 @@ export class LoginComponent {
 
   onSubmit() {
     this.isLoading = true;
-
+  
     const loginData = {
       userName: this.userName,
       password: this.password
     };
-
+  
     this.http.post(this.apiUrl, loginData).subscribe({
       next: (response: any) => {
         const user = response.user;
         const token = response.token;
         const role = user.role;
         const organizationId = user.organization;
-
-        // Store common fields
+  
+        // ✅ Save entire user object (contains user._id)
+        localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('authToken', token);
         localStorage.setItem('userName', user.userName || 'Default User');
         localStorage.setItem('profileImage', user.profileImage || 'assets/default-user.png');
-
-        // Save role info (handle recruiter vs applicant)
+  
         const roleId = role?._id || null;
-        const roleName = role?.name?.toLowerCase() || 'applicant'; // fallback to 'applicant'
+        const roleName = role?.name?.toLowerCase() || 'applicant';
         localStorage.setItem('role', roleName);
-
-        // If recruiter → fetch organization name
+  
         if (roleId === this.RECRUITER_ROLE_ID && organizationId) {
           localStorage.setItem('organizationId', organizationId);
           this.http.get<any>(`http://127.0.0.1:3000/api/v1/organization/${organizationId}`).subscribe({
@@ -71,6 +70,8 @@ export class LoginComponent {
       }
     });
   }
+  
+  
 
   redirectUser(roleName: string) {
     this.isLoading = false;

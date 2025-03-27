@@ -10,19 +10,23 @@ import { ApplicantApplyJobComponent } from './applicant-apply-job/applicant-appl
 import { ApplicantJobViewComponent } from './applicant-job-view/applicant-job-view.component';
 import { LoginComponent } from './login/login.component';
 
-// Import Job Posting Form Steps
+// Job Posting Form Steps
 import { RecruiterPostJobForm1Component } from './recruiter-post-job-form-1/recruiter-post-job-form-1.component';
 import { RecruiterPostJobForm2Component } from './recruiter-post-job-form-2/recruiter-post-job-form-2.component';
 import { RecruiterPostJobForm3Component } from './recruiter-post-job-form-3/recruiter-post-job-form-3.component';
 import { RecruiterPostJobForm4Component } from './recruiter-post-job-form-4/recruiter-post-job-form-4.component';
 
+// New: Applicant User Profile
+import { ApplicantUserProfileComponent } from './applicant-user-profile/applicant-user-profile.component';
+
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
 
-  // New Route for Applicant
+  // Applicant Routes
   { path: 'apply-job', component: ApplicantApplyJobComponent },
   { path: 'job-view/:jobId', component: ApplicantJobViewComponent },
+  { path: 'user-profile', component: ApplicantUserProfileComponent }, // ✅ New profile route
 
   // Recruiter Routes
   { path: 'company', component: CompanyComponent },

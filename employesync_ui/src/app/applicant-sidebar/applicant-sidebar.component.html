@@ -44,10 +44,13 @@
   </div>
 
   <!-- Profile Section -->
-  <div class="profile-container flex items-center justify-between">
+  <div class="profile-container flex items-center justify-between mt-4 group cursor-pointer"
+       (click)="goToUserProfile()"
+       [ngClass]="{ 'hover:bg-gray-100': !isCollapsed, 'p-2': !isCollapsed, 'rounded-md': !isCollapsed, 'transition-all': true, 'duration-200': true }">
     <div class="flex items-center space-x-2">
-      <img [src]="userProfileImage" alt="User Profile" class="profile-img">
-      <span class="ml-2" [ngClass]="{ 'hidden': isCollapsed }">{{ userName }}</span>
+      <img [src]="userProfileImage" alt="User Profile" class="profile-img w-8 h-8 rounded-full object-cover">
+      <span class="ml-2 text-sm font-medium text-gray-800 group-hover:text-blue-800"
+            [ngClass]="{ 'hidden': isCollapsed }">{{ userName }}</span>
     </div>
 
     <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="!isCollapsed">

@@ -36,10 +36,12 @@ export class ApplicantSidebarComponent implements OnInit {
   }
 
   loadUserData() {
-    this.userProfileImage = localStorage.getItem('profileImage') || 'https://via.placeholder.com/40';
-    this.userName = localStorage.getItem('userName') || 'Default User';
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.userProfileImage = user.profileImage || 'https://via.placeholder.com/40';
+    this.userName = user.userName || 'Default User';
     this.organizationName = localStorage.getItem('organizationName') || 'DigiRecruitez';
   }
+  
 
   toggleSidebar() {
     this.isCollapsed = !this.isCollapsed;
@@ -74,5 +76,9 @@ export class ApplicantSidebarComponent implements OnInit {
       alert('You need to log in first.');
       this.router.navigate(['/login']);
     }
+  }
+
+  goToUserProfile() {
+    this.navigateTo('/user-profile');
   }
 }
