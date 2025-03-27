@@ -1,51 +1,55 @@
 <div class="flex min-h-screen bg-gray-50">
-    <!-- Sidebar -->
     <app-applicant-sidebar></app-applicant-sidebar>
-
-    <!-- Main Content -->
+  
     <div class="flex-1 p-6">
-        <h2 class="text-xl font-semibold mb-4">Applied jobs</h2>
-
-        <!-- Filters -->
-        <div class="flex gap-4 mb-4 flex-wrap">
+      <h2 class="text-xl font-semibold mb-4">Available Jobs</h2>
+  
+      <!-- Filters -->
+      <div class="flex gap-4 mb-4 flex-wrap">
         <input type="text" placeholder="Filter by company" class="filter-input">
         <input type="text" placeholder="Filter by Location" class="filter-input">
         <div class="flex items-center gap-2">
-            <label>Salary</label>
-            <input type="text" class="filter-input w-20" value="$50">
-            <span>-</span>
-            <input type="text" class="filter-input w-24" value="$1,000">
+          <label>Salary</label>
+          <input type="text" class="filter-input w-20" value="$50">
+          <span>-</span>
+          <input type="text" class="filter-input w-24" value="$1,000">
         </div>
         <input type="text" placeholder="Filter by Role" class="filter-input">
-        </div>
-
-        <!-- Job Table -->
-        <div class="overflow-x-auto bg-white rounded-xl shadow-md">
+      </div>
+  
+      <!-- Job Table -->
+      <div class="overflow-x-auto bg-white rounded-xl shadow-md">
         <table class="w-full text-left">
-            <thead class="border-b bg-gray-100">
+          <thead class="border-b bg-gray-100">
             <tr>
-                <th class="p-3">Job Title</th>
-                <th class="p-3">Shortlisted</th>
-                <th class="p-3">Selected</th>
-                <th class="p-3">Start Date</th>
-                <th class="p-3">Apply</th>
+              <th class="p-3">Job Title</th>
+              <th class="p-3">Company</th>
+              <th class="p-3">Start Date</th>
+              <th class="p-3">Apply</th>
             </tr>
-            </thead>
-            <tbody>
+          </thead>
+          <tbody>
             <tr *ngFor="let job of jobs" class="border-b hover:bg-gray-50">
-                <td class="p-3">
-                <div class="font-medium">{{ job.title }}</div>
-                <div class="text-sm text-gray-500">IFS Sri Lanka</div> <!-- Placeholder -->
-                </td>
-                <td class="p-3 font-semibold">10</td>
-                <td class="p-3 font-semibold">9</td>
-                <td class="p-3">{{ job.createdAt | date:'M/d/yyyy' }}</td>
-                <td class="p-3">
-                <mat-slide-toggle color="primary" (change)="onToggle(job._id)"></mat-slide-toggle>
-                </td>
+              <td class="p-3">
+                <div
+                  class="font-medium text-blue-900 cursor-pointer transition-all duration-200 hover:underline hover:text-blue-700"
+                  (click)="navigateToJob(job._id)">
+                  {{ job.title }}
+                </div>
+              </td>
+              <td class="p-3 text-sm text-gray-700">
+                {{ job.organization?.name || 'N/A' }}
+              </td>
+              <td class="p-3 text-gray-600">
+                {{ job.createdAt | date: 'MMM d, y' }}
+              </td>
+              <td class="p-3">
+                <mat-slide-toggle color="accent" (change)="onToggle(job._id)"></mat-slide-toggle>
+              </td>
             </tr>
-            </tbody>
+          </tbody>
         </table>
-        </div>
+      </div>
     </div>
-</div>  
+</div>
+  

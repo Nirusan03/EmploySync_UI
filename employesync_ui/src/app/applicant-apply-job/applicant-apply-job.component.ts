@@ -30,7 +30,7 @@ export class ApplicantApplyJobComponent implements OnInit {
   }
 
   fetchJobs() {
-    const apiUrl = 'http://127.0.0.1:3000/api/v1/organization/67c2d88d86f598e77d91c631/jobs';
+    const apiUrl = 'http://127.0.0.1:3000/api/v1/organization/jobs';
     this.http.get<any[]>(apiUrl).subscribe({
       next: (res) => {
         this.jobs = res;
@@ -45,6 +45,10 @@ export class ApplicantApplyJobComponent implements OnInit {
 
   onToggle(jobId: string) {
     console.log('Toggle clicked for job:', jobId);
-    this.router.navigate(['/job-details', jobId]); // Placeholder route
+    // future: handle job application logic
+  }
+
+  navigateToJob(jobId: string) {
+    this.router.navigate(['/job-view', jobId]);
   }
 }
