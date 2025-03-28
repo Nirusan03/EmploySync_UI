@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ApplicantNotificationComponent } from '../applicant-notification/applicant-notification.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-applicant-sidebar',
@@ -34,7 +35,7 @@ export class ApplicantSidebarComponent implements OnInit {
   hasShortlistNotifications: boolean = false;
   shortlistedJobs: string[] = [];
 
-  constructor(private router: Router, private dialog: MatDialog) {}
+  constructor(private router: Router, private dialog: MatDialog, private userService: UserService) {}
 
   ngOnInit(): void {
     this.loadUserData();
@@ -56,9 +57,6 @@ export class ApplicantSidebarComponent implements OnInit {
     if (shortlisted.length > 0) {
       this.hasShortlistNotifications = true;
       this.shortlistedJobs = shortlisted;
-
-      // Optional: Auto-popup on first visit (or trigger manually with a button)
-      // this.openShortlistPopup();
     }
   }
 
@@ -92,11 +90,19 @@ export class ApplicantSidebarComponent implements OnInit {
         reader.onload = () => {
           const base64Image = reader.result as string;
           this.userProfileImage = base64Image;
-          localStorage.setItem('profileImage', base64Image);
 
           const user = JSON.parse(localStorage.getItem('user') || '{}');
           user.profileImage = base64Image;
           localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('profileImage', base64Image);
+
+          // Update in backend
+          if (user._id) {
+            this.userService.updateUserProfileImage(user._id, base64Image).subscribe({
+              next: () => console.log('Profile image updated on server.'),
+              error: (err) => console.error('Image update failed', err)
+            });
+          }
         };
         reader.readAsDataURL(file);
       }

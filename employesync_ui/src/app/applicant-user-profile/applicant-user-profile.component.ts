@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ApplicantSidebarComponent } from '../applicant-sidebar/applicant-sidebar.component';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-applicant-user-profile',
@@ -36,7 +37,7 @@ export class ApplicantUserProfileComponent implements OnInit, DoCheck {
     profileImage: ''
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
 
   ngOnInit(): void {
     const storedUser = localStorage.getItem('user');
@@ -108,10 +109,24 @@ export class ApplicantUserProfileComponent implements OnInit, DoCheck {
       ...this.profile
     };
 
+    // Step 1: Create or update CV
     this.http.post(`http://127.0.0.1:3000/api/v1/users/${this.userId}/cv`, payload).subscribe({
-      next: () => {
+      next: (cvResponse: any) => {
         alert('Profile saved successfully!');
         this.isEditMode = false;
+
+        const cvId = cvResponse?._id;
+        if (cvId) {
+          // Step 2: Attach CV to user document
+          this.userService.updateUserCvId(this.userId, cvId).subscribe({
+            next: () => {
+              console.log('User CV linked successfully.');
+            },
+            error: (err) => {
+              console.error('Failed to update user with CV ID', err);
+            }
+          });
+        }
       },
       error: (err) => {
         console.error('Failed to save profile', err);
