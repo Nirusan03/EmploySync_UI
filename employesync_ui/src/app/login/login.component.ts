@@ -36,7 +36,7 @@ export class LoginComponent {
         const role = user.role;
         const organizationId = user.organization;
   
-        // ✅ Save entire user object (contains user._id)
+        // Save entire user object (contains user._id)
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('authToken', token);
         localStorage.setItem('userName', user.userName || 'Default User');
