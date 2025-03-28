@@ -7,6 +7,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ApplicantNotificationComponent } from '../applicant-notification/applicant-notification.component';
 
 @Component({
   selector: 'app-applicant-sidebar',
@@ -18,7 +20,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatMenuModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDialogModule
   ],
   templateUrl: './applicant-sidebar.component.html',
   styleUrls: ['./applicant-sidebar.component.css']
@@ -28,24 +31,35 @@ export class ApplicantSidebarComponent implements OnInit {
   userProfileImage: string = '';
   userName: string = '';
   organizationName: string = '';
+  hasShortlistNotifications: boolean = false;
+  shortlistedJobs: string[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadUserData();
+    this.checkShortlistedStatus();
   }
 
   loadUserData(): void {
     const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
-
     this.userName = storedUser.userName || localStorage.getItem('userName') || 'Default User';
     this.organizationName = localStorage.getItem('organizationName') || 'Independent User';
-
-    // Profile image: check user object first, then localStorage
     this.userProfileImage =
-      storedUser.profileImage ||
-      localStorage.getItem('profileImage') ||
-      'https://via.placeholder.com/150';
+      storedUser.profileImage || localStorage.getItem('profileImage') || 'https://via.placeholder.com/150';
+  }
+
+  checkShortlistedStatus(): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const shortlisted = user.shortlistedjobs || [];
+
+    if (shortlisted.length > 0) {
+      this.hasShortlistNotifications = true;
+      this.shortlistedJobs = shortlisted;
+
+      // Optional: Auto-popup on first visit (or trigger manually with a button)
+      // this.openShortlistPopup();
+    }
   }
 
   toggleSidebar(): void {
@@ -78,8 +92,6 @@ export class ApplicantSidebarComponent implements OnInit {
         reader.onload = () => {
           const base64Image = reader.result as string;
           this.userProfileImage = base64Image;
-
-          // Save to localStorage and update the user object
           localStorage.setItem('profileImage', base64Image);
 
           const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -91,5 +103,12 @@ export class ApplicantSidebarComponent implements OnInit {
     });
 
     input.click();
+  }
+
+  openShortlistPopup(): void {
+    this.dialog.open(ApplicantNotificationComponent, {
+      width: '400px',
+      data: { jobs: this.shortlistedJobs }
+    });
   }
 }

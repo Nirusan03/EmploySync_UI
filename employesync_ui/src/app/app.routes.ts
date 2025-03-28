@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { provideRouter } from '@angular/router';
 
+// Authentication
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 
@@ -9,6 +10,7 @@ import { ApplicantApplyJobComponent } from './applicant-apply-job/applicant-appl
 import { ApplicantAppliedJobComponent } from './applicant-applied-job/applicant-applied-job.component';
 import { ApplicantJobViewComponent } from './applicant-job-view/applicant-job-view.component';
 import { ApplicantUserProfileComponent } from './applicant-user-profile/applicant-user-profile.component';
+import { ApplicantNotificationComponent } from './applicant-notification/applicant-notification.component';
 
 // Recruiter Components
 import { CompanyComponent } from './company/company.component';
@@ -36,6 +38,7 @@ export const routes: Routes = [
   { path: 'applied-jobs', component: ApplicantAppliedJobComponent },
   { path: 'job-view/:jobId', component: ApplicantJobViewComponent },
   { path: 'user-profile', component: ApplicantUserProfileComponent },
+  { path: 'notifications', component: ApplicantNotificationComponent },
 
   // Recruiter Routes
   { path: 'company', component: CompanyComponent },

@@ -27,9 +27,11 @@
   <div class="mt-auto">
     <!-- Notifications -->
     <ul class="space-y-1">
-      <li class="flex items-center space-x-2 menu-item">
-        <mat-icon>notifications</mat-icon>
-        <a href="#" [ngClass]="{ 'hidden': isCollapsed }">Notifications</a>
+      <li class="flex items-center space-x-2 menu-item cursor-pointer" (click)="openShortlistPopup()">
+        <mat-icon [ngClass]="{ 'text-blue-600': hasShortlistNotifications }">notifications</mat-icon>
+        <span [ngClass]="{ 'hidden': isCollapsed }" [class.text-blue-600]="hasShortlistNotifications">
+          Notifications
+        </span>
       </li>
     </ul>
   </div>
