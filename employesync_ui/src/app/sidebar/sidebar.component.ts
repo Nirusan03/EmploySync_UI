@@ -36,9 +36,14 @@ export class SidebarComponent implements OnInit {
   }
 
   loadUserData() {
-    this.userProfileImage = localStorage.getItem('profileImage') || 'https://via.placeholder.com/40';
-    this.userName = localStorage.getItem('userName') || 'Default User';
-    this.organizationName = localStorage.getItem('organizationName') || 'Default Organization';
+    // Load from localStorage every time component initializes
+    const storedProfile = localStorage.getItem('profileImage');
+    const storedName = localStorage.getItem('userName');
+    const storedOrg = localStorage.getItem('organizationName');
+
+    this.userProfileImage = storedProfile || 'https://via.placeholder.com/40';
+    this.userName = storedName || 'Default User';
+    this.organizationName = storedOrg || 'Default Organization';
   }
 
   toggleSidebar() {
@@ -54,8 +59,9 @@ export class SidebarComponent implements OnInit {
       if (file) {
         const reader = new FileReader();
         reader.onload = () => {
-          this.userProfileImage = reader.result as string;
-          localStorage.setItem('profileImage', this.userProfileImage); // Optional: update storage
+          const imageData = reader.result as string;
+          this.userProfileImage = imageData;
+          localStorage.setItem('profileImage', imageData); // Save for persistent use
         };
         reader.readAsDataURL(file);
       }
