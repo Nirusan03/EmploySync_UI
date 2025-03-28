@@ -26,7 +26,8 @@
       <div class="flex items-center mt-4">
         <input type="checkbox" [(ngModel)]="agreeToTerms" name="agreeToTerms" class="mr-2" />
         <label class="text-sm text-gray-700">
-          I agree to the <a href="#" class="text-blue-600">terms</a> and <a href="#" class="text-blue-600">privacy policy</a>
+          I agree to the <a href="#" class="text-blue-600">terms</a> and
+          <a href="#" class="text-blue-600">privacy policy</a>
         </label>
       </div>
 
@@ -61,7 +62,8 @@
     </button>
 
     <p class="text-center text-sm mt-4">
-      Have an account? <a href="/login" class="text-blue-600">Log in</a>
+      Have an account?
+      <a [routerLink]="['/login']" class="text-blue-600">Log in</a>
     </p>
   </div>
 </div>
