@@ -1,0 +1,284 @@
+<style>
+    /* Global Styles */
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+    .flex-container {
+      display: flex;
+      height: 100vh;
+    }
+    
+    /* Sidebar Styles */
+    .sidebar {
+      width: 240px;
+      background-color: #fff;
+      border-right: 1px solid #e0e0e0;
+      padding: 30px;
+    }
+    .sidebar h2 {
+      font-size: 24px;
+      color: #001f3f; /* Navy blue */
+      margin-bottom: 30px;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sidebar ul li {
+      margin-bottom: 15px;
+    }
+    .sidebar ul li a {
+      text-decoration: none;
+      color: #333;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+    .sidebar ul li a:hover {
+      color: #001f3f;
+    }
+    .sidebar ul li a.active {
+      font-weight: bold;
+      color: #001f3f;
+    }
+    
+    /* Main Content Styles */
+    .main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .tab-header {
+      margin-bottom: 30px;
+    }
+    .tab-header button {
+      background: transparent;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #666;
+      transition: color 0.3s ease, border-bottom 0.3s ease;
+      margin-right: 15px;
+    }
+    .tab-header button:hover {
+      color: #001f3f;
+    }
+    .tab-header button.active {
+      font-weight: bold;
+      color: #001f3f;
+      border-bottom: 2px solid #001f3f;
+    }
+    h2.section-title {
+      font-size: 22px;
+      color: #001f3f;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      color: #333;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #f2f2f2;
+    }
+    
+    /* Table Styles */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    table, th, td {
+      border: 1px solid #e0e0e0;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+    }
+    th {
+      background-color: #f9f9f9;
+      color: #001f3f;
+      font-weight: bold;
+    }
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+    
+    /* Modal Styles */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .modal {
+      background-color: #fff;
+      padding: 25px;
+      border-radius: 8px;
+      width: 320px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .modal h3 {
+      font-size: 20px;
+      color: #001f3f;
+      margin-bottom: 20px;
+    }
+    .modal input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    .modal button {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .modal button:first-of-type {
+      background-color: #ccc;
+      color: #fff;
+      margin-right: 10px;
+    }
+    .modal button:last-of-type {
+      background-color: #001f3f;
+      color: #fff;
+    }
+  </style>
+  
+  <div class="flex-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>DIGIRECRUITERS</h2>
+      <h5>Admin Dashboard</h5>
+      <ul>
+        <li>
+          <a href="#" (click)="selectTab('users')" [class.active]="selectedTab === 'users'">
+            Users
+          </a>
+        </li>
+        <li>
+          <a href="#" (click)="selectTab('organizations')" [class.active]="selectedTab === 'organizations'">
+            Organizations
+          </a>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Main Content -->
+    <div class="main">
+      <div class="tab-header">
+        <button (click)="selectTab('users')" [class.active]="selectedTab === 'users'">
+          Users
+        </button>
+        <button (click)="selectTab('organizations')" [class.active]="selectedTab === 'organizations'">
+          Organizations
+        </button>
+      </div>
+  
+      <!-- Users Tab -->
+      <div *ngIf="selectedTab === 'users'">
+        <h2 class="section-title">Users</h2>
+        <button (click)="openCreateUserModal()">Create User</button>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th style="width: 150px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user._id || user.id }}</td>
+              <td>{{ user.userName }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button (click)="openEditUserModal(user)">Edit</button>
+                <button (click)="deleteUser(user._id || user.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- Organizations Tab -->
+      <div *ngIf="selectedTab === 'organizations'">
+        <h2 class="section-title">Organizations</h2>
+        <button (click)="openCreateOrganizationModal()">Create Organization</button>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>URL</th>
+              <th style="width: 150px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let org of organizations">
+              <td>{{ org._id || org.id }}</td>
+              <td>{{ org.name }}</td>
+              <td>{{ org.url }}</td>
+              <td>
+                <button (click)="openEditOrganizationModal(org)">Edit</button>
+                <button (click)="deleteOrganization(org._id || org.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <!-- User Modal -->
+      <div *ngIf="showUserModal" class="modal-backdrop">
+        <div class="modal">
+          <h3>{{ userModalTitle }}</h3>
+          <input type="text" [(ngModel)]="currentUser.userName" placeholder="Name" />
+          <input type="email" [(ngModel)]="currentUser.email" placeholder="Email" />
+          <input type="password" [(ngModel)]="currentUser.password" placeholder="Password" />
+          <input type="text" [(ngModel)]="currentUser.role" placeholder="Role (ID)" />
+          <div style="text-align: right;">
+            <button (click)="closeUserModal()">Cancel</button>
+            <button (click)="saveUser()">Save</button>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Organization Modal -->
+      <div *ngIf="showOrgModal" class="modal-backdrop">
+        <div class="modal">
+          <h3>{{ orgModalTitle }}</h3>
+          <input type="text" [(ngModel)]="currentOrg.name" placeholder="Name" />
+          <input type="text" [(ngModel)]="currentOrg.url" placeholder="URL" />
+          <div style="text-align: right;">
+            <button (click)="closeOrgModal()">Cancel</button>
+            <button (click)="saveOrganization()">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

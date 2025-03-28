@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 // Authentication
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AdminComponent } from './admin/admin.component';
 
 // Applicant Components
 import { ApplicantApplyJobComponent } from './applicant-apply-job/applicant-apply-job.component';
@@ -32,6 +33,8 @@ export const routes: Routes = [
   // Authentication
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+
+  {path: 'admin' , component: AdminComponent},
 
   // Applicant Routes
   { path: 'apply-job', component: ApplicantApplyJobComponent },
