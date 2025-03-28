@@ -6,8 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RecruiterPostJobService } from '../services/recruiter-post-job.service';
-import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sidebar
 
 @Component({
   selector: 'app-recruiter-post-job-form-4',
@@ -19,7 +19,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component'; // Import Sideb
     MatInputModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    SidebarComponent // Include Sidebar Component
+    SidebarComponent
   ],
   templateUrl: './recruiter-post-job-form-4.component.html',
   styleUrls: ['./recruiter-post-job-form-4.component.css']
@@ -30,25 +30,22 @@ export class RecruiterPostJobForm4Component {
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
-    this.jobDescription = savedData.description;
+    this.jobDescription = savedData.description || '';
   }
 
   postJob() {
     this.isLoading = true;
-    
-    // Update only required fields before posting
     this.jobService.updateJobData({ description: this.jobDescription });
 
     this.jobService.postJob().subscribe({
-      next: (response) => {
-        console.log('Job successfully posted:', response);
+      next: (res) => {
         alert('Job successfully posted!');
+        this.router.navigate(['/jobs']);
         this.isLoading = false;
-        this.router.navigate(['/jobs']); // Redirect to job listings page
       },
-      error: (error) => {
-        console.error('Error posting job:', error);
-        alert('Failed to post job. Please try again.');
+      error: (err) => {
+        console.error('Failed to post job:', err);
+        alert('Something went wrong while posting the job.');
         this.isLoading = false;
       }
     });

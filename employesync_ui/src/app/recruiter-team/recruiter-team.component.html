@@ -1,61 +1,57 @@
 <div class="main-container">
-    <!-- Sidebar -->
-    <app-sidebar></app-sidebar>
-  
-    <!-- Main Content -->
-    <div class="content">
-      <!-- Page Header -->
-      <div class="header">
-        <h2>Team</h2>
-        <button mat-button class="add-btn" (click)="addNewMember()">
-          <mat-icon>person_add</mat-icon> Add new member
-        </button>
-      </div>
-  
-      <!-- Loader -->
-      <div *ngIf="isLoading" class="loading-container">
-        <mat-spinner></mat-spinner>
-        <p>Loading team members...</p>
-      </div>
-  
-      <!-- Table (Only show if data exists) -->
-      <div *ngIf="!isLoading && teamMembers.length > 0" class="table-container">
-        <table mat-table [dataSource]="teamMembers" class="mat-elevation-z1">
-          
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let member">
-              <div class="team-info">
-                <img [src]="member.profileImage" class="profile-img">
-                <strong>{{ member.userName }}</strong>
-              </div>
-            </td>
-          </ng-container>
-  
-          <!-- Role Column -->
-          <ng-container matColumnDef="role">
-            <th mat-header-cell *matHeaderCellDef>Role</th>
-            <td mat-cell *matCellDef="let member">
-              <span class="role-badge">{{ member.role }}</span>
-            </td>
-          </ng-container>
-  
-          <!-- Email Column -->
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>Email</th>
-            <td mat-cell *matCellDef="let member">{{ member.email }}</td>
-          </ng-container>
-  
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-  
-      <!-- No Data Message -->
-      <div *ngIf="!isLoading && teamMembers.length === 0" class="no-data">
-        <p>No recruiters found.</p>
-      </div>
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+
+  <!-- Main Content -->
+  <div class="content">
+    <!-- Page Header -->
+    <div class="header">
+      <h2>Team</h2>
+      <button mat-button class="add-btn" [routerLink]="['/signup']">
+        <mat-icon>person_add</mat-icon> Add new member
+      </button>
+    </div>
+
+    <!-- Loader -->
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading team members...</p>
+    </div>
+
+    <!-- Table -->
+    <div *ngIf="!isLoading && teamMembers.length > 0" class="table-container">
+      <table mat-table [dataSource]="teamMembers" class="mat-elevation-z1">
+        
+        <!-- Name -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let member">
+            <strong>{{ member.userName }}</strong>
+          </td>
+        </ng-container>
+
+        <!-- Role -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let member">
+            <span class="role-badge">Recruiter</span>
+          </td>
+        </ng-container>
+
+        <!-- Email -->
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let member">{{ member.email }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <!-- No Data Message -->
+    <div *ngIf="!isLoading && teamMembers.length === 0" class="no-data">
+      <p>No recruiters found.</p>
     </div>
   </div>
-  
+</div>

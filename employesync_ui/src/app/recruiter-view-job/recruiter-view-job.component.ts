@@ -16,9 +16,14 @@ interface Job {
   status: string;
   createdAt: string;
   startDate?: string;
-  lastActivity?: string;
   shortlisted?: number;
   selected?: number;
+  lastActivity?: string;
+}
+
+interface Applicant {
+  appliedjobs: string[];
+  shortlistedjobs: string[];
 }
 
 @Component({
@@ -38,43 +43,56 @@ interface Job {
   styleUrls: ['./recruiter-view-job.component.css']
 })
 export class RecruiterViewJobComponent implements OnInit {
-  displayedColumns: string[] = ['title', 'shortlisted', 'selected', 'startDate', 'lastActivity'];
+  displayedColumns: string[] = ['title', 'shortlisted', 'selected', 'startDate'];
   jobs: Job[] = [];
   isLoading: boolean = false;
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.fetchJobs();
+    this.fetchJobsAndApplicants();
   }
 
-  fetchJobs() {
+  fetchJobsAndApplicants() {
     const orgId = localStorage.getItem('organizationId');
     if (!orgId) {
       alert('Organization ID not found. Please log in again.');
       return;
     }
 
-    const apiUrl = `http://127.0.0.1:3000/api/v1/organization/${orgId}/jobs`;
-    console.log(apiUrl + " url ")
+    const jobsUrl = `http://127.0.0.1:3000/api/v1/organization/${orgId}/jobs`;
+    const applicantsUrl = `http://127.0.0.1:3000/api/v1/users/get/applicants`;
+
     this.isLoading = true;
 
-    this.http.get<Job[]>(apiUrl).subscribe({
-      next: (data) => {
-        this.jobs = data.map(job => ({
+    Promise.all([
+      this.http.get<Job[]>(jobsUrl).toPromise(),
+      this.http.get<Applicant[]>(applicantsUrl).toPromise()
+    ])
+    .then(([jobs = [], applicants = []]) => {
+      this.jobs = jobs.map(job => {
+        const appliedCount = applicants.filter(applicant =>
+          applicant.appliedjobs?.includes(job._id)
+        ).length;
+
+        const shortlistedCount = applicants.filter(applicant =>
+          applicant.shortlistedjobs?.includes(job._id)
+        ).length;
+
+        return {
           ...job,
           startDate: new Date(job.createdAt).toLocaleDateString(),
-          lastActivity: '5 days ago', // Replace with real data if available
-          shortlisted: Math.floor(Math.random() * 10),
-          selected: Math.floor(Math.random() * 5)
-        }));
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching jobs:', error);
-        alert('Failed to load job listings. Please try again later.');
-        this.isLoading = false;
-      }
+          shortlisted: shortlistedCount,
+          selected: appliedCount,
+        };
+      });
+
+      this.isLoading = false;
+    })
+    .catch(error => {
+      console.error('Error fetching jobs or applicants:', error);
+      alert('Failed to load job listings. Please try again later.');
+      this.isLoading = false;
     });
   }
 

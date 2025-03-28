@@ -4,32 +4,21 @@
   <div class="form-container">
     <h2>Qualifications</h2>
 
-    <h3>Total Years of Industry Experience</h3>
-    <div class="experience-range">
-      <mat-form-field class="experience-select">
-        <mat-label>Min</mat-label>
-        <mat-select [(ngModel)]="experienceMin">
-          <mat-option *ngFor="let num of [].constructor(21); let i = index" [value]="i">{{ i }}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <h3>Years of Industry Experience</h3>
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Minimum Years of Experience</mat-label>
+      <mat-select [(ngModel)]="yearOfExperience">
+        <mat-option *ngFor="let year of [].constructor(21); let i = index" [value]="i">{{ i }}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-      <span> - </span>
-
-      <mat-form-field class="experience-select">
-        <mat-label>Max</mat-label>
-        <mat-select [(ngModel)]="experienceMax">
-          <mat-option *ngFor="let num of [].constructor(21); let i = index" [value]="i">{{ i }}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <h3>Screening Questions</h3>
-    <button mat-button color="primary" (click)="addQuestion()">+ Add screening question</button>
-    <div *ngFor="let question of screeningQuestions; let i = index" class="question-container">
+    <h3>Responsibilities</h3>
+    <button mat-button color="primary" (click)="addResponsibility()">+ Add Responsibility</button>
+    <div *ngFor="let item of responsibilities; let i = index" class="question-container">
       <mat-form-field class="full-width">
-        <input matInput [(ngModel)]="screeningQuestions[i]" placeholder="Enter screening question">
+        <input matInput [(ngModel)]="responsibilities[i]" placeholder="e.g. Collaborate with design team" />
       </mat-form-field>
-      <button mat-icon-button color="warn" (click)="removeQuestion(i)">
+      <button mat-icon-button color="warn" (click)="removeResponsibility(i)">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

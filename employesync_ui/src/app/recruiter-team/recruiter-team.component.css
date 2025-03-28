@@ -1,6 +1,9 @@
+/* Layout */
 .main-container {
   display: flex;
   height: 100vh;
+  background-color: #f4f6f9;
+  overflow: hidden;
 }
 
 app-sidebar {
@@ -9,36 +12,38 @@ app-sidebar {
 
 .content {
   flex-grow: 1;
-  padding: 24px;
-  /* background: #FAFAFA; */
-  border-radius: 8px;
-  margin: 20px;
+  padding: 32px 40px;
+  margin-left: 12px;
 }
 
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .header h2 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #333;
+  font-size: 26px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
 }
 
+/* Add Button */
 .add-btn {
-  background: #0073E6;
-  color: white;
+  background: #007bff;
+  color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 10px 16px;
+  padding: 10px 18px;
   font-size: 14px;
+  font-weight: 500;
   display: flex;
   align-items: center;
-  cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: background 0.2s ease-in-out;
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2);
 }
 
 .add-btn mat-icon {
@@ -46,114 +51,74 @@ app-sidebar {
 }
 
 .add-btn:hover {
-  background: #005BB5;
+  background: #0056b3;
 }
 
-.filter-container {
-  margin-bottom: 15px;
-  display: flex;
-  gap: 10px;
-}
-
-.filter-btn {
-  background: white;
-  border: 1px solid #ddd;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  background: #0073E6;
-  color: white;
-  border: none;
-}
-
+/* Table Container */
 .table-container {
-  border-radius: 10px;
+  background: #fff;
+  border-radius: 12px;
   overflow: hidden;
-  background: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 15px;
 }
 
+/* Table Head */
 th {
-  background: #F5F5F5;
-  padding: 12px;
-  text-align: left;
+  background-color: #f9fafb;
+  color: #374151;
   font-weight: 600;
-  color: #444;
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e5e7eb;
+  text-transform: uppercase;
+  font-size: 13px;
 }
 
+/* Table Body */
 td {
-  padding: 12px;
-  border-bottom: 1px solid #E0E0E0;
-  color: #555;
+  padding: 14px 18px;
+  color: #333;
+  border-bottom: 1px solid #f1f1f1;
 }
 
 tr:last-child td {
   border-bottom: none;
 }
 
+/* Team Role Badge */
 .role-badge {
-  display: inline-block;
   padding: 6px 12px;
-  font-size: 14px;
-  font-weight: bold;
   border-radius: 20px;
-  background: #D9D9D9;
-  color: black;
+  font-size: 13px;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: #374151;
   text-align: center;
-}
-
-.role-badge.admin {
-  background: #E0F8E4;
-  color: #008000;
-}
-
-.role-badge.sales {
-  background: #F0F0F5;
-  color: #555;
+  display: inline-block;
 }
 
 .role-badge:hover {
-  box-shadow: 0px 0px 10px rgba(0, 102, 255, 0.8);
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
 }
 
-.team-info {
-  display: flex;
-  align-items: center;
-}
-
-.profile-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-right: 12px;
-  object-fit: cover;
-}
-
-.owner-label {
-  color: #777;
-  font-size: 12px;
-  font-weight: normal;
-}
-
+/* Loading State */
 .loading-container {
   text-align: center;
-  padding: 20px;
-  font-size: 14px;
-  color: #777;
+  padding: 40px 0;
+  font-size: 15px;
+  color: #6b7280;
 }
 
+/* No Data Message */
 .no-data {
   text-align: center;
-  color: #888;
-  font-size: 14px;
-  padding: 20px;
+  font-size: 15px;
+  color: #999;
+  padding: 40px 0;
 }

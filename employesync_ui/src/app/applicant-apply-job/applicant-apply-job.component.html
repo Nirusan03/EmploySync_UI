@@ -8,15 +8,14 @@
 
     <!-- Filters -->
     <div class="flex gap-4 mb-4 flex-wrap">
-      <input type="text" placeholder="Filter by company" class="filter-input">
-      <input type="text" placeholder="Filter by Location" class="filter-input">
-      <div class="flex items-center gap-2">
-        <label>Salary</label>
-        <input type="text" class="filter-input w-20" value="$50">
-        <span>-</span>
-        <input type="text" class="filter-input w-24" value="$1,000">
-      </div>
-      <input type="text" placeholder="Filter by Role" class="filter-input">
+      <input type="text" placeholder="Filter by Company" class="filter-input"
+             [(ngModel)]="filterCompany" (ngModelChange)="applyFilters()" />
+
+      <input type="text" placeholder="Filter by Location" class="filter-input"
+             [(ngModel)]="filterLocation" (ngModelChange)="applyFilters()" />
+
+      <input type="text" placeholder="Filter by Role" class="filter-input"
+             [(ngModel)]="filterRole" (ngModelChange)="applyFilters()" />
     </div>
 
     <!-- Job Table -->
@@ -31,11 +30,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let job of jobs" class="border-b hover:bg-gray-50">
+          <tr *ngFor="let job of filteredJobs" class="border-b hover:bg-gray-50">
             <td class="p-3">
-              <div
-                class="font-medium text-blue-900 cursor-pointer transition-all duration-200 hover:underline hover:text-blue-700"
-                (click)="navigateToJob(job)">
+              <div class="font-medium text-blue-900 cursor-pointer hover:underline"
+                   (click)="navigateToJob(job)">
                 {{ job.title }}
               </div>
             </td>

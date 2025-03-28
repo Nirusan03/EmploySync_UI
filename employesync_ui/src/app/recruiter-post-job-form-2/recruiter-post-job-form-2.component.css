@@ -61,3 +61,60 @@ p {
   justify-content: space-between;
   margin-top: 20px;
 }
+
+.custom-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 4px;
+  background: #f48fb1;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d81b60;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.custom-slider::-webkit-slider-thumb:hover {
+  background: #ad1457;
+}
+
+.salary-value {
+  color: #880e4f;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.skill-chips {
+  margin-bottom: 10px;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffe6e6;
+  color: #d6336c;
+  border-radius: 20px;
+  padding: 6px 12px;
+  margin-right: 6px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.skill-chip button {
+  margin-left: 5px;
+  font-size: 12px;
+  color: #d6336c;
+}
+
+.button-group {
+  margin-top: 20px;
+}

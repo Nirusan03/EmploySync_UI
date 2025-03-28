@@ -1,34 +1,29 @@
 <div class="container">
-
   <app-sidebar></app-sidebar>
-  
+
   <div class="form-container">
-    
     <h2>Tell us about the position you need to fill</h2>
-  
+
     <mat-form-field class="full-width">
       <mat-label>Job Title</mat-label>
-      <input matInput [(ngModel)]="title">
+      <input matInput [(ngModel)]="title" placeholder="e.g. Full Stack Developer">
     </mat-form-field>
-  
-    <h3>Position</h3>
-    <mat-radio-group [(ngModel)]="position">
+
+    <h3>Location Type</h3>
+    <mat-radio-group [(ngModel)]="location">
       <mat-radio-button value="Remote">Remote</mat-radio-button>
       <mat-radio-button value="Hybrid">Hybrid</mat-radio-button>
+      <mat-radio-button value="Onsite">Onsite</mat-radio-button>
     </mat-radio-group>
-  
+
     <h3>Job Type</h3>
     <mat-radio-group [(ngModel)]="jobType">
       <mat-radio-button value="Full-time">Full-time</mat-radio-button>
       <mat-radio-button value="Part-time">Part-time</mat-radio-button>
       <mat-radio-button value="Contract">Contract</mat-radio-button>
+      <mat-radio-button value="Internship">Internship</mat-radio-button>
     </mat-radio-group>
-  
-    <h3>Minimum Education Level</h3>
-    <mat-form-field class="full-width">
-      <input matInput [(ngModel)]="minEducation" placeholder="Enter minimum education level">
-    </mat-form-field>
-  
+
     <button mat-button color="primary" (click)="nextStep()">Continue</button>
   </div>
 </div>

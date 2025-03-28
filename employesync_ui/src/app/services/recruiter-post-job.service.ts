@@ -6,20 +6,23 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RecruiterPostJobService {
-  private apiUrl = 'http://127.0.0.1:3000/api/v1/organization/67c2d88d86f598e77d91c631/jobs';
-
+  private apiBaseUrl = 'http://127.0.0.1:3000/api/v1/organization';
   jobData: any = {
     title: '',
     description: '',
-    location: 'Remote',
-    salary: null,
-    status: 'open'
+    jobType: '',
+    salaryPerHour: 0,
+    yearOfExperience: 0,
+    skills: [],
+    responsibilities: [],
+    screeningQuestions: [],
+    organization: ''
   };
 
   constructor(private http: HttpClient) {}
 
-  updateJobData(updatedData: any) {
-    this.jobData = { ...this.jobData, ...updatedData };
+  updateJobData(updated: any) {
+    this.jobData = { ...this.jobData, ...updated };
   }
 
   getJobData() {
@@ -27,14 +30,23 @@ export class RecruiterPostJobService {
   }
 
   postJob(): Observable<any> {
-    // Ensure only the required API fields are sent
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const organizationId = user.organization;
+    if (!organizationId) throw new Error('No organization ID found.');
+
+    this.jobData.organization = organizationId;
+
     const payload = {
       title: this.jobData.title,
       description: this.jobData.description,
-      location: this.jobData.location,
-      salary: this.jobData.salary,
-      status: this.jobData.status
+      jobType: this.jobData.jobType,
+      salaryPerHour: this.jobData.salaryPerHour,
+      yearOfExperience: this.jobData.yearOfExperience,
+      skills: this.jobData.skills,
+      responsibilities: this.jobData.responsibilities,
+      organization: this.jobData.organization
     };
-    return this.http.post(this.apiUrl, payload);
+
+    return this.http.post(`${this.apiBaseUrl}/${organizationId}/jobs`, payload);
   }
 }

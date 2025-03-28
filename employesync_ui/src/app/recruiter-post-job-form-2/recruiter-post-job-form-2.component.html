@@ -2,32 +2,22 @@
   <app-sidebar></app-sidebar>
 
   <div class="form-container">
-    <h2>Education & Salary</h2>
+    <h2>Compensation & Skills</h2>
 
-    <h3>Salary</h3>
-    <mat-form-field class="full-width">
-      <mat-label>Salary Type</mat-label>
-      <mat-select [(ngModel)]="salaryType">
-        <mat-option value="per Hour">Per Hour</mat-option>
-        <mat-option value="per Month">Per Month</mat-option>
-        <mat-option value="per Year">Per Year</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <!-- Salary Input -->
+    <h3>Salary Per Hour</h3>
+    <input
+      type="range"
+      min="10"
+      max="200"
+      step="5"
+      [(ngModel)]="salaryPerHour"
+      class="custom-slider"
+    />
+    <p class="salary-value">Selected Rate: ${{ salaryPerHour }} per hour</p>
 
-    <div class="salary-range">
-      <mat-slider
-        class="full-width"
-        [(ngModel)]="salary"
-        min="50"
-        max="100000"
-        step="100"
-        thumbLabel
-      ></mat-slider>
-      <p>Salary: ${{ salary }}</p>
-    </div>
-
-    <h3>Skill, Tools, and Technology</h3>
-    <h4>Relevant Skills</h4>
+    <!-- Skills -->
+    <h3>Skills, Tools & Technologies</h3>
     <div class="skill-chips">
       <span *ngFor="let skill of skills; let i = index" class="skill-chip">
         {{ skill }}

@@ -7,6 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { RouterModule } from '@angular/router';
 
 interface TeamMember {
   _id: string;
@@ -21,14 +22,15 @@ interface TeamMember {
   selector: 'app-recruiter-team',
   standalone: true,
   imports: [
-    CommonModule, 
-    MatTableModule, 
-    MatButtonModule, 
-    MatIconModule, 
-    MatChipsModule, 
-    MatProgressSpinnerModule, 
-    HttpClientModule, 
-    SidebarComponent
+    CommonModule,
+    MatTableModule,
+    MatButtonModule,
+    MatIconModule,
+    MatChipsModule,
+    MatProgressSpinnerModule,
+    HttpClientModule,
+    SidebarComponent,
+    RouterModule
   ],
   templateUrl: './recruiter-team.component.html',
   styleUrls: ['./recruiter-team.component.css']
@@ -38,7 +40,7 @@ export class RecruiterTeamComponent implements OnInit {
   teamMembers: TeamMember[] = [];
   apiUrl: string = 'http://127.0.0.1:3000/api/v1/users';
   isLoading: boolean = false;
-  recruiterRoleId: string = '67c3214d74f3d06251dd28c3'; // Only show this role
+  recruiterRoleId: string = '67c3214d74f3d06251dd28c3';
 
   constructor(private http: HttpClient) {}
 
@@ -48,19 +50,28 @@ export class RecruiterTeamComponent implements OnInit {
 
   fetchTeamMembers() {
     this.isLoading = true;
+    const orgId = localStorage.getItem('organizationId');
+
+    if (!orgId) {
+      console.error('Organization ID not found in localStorage.');
+      this.isLoading = false;
+      return;
+    }
 
     this.http.get<TeamMember[]>(this.apiUrl).subscribe({
       next: (data) => {
-        // Filter users with the specific recruiter role ID
         this.teamMembers = data
-          .filter(member => member.role === this.recruiterRoleId)
+          .filter(member =>
+            member.role === this.recruiterRoleId &&
+            member.organization === orgId
+          )
           .map(member => ({
             _id: member._id,
             userName: member.userName,
             email: member.email,
             profileImage: member.profileImage,
             organization: member.organization,
-            role: 'Recruiter' // Always show "Recruiter" as role
+            role: 'Recruiter'
           }));
         this.isLoading = false;
       },
@@ -73,6 +84,6 @@ export class RecruiterTeamComponent implements OnInit {
   }
 
   addNewMember() {
-    console.log('Add new member clicked');
+    // Redundant now; handled with routerLink
   }
 }

@@ -27,34 +27,31 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
   styleUrls: ['./recruiter-post-job-form-3.component.css']
 })
 export class RecruiterPostJobForm3Component {
-  experienceMin = 0;
-  experienceMax = 20;
-  screeningQuestions: string[] = [];
+  yearOfExperience = 0;
+  responsibilities: string[] = [];
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
-    this.experienceMin = savedData.experienceMin || 0;
-    this.experienceMax = savedData.experienceMax || 20;
-    this.screeningQuestions = savedData.screeningQuestions || [];
+    this.yearOfExperience = savedData.yearOfExperience || 0;
+    this.responsibilities = savedData.responsibilities || [];
   }
 
-  addQuestion() {
-    this.screeningQuestions.push('');
+  addResponsibility() {
+    this.responsibilities.push('');
   }
 
-  updateQuestion(index: number, value: string) {
-    this.screeningQuestions[index] = value;
+  updateResponsibility(index: number, value: string) {
+    this.responsibilities[index] = value;
   }
 
-  removeQuestion(index: number) {
-    this.screeningQuestions.splice(index, 1);
+  removeResponsibility(index: number) {
+    this.responsibilities.splice(index, 1);
   }
 
   nextStep() {
     this.jobService.updateJobData({
-      experienceMin: this.experienceMin,
-      experienceMax: this.experienceMax,
-      screeningQuestions: this.screeningQuestions
+      yearOfExperience: this.yearOfExperience,
+      responsibilities: this.responsibilities
     });
     this.router.navigate(['/post-job/step-4']);
   }

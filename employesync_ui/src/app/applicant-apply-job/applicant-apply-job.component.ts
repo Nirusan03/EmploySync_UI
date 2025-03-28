@@ -4,6 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms'; //  Required for ngModel
 import { ApplicantSidebarComponent } from '../applicant-sidebar/applicant-sidebar.component';
 
 @Component({
@@ -12,6 +13,7 @@ import { ApplicantSidebarComponent } from '../applicant-sidebar/applicant-sideba
   imports: [
     CommonModule,
     HttpClientModule,
+    FormsModule, // Added here
     MatSlideToggleModule,
     MatIconModule,
     ApplicantSidebarComponent
@@ -21,7 +23,12 @@ import { ApplicantSidebarComponent } from '../applicant-sidebar/applicant-sideba
 })
 export class ApplicantApplyJobComponent implements OnInit {
   jobs: any[] = [];
+  filteredJobs: any[] = [];
   isLoading = true;
+
+  filterCompany: string = '';
+  filterLocation: string = '';
+  filterRole: string = '';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -34,6 +41,7 @@ export class ApplicantApplyJobComponent implements OnInit {
     this.http.get<any[]>(apiUrl).subscribe({
       next: (res) => {
         this.jobs = res;
+        this.filteredJobs = res;
         this.isLoading = false;
       },
       error: (err) => {
@@ -43,33 +51,49 @@ export class ApplicantApplyJobComponent implements OnInit {
     });
   }
 
+  applyFilters() {
+    this.filteredJobs = this.jobs.filter(job => {
+      const matchesCompany = this.filterCompany
+        ? job.organization?.name?.toLowerCase().includes(this.filterCompany.toLowerCase())
+        : true;
+
+      const matchesLocation = this.filterLocation
+        ? job.location?.toLowerCase().includes(this.filterLocation.toLowerCase())
+        : true;
+
+      const matchesRole = this.filterRole
+        ? job.title?.toLowerCase().includes(this.filterRole.toLowerCase())
+        : true;
+
+      return matchesCompany && matchesLocation && matchesRole;
+    });
+  }
+
   onToggle(jobId: string) {
     const storedUser = localStorage.getItem('user');
     if (!storedUser) {
       alert('User not found. Please log in again.');
       return;
     }
-  
+
     const user = JSON.parse(storedUser);
     const userId = user._id;
-  
+
     const apiUrl = `http://127.0.0.1:3000/api/v1/job/${jobId}/apply`;
-  
+
     const body = {
       userId: userId
     };
-  
+
     this.http.post(apiUrl, body).subscribe({
       next: (res) => {
-        console.log('Application submitted:', res);
         alert('Successfully applied for the job!');
       },
       error: (err) => {
-        console.error('You had applied to the job already:', err);
         alert('You had applied to the job already.');
       }
     });
-  }  
+  }
 
   navigateToJob(job: any) {
     localStorage.setItem('selectedJob', JSON.stringify(job));
