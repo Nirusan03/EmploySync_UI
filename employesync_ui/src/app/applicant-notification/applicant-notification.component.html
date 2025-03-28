@@ -1,1 +1,20 @@
-<p>applicant-notification works!</p>
+<div class="notification-popup">
+    <h3>You have been shortlisted!</h3>
+  
+    <div *ngIf="shortlistedJobs.length > 0; else noJobs">
+      <ul>
+        <li *ngFor="let job of shortlistedJobs">
+          <mat-icon class="icon">check_circle</mat-icon>
+          <span>{{ job }}</span>
+        </li>
+      </ul>
+    </div>
+  
+    <ng-template #noJobs>
+      <p>No shortlisted jobs to display.</p>
+    </ng-template>
+  
+    <div class="actions">
+      <button mat-button color="primary" (click)="close()">Close</button>
+    </div>
+</div>
