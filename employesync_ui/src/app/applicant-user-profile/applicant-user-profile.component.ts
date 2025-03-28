@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -11,7 +11,7 @@ import { ApplicantSidebarComponent } from '../applicant-sidebar/applicant-sideba
   templateUrl: './applicant-user-profile.component.html',
   styleUrls: ['./applicant-user-profile.component.css']
 })
-export class ApplicantUserProfileComponent implements OnInit {
+export class ApplicantUserProfileComponent implements OnInit, DoCheck {
   isEditMode = false;
   userId = '';
   skillsInput: string = '';
@@ -43,21 +43,45 @@ export class ApplicantUserProfileComponent implements OnInit {
     if (storedUser) {
       const user = JSON.parse(storedUser);
       this.userId = user._id;
-  
+
       if (!this.userId) {
         alert('User ID not found. Please log in again.');
         return;
       }
-  
+
       this.profile.fullName = user.userName;
       this.profile.email = user.email;
-      this.profile.profileImage = user.profileImage || '';
+      this.profile.profileImage = user.profileImage || localStorage.getItem('profileImage') || 'https://via.placeholder.com/150';
+
+      this.getCVDetails();
     } else {
       alert('User info not found. Please log in again.');
     }
-  
-    this.skillsInput = this.profile.skills?.join(', ') || '';
-  }  
+  }
+
+  ngDoCheck(): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.profile.profileImage = user.profileImage || 'https://via.placeholder.com/150';
+  }
+
+  getCVDetails(): void {
+    this.http.get(`http://127.0.0.1:3000/api/v1/users/${this.userId}/cv`).subscribe({
+      next: (data: any) => {
+        this.profile = {
+          ...this.profile,
+          ...data,
+          lookingFor: {
+            ...this.profile.lookingFor,
+            ...data.lookingFor
+          }
+        };
+        this.skillsInput = this.profile.skills?.join(', ') || '';
+      },
+      error: (err) => {
+        console.error('Failed to fetch CV', err);
+      }
+    });
+  }
 
   toggleEdit() {
     this.isEditMode = true;
