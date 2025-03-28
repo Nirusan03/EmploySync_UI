@@ -1,33 +1,36 @@
 .notification-popup {
-    padding: 20px;
-    max-width: 400px;
-  }
-  
-  .notification-popup h3 {
-    margin-bottom: 16px;
-    font-weight: 600;
-    color: #1d4ed8;
-  }
-  
-  .notification-popup ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .notification-popup li {
-    display: flex;
-    align-items: center;
-    margin-bottom: 8px;
-    font-size: 15px;
-  }
-  
-  .icon {
-    color: green;
-    margin-right: 8px;
-  }
-  
-  .actions {
-    text-align: right;
-    margin-top: 20px;
-  }
+  padding: 24px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.notification-popup h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #1a202c;
+}
+
+.notification-popup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.notification-popup li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-weight: 500;
+}
+
+.loading, .empty {
+  font-size: 14px;
+  color: #666;
+  margin: 12px 0;
+}
+
+button {
+  display: block;
+  margin-left: auto;
+}

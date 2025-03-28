@@ -1,20 +1,18 @@
 <div class="notification-popup">
-    <h3>You have been shortlisted!</h3>
-  
-    <div *ngIf="shortlistedJobs.length > 0; else noJobs">
-      <ul>
-        <li *ngFor="let job of shortlistedJobs">
-          <mat-icon class="icon">check_circle</mat-icon>
-          <span>{{ job }}</span>
-        </li>
-      </ul>
-    </div>
-  
-    <ng-template #noJobs>
-      <p>No shortlisted jobs to display.</p>
-    </ng-template>
-  
-    <div class="actions">
-      <button mat-button color="primary" (click)="close()">Close</button>
-    </div>
+  <h2>You've been shortlisted! 🎉</h2>
+
+  <div *ngIf="isLoading" class="loading">Loading jobs...</div>
+
+  <ul *ngIf="!isLoading && jobTitles.length > 0">
+    <li *ngFor="let title of jobTitles">
+      <mat-icon color="primary">check_circle</mat-icon>
+      {{ title }}
+    </li>
+  </ul>
+
+  <div *ngIf="!isLoading && jobTitles.length === 0" class="empty">
+    No jobs matched.
+  </div>
+
+  <button mat-button (click)="closeDialog()">Close</button>
 </div>
