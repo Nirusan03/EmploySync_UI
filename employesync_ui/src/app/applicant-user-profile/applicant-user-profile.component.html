@@ -1,85 +1,222 @@
 <div class="flex min-h-screen bg-gray-100">
-    <app-applicant-sidebar></app-applicant-sidebar>
-  
-    <div class="flex-1 p-6">
-      <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-6">
-          <div class="flex items-center gap-4">
-            <img [src]="profile.profileImage" alt="Profile Image" class="w-16 h-16 rounded-full object-cover border" />
-            <div>
-              <h2 class="text-xl font-semibold">{{ profile.fullName || 'Full Name' }}</h2>
-              <p class="text-sm text-gray-500">{{ profile.jobTitle || 'Not Specified' }}</p>
-            </div>
+  <app-applicant-sidebar></app-applicant-sidebar>
+
+  <div class="flex-1 p-6">
+    <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg transition-all duration-300">
+      
+      <!-- Header -->
+      <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center gap-4">
+          <img [src]="profile.profileImage" alt="Profile Image" class="w-16 h-16 rounded-full object-cover border" />
+          <div>
+            <h2 class="text-xl font-semibold">{{ profile.fullName || 'Full Name' }}</h2>
+            <p class="text-sm text-gray-500">{{ profile.jobTitle || 'Not Specified' }}</p>
           </div>
-          <button
-            *ngIf="isEditMode"
-            class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1 rounded-md"
-            type="button"
-            (click)="cancelEdit()"
-          >
-            Cancel
-          </button>
-          <button
-            *ngIf="!isEditMode"
-            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-md"
-            type="button"
-            (click)="toggleEdit()"
-          >
-            Edit Details
-          </button>
         </div>
-  
-        <!-- Form -->
-        <form class="space-y-6" *ngIf="isEditMode" (ngSubmit)="saveProfile()">
-          <!-- Personal Information -->
-          <div>
-            <h3 class="text-lg font-medium text-gray-800 mb-2">Personal Information</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input class="input" placeholder="Full Name" [(ngModel)]="profile.fullName" name="fullName" />
-              <input class="input" placeholder="Email" [(ngModel)]="profile.email" name="email" />
-              <input class="input" placeholder="Job Title" [(ngModel)]="profile.jobTitle" name="jobTitle" />
-              <input class="input" placeholder="Phone Number" [(ngModel)]="profile.phone" name="phone" />
-              <input class="input" placeholder="Location" [(ngModel)]="profile.location" name="location" />
-            </div>
-          </div>
-  
-          <!-- Skills -->
-          <div>
-            <h3 class="text-lg font-medium text-gray-800 mb-2">Skills</h3>
-            <input
-              class="input w-full"
-              placeholder="Comma separated skills"
-              [(ngModel)]="skillsInput"
-              (ngModelChange)="onSkillsChange($event)"
-              name="skills"
-            />
-          </div>
-  
-          <!-- Job Preferences -->
-          <div>
-            <h3 class="text-lg font-medium text-gray-800 mb-2">Job Preferences</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input class="input" placeholder="Position" [(ngModel)]="profile.lookingFor.position" name="position" />
-              <input class="input" placeholder="Job Location" [(ngModel)]="profile.lookingFor.location" name="locationPref" />
-              <input class="input" placeholder="Job Type" [(ngModel)]="profile.lookingFor.jobType" name="jobType" />
-              <input class="input" placeholder="Compensation Expectation" [(ngModel)]="profile.lookingFor.compensationExpectation" name="comp" />
-              <input class="input" placeholder="Sector" [(ngModel)]="profile.lookingFor.sector" name="sector" />
-              <input class="input" placeholder="Desired Job" [(ngModel)]="profile.lookingFor.desiredJob" name="desiredJob" />
-            </div>
-          </div>
-  
-          <!-- Buttons -->
-          <div class="text-right">
-            <button
-              class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md transition-all duration-200"
-              type="submit"
-            >
-              Save
-            </button>
-          </div>
-        </form>
+        <div>
+          <button *ngIf="isEditMode" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-1 rounded-md mr-2" type="button" (click)="cancelEdit()">Cancel</button>
+          <button *ngIf="!isEditMode" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-1 rounded-md" type="button" (click)="toggleEdit()">Edit Details</button>
+        </div>
+      </div>
+
+      <!-- Edit Mode -->
+      <!-- Edit Mode -->
+<form *ngIf="isEditMode" class="space-y-6">
+
+  <!-- Personal Information -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Personal Information</h3>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Full Name</label>
+        <input class="input text-base" placeholder="Full Name" [(ngModel)]="profile.fullName" name="fullName" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Email</label>
+        <input class="input text-base" placeholder="Email" [(ngModel)]="profile.email" name="email" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Job Title</label>
+        <input class="input text-base" placeholder="Job Title" [(ngModel)]="profile.jobTitle" name="jobTitle" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Phone Number</label>
+        <input class="input text-base" placeholder="Phone Number" [(ngModel)]="profile.phone" name="phone" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Location</label>
+        <input class="input text-base" placeholder="Location" [(ngModel)]="profile.location" name="location" />
       </div>
     </div>
   </div>
-  
+
+  <!-- Skills -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Skills</h3>
+    <div class="flex flex-col">
+      <label class="mb-1 text-sm text-gray-700">Skills (comma separated)</label>
+      <input class="input text-base" placeholder="e.g., Angular, TypeScript, Tailwind CSS" [(ngModel)]="skillsInput" (ngModelChange)="onSkillsChange($event)" name="skills" />
+    </div>
+  </div>
+
+  <!-- Job Preferences -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Job Preferences</h3>
+    <div class="flex flex-wrap gap-4">
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Position</label>
+        <input class="input text-base" placeholder="Position" [(ngModel)]="profile.lookingFor.position" name="position" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Job Location</label>
+        <input class="input text-base" placeholder="Job Location" [(ngModel)]="profile.lookingFor.location" name="locationPref" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Job Type</label>
+        <input class="input text-base" placeholder="Job Type" [(ngModel)]="profile.lookingFor.jobType" name="jobType" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Compensation</label>
+        <input class="input text-base" placeholder="Compensation Expectation" [(ngModel)]="profile.lookingFor.compensationExpectation" name="comp" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Sector</label>
+        <input class="input text-base" placeholder="Sector" [(ngModel)]="profile.lookingFor.sector" name="sector" />
+      </div>
+      <div class="flex flex-col flex-1 min-w-[200px]">
+        <label class="mb-1 text-sm text-gray-700">Desired Job</label>
+        <input class="input text-base" placeholder="Desired Job" [(ngModel)]="profile.lookingFor.desiredJob" name="desiredJob" />
+      </div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Experience</h3>
+    <div class="space-y-4">
+      <div *ngFor="let exp of profile.experience; let i = index" class="grid grid-cols-5 gap-4 items-end">
+        <div>
+          <label class="block text-xs text-gray-600">Job Title</label>
+          <input class="input text-sm" placeholder="Job Title" [(ngModel)]="exp.jobTitle" [name]="'jobTitle' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">Company</label>
+          <input class="input text-sm" placeholder="Company" [(ngModel)]="exp.company" [name]="'company' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">Start Date</label>
+          <input class="input text-sm" placeholder="Start Date" [(ngModel)]="exp.startDate" [name]="'startDate' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">End Date</label>
+          <input class="input text-sm" placeholder="End Date" [(ngModel)]="exp.endDate" [name]="'endDate' + i" />
+        </div>
+        <div class="flex justify-end">
+          <button class="text-red-500 text-sm" type="button" (click)="profile.experience.splice(i, 1)">Remove</button>
+        </div>
+      </div>
+    </div>
+    <button class="mt-4 text-blue-600 text-sm" type="button" (click)="profile.experience.push({ jobTitle: '', company: '', startDate: '', endDate: '' })">
+      + Add Experience
+    </button>
+  </div>
+
+  <!-- Education -->
+  <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+    <h3 class="text-lg font-semibold text-gray-800 mb-4">Education</h3>
+    <div class="space-y-4">
+      <div *ngFor="let edu of profile.education; let i = index" class="grid grid-cols-6 gap-4 items-end">
+        <div>
+          <label class="block text-xs text-gray-600">Institution</label>
+          <input class="input text-sm" placeholder="Institution" [(ngModel)]="edu.institution" [name]="'institution' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">Degree</label>
+          <input class="input text-sm" placeholder="Degree" [(ngModel)]="edu.degree" [name]="'degree' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">Field</label>
+          <input class="input text-sm" placeholder="Field of Study" [(ngModel)]="edu.fieldOfStudy" [name]="'fieldOfStudy' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">Start</label>
+          <input class="input text-sm" placeholder="Start Date" [(ngModel)]="edu.startDate" [name]="'eduStartDate' + i" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-600">End</label>
+          <input class="input text-sm" placeholder="End Date" [(ngModel)]="edu.endDate" [name]="'eduEndDate' + i" />
+        </div>
+        <div class="flex justify-end">
+          <button class="text-red-500 text-sm" type="button" (click)="profile.education.splice(i, 1)">Remove</button>
+        </div>
+      </div>
+    </div>
+    <button class="mt-4 text-blue-600 text-sm" type="button" (click)="profile.education.push({ institution: '', degree: '', fieldOfStudy: '', startDate: '', endDate: '' })">
+      + Add Education
+    </button>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="flex justify-end gap-4">
+    <button class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md" type="button" (click)="createCv()">Create CV</button>
+    <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-md" type="button" (click)="updateCv()">Update CV</button>
+  </div>
+
+</form>
+
+
+      <!-- Display Mode -->
+      <div *ngIf="!isEditMode" class="space-y-6 text-gray-800 mt-6">
+        <!-- Personal Details -->
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Personal Details</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div><span class="font-medium text-gray-600">Full Name:</span> {{ profile.fullName }}</div>
+            <div><span class="font-medium text-gray-600">Email:</span> {{ profile.email }}</div>
+            <div><span class="font-medium text-gray-600">Job Title:</span> {{ profile.jobTitle }}</div>
+            <div><span class="font-medium text-gray-600">Phone:</span> {{ profile.phone }}</div>
+            <div><span class="font-medium text-gray-600">Location:</span> {{ profile.location }}</div>
+            <div><span class="font-medium text-gray-600">Skills:</span> {{ profile.skills.join(', ') }}</div>
+          </div>
+        </div>
+
+        <!-- Job Preferences -->
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Job Preferences</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div><span class="font-medium text-gray-600">Position:</span> {{ profile.lookingFor.position }}</div>
+            <div><span class="font-medium text-gray-600">Location:</span> {{ profile.lookingFor.location }}</div>
+            <div><span class="font-medium text-gray-600">Job Type:</span> {{ profile.lookingFor.jobType }}</div>
+            <div><span class="font-medium text-gray-600">Compensation:</span> {{ profile.lookingFor.compensationExpectation }}</div>
+            <div><span class="font-medium text-gray-600">Sector:</span> {{ profile.lookingFor.sector }}</div>
+            <div><span class="font-medium text-gray-600">Desired Job:</span> {{ profile.lookingFor.desiredJob }}</div>
+          </div>
+        </div>
+
+        <!-- Experience -->
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Experience</h3>
+          <div *ngFor="let exp of profile.experience" class="text-sm text-gray-700 mb-2">
+            <div class="border-l-4 border-blue-500 pl-3">
+              <p><span class="font-medium">{{ exp.jobTitle }}</span> at <span class="italic">{{ exp.company }}</span></p>
+              <p class="text-xs text-gray-500">{{ exp.startDate }} to {{ exp.endDate || 'Present' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Education -->
+        <div class="bg-gray-50 p-4 rounded-lg shadow-sm">
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Education</h3>
+          <div *ngFor="let edu of profile.education" class="text-sm text-gray-700 mb-2">
+            <div class="border-l-4 border-green-500 pl-3">
+              <p><span class="font-medium">{{ edu.degree }}</span> in {{ edu.fieldOfStudy || 'N/A' }}</p>
+              <p><span class="italic">{{ edu.institution }}</span></p>
+              <p class="text-xs text-gray-500">{{ edu.startDate }} to {{ edu.endDate || 'Present' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

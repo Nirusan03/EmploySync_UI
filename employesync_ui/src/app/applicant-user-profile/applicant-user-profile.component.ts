@@ -17,24 +17,28 @@ export class ApplicantUserProfileComponent implements OnInit, DoCheck {
   userId = '';
   skillsInput: string = '';
 
-  profile: any = {
-    fullName: '',
-    jobTitle: '',
-    location: '',
-    email: '',
-    phone: '',
-    skills: [],
+  profile = {
+    profileImage: 'assets/images/profile.jpg',
+    fullName: 'John Doe',
+    jobTitle: 'Software Engineer',
+    email: 'john@example.com',
+    phone: '123-456-7890',
+    location: 'City, Country',
+    skills: ['Angular', 'TypeScript', 'Tailwind CSS'],
     lookingFor: {
-      location: '',
-      position: '',
-      jobType: '',
-      compensationExpectation: '',
-      sector: '',
-      desiredJob: ''
+      position: 'Senior Developer',
+      location: 'Remote',
+      jobType: 'Full-time',
+      compensationExpectation: '$100k+',
+      sector: 'Technology',
+      desiredJob: 'Lead Developer'
     },
-    experience: [],
-    education: [],
-    profileImage: ''
+    experience: [
+      { jobTitle: 'Developer', company: 'ABC Inc', startDate: '2019', endDate: '2021' }
+    ],
+    education: [
+      { institution: 'XYZ University', degree: 'B.Sc.', fieldOfStudy: 'Computer Science', startDate: '2015', endDate: '2019' }
+    ]
   };
 
   constructor(private http: HttpClient, private userService: UserService) {}
@@ -98,7 +102,7 @@ export class ApplicantUserProfileComponent implements OnInit, DoCheck {
     this.profile.skills = event.split(',').map(skill => skill.trim()).filter(Boolean);
   }
 
-  saveProfile() {
+  createCv() {
     if (!this.userId) {
       alert('User ID not found. Please log in again.');
       return;
@@ -109,28 +113,45 @@ export class ApplicantUserProfileComponent implements OnInit, DoCheck {
       ...this.profile
     };
 
-    // Step 1: Create or update CV
     this.http.post(`http://127.0.0.1:3000/api/v1/users/${this.userId}/cv`, payload).subscribe({
       next: (cvResponse: any) => {
-        alert('Profile saved successfully!');
+        alert('CV created successfully!');
         this.isEditMode = false;
 
         const cvId = cvResponse?._id;
         if (cvId) {
-          // Step 2: Attach CV to user document
           this.userService.updateUserCvId(this.userId, cvId).subscribe({
-            next: () => {
-              console.log('User CV linked successfully.');
-            },
-            error: (err) => {
-              console.error('Failed to update user with CV ID', err);
-            }
+            next: () => console.log('User CV linked successfully.'),
+            error: (err) => console.error('Failed to update user with CV ID', err)
           });
         }
       },
       error: (err) => {
-        console.error('Failed to save profile', err);
-        alert('Failed to save profile.');
+        console.error('Failed to create CV', err);
+        alert('Failed to create CV.');
+      }
+    });
+  }
+
+  updateCv() {
+    if (!this.userId) {
+      alert('User ID not found. Please log in again.');
+      return;
+    }
+
+    const payload = {
+      user: this.userId,
+      ...this.profile
+    };
+
+    this.http.put(`http://127.0.0.1:3000/api/v1/users/${this.userId}/cv`, payload).subscribe({
+      next: (cvResponse: any) => {
+        alert('CV updated successfully!');
+        this.isEditMode = false;
+      },
+      error: (err) => {
+        console.error('Failed to update CV', err);
+        alert('Failed to update CV.');
       }
     });
   }

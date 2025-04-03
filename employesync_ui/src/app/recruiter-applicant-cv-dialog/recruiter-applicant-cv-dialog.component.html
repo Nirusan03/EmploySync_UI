@@ -1,29 +1,56 @@
 <div class="cv-dialog">
+  <!-- Header with name and profile image -->
   <h2>{{ data?.fullName || 'Unknown' }}</h2>
-  <p>{{ data?.email || 'No Email' }}</p>
-  <p>{{ data?.phone || 'No Phone' }}</p>
+  <!-- Contact & Personal Information -->
+  <p><strong>Email:</strong> {{ data?.email || 'No Email' }}</p>
+  <p><strong>Phone:</strong> {{ data?.phone || 'No Phone' }}</p>
+  <p><strong>Location:</strong> {{ data?.location || 'Not Specified' }}</p>
+  <p><strong>Job Title:</strong> {{ data?.jobTitle || 'Not Specified' }}</p>
 
   <mat-divider></mat-divider>
 
+  <!-- Skills -->
   <h3>Skills</h3>
   <div class="chip-container">
     <mat-chip *ngFor="let skill of data?.skills || []">{{ skill }}</mat-chip>
   </div>
 
+  <mat-divider></mat-divider>
+
+  <!-- Job Preferences -->
+  <h3>Job Preferences</h3>
+  <p><strong>Position:</strong> {{ data?.lookingFor?.position || 'N/A' }}</p>
+  <p><strong>Location:</strong> {{ data?.lookingFor?.location || 'N/A' }}</p>
+  <p><strong>Job Type:</strong> {{ data?.lookingFor?.jobType || 'N/A' }}</p>
+  <p><strong>Compensation:</strong> {{ data?.lookingFor?.compensationExpectation || 'N/A' }}</p>
+  <p><strong>Sector:</strong> {{ data?.lookingFor?.sector || 'N/A' }}</p>
+  <p><strong>Desired Job:</strong> {{ data?.lookingFor?.desiredJob || 'N/A' }}</p>
+
+  <mat-divider></mat-divider>
+
+  <!-- Experience -->
   <h3>Experience</h3>
   <ul>
     <li *ngFor="let exp of data?.experience || []">
-      <strong>{{ exp.jobTitle }}</strong> - {{ exp.company }} ({{ exp.startDate }} - {{ exp.endDate }})
+      <strong>{{ exp.jobTitle }}</strong> at <strong>{{ exp.company }}</strong> 
+      ({{ exp.startDate }} - {{ exp.endDate || 'Present' }})
     </li>
   </ul>
 
+  <mat-divider></mat-divider>
+
+  <!-- Education -->
   <h3>Education</h3>
   <ul>
     <li *ngFor="let edu of data?.education || []">
-      <strong>{{ edu.degree }}</strong> - {{ edu.institution }}
+      <strong>{{ edu.degree }}</strong>
+      <span *ngIf="edu.fieldOfStudy"> in {{ edu.fieldOfStudy }}</span>
+      from <strong>{{ edu.institution }}</strong> 
+      ({{ edu.startDate }} - {{ edu.endDate || 'Present' }})
     </li>
   </ul>
 
+  <!-- Action Buttons -->
   <div class="button-row">
     <button mat-button color="primary" (click)="shortlistApplicant()">Shortlist CV</button>
     <button mat-button (click)="closeDialog()">Close</button>
