@@ -1,7 +1,7 @@
 <div class="flex min-h-screen bg-gray-100">
   <app-applicant-sidebar></app-applicant-sidebar>
 
-  <div class="flex-1 p-8 overflow-y-auto animate-slide-fade-in">
+  <div class="flex-1 p-8 ml-64 overflow-y-auto animate-slide-fade-in">
     <div *ngIf="isLoading" class="text-lg text-gray-500 animate-pulse">Loading job details...</div>
 
     <div *ngIf="!isLoading && job"
