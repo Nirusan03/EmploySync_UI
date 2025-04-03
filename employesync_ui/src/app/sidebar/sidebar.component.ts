@@ -5,8 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,24 +27,46 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
   isCollapsed: boolean = false;
   userProfileImage: string = '';
-  userName: string = '';
   organizationName: string = '';
+  userName: string = '';
+  private userId: string = '';
+  private organizationId: string = '';
 
-  constructor(private router: Router) {}
+  private readonly USER_API = 'http://127.0.0.1:3000/api/v1/users';
+  private readonly ORG_API = 'http://127.0.0.1:3000/api/v1/organization';
+
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
     this.loadUserData();
   }
 
-  loadUserData() {
-    // Load from localStorage every time component initializes
-    const storedProfile = localStorage.getItem('profileImage');
-    const storedName = localStorage.getItem('userName');
-    const storedOrg = localStorage.getItem('organizationName');
+  async loadUserData() {
+    const userData = JSON.parse(localStorage.getItem('user') || '{}');
 
-    this.userProfileImage = storedProfile || 'https://via.placeholder.com/40';
-    this.userName = storedName || 'Default User';
-    this.organizationName = storedOrg || 'Default Organization';
+    this.userId = userData._id || '';
+    this.organizationId = userData.organization || '';
+    this.userProfileImage = this.resolveImagePath(userData.profileImage || '');
+
+    this.userName = userData.userName || 'Default User';
+
+    await this.loadOrganizationName(this.organizationId);
+  }
+
+  async loadOrganizationName(orgId: string) {
+    try {
+      const response: any = await firstValueFrom(
+        this.http.get(`${this.ORG_API}/${orgId}`)
+      );
+      this.organizationName = response.name || 'Organization';
+    } catch (error) {
+      console.error('Failed to fetch organization name', error);
+      this.organizationName = 'Organization';
+    }
+  }
+
+  resolveImagePath(image: string): string {
+    return image.startsWith('/assets') ? image : image;
   }
 
   toggleSidebar() {
@@ -54,16 +77,32 @@ export class SidebarComponent implements OnInit {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = 'image/*';
-    input.addEventListener('change', (event: any) => {
+    input.addEventListener('change', async (event: any) => {
       const file = event.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const imageData = reader.result as string;
-          this.userProfileImage = imageData;
-          localStorage.setItem('profileImage', imageData); // Save for persistent use
-        };
-        reader.readAsDataURL(file);
+        const objectUrl = URL.createObjectURL(file);
+        this.userProfileImage = objectUrl;
+
+        const fileName = file.name;
+        const finalImagePath = `/assets/images/${fileName}`;
+
+        try {
+          const payload = {
+            userId: this.userId,
+            profileImage: finalImagePath
+          };
+
+          await firstValueFrom(this.http.put(this.USER_API, payload));
+
+          const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+          currentUser.profileImage = finalImagePath;
+          localStorage.setItem('user', JSON.stringify(currentUser));
+
+          this.userProfileImage = finalImagePath;
+        } catch (err) {
+          alert('Failed to update profile image');
+          console.error(err);
+        }
       }
     });
     input.click();
@@ -83,8 +122,7 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    localStorage.clear(); // Clear all localStorage items
-    this.router.navigate(['/login']); // Redirect to login page
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
-  
 }
