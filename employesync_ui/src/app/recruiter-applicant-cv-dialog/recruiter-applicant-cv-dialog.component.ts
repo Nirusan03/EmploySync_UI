@@ -30,31 +30,68 @@ export class RecruiterApplicantCvDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
-  closeDialog(): void {
-    this.dialogRef.close();
+
+  // shortlistApplicant(): void {
+  //   const applicantId = this.data._id; // from CV data
+  //   const jobId = this.data.jobId; // should be passed from parent component
+
+  //   if (!applicantId || !jobId) {
+  //     alert('Missing job or applicant ID.');
+  //     return;
+  //   }
+
+  //   const url = `http://127.0.0.1:3000/api/v1/job/${jobId}/shortlist`;
+  //   const payload = { applicantId };
+
+  //   this.http.put(url, payload).subscribe({
+  //     next: () => {
+  //       alert('Applicant shortlisted successfully.');
+  //       this.closeDialog();
+  //     },
+  //     error: (err) => {
+  //       console.error('Failed to shortlist applicant:', err);
+  //       alert('Error shortlisting applicant.');
+  //     }
+  //   });
+  // }
+
+  shortlistApplicant() {
+    console.log('shortlistApplicant() called, data:', this.data);
+    const updateUrl = `http://127.0.0.1:3000/api/v1/users/${this.data._id}/application-status`;
+    this.http.patch(updateUrl, { jobId: this.data.jobId, status: 'accepted' })
+      .subscribe({
+        next: (response) => {
+          console.log('API call succeeded: Application status updated to accepted:', response);
+          alert('Application shortlisted successfully!');
+          this.dialogRef.close(true);
+        },
+        error: (error) => {
+          console.error('API call error updating application status:', error);
+        }
+      });
   }
+  
+  rejectApplicant() {
+    console.log('rejectApplicant() called, data:', this.data);
+    const updateUrl = `http://127.0.0.1:3000/api/v1/users/${this.data._id}/application-status`;
+    this.http.patch(updateUrl, { jobId: this.data.jobId, status: 'rejected' })
+      .subscribe({
+        next: (response) => {
+          console.log('API call succeeded: Application status updated to rejected:', response);
+          alert('Application rejected successfully!');
+          this.dialogRef.close(false);
+        },
+        error: (error) => {
+          console.error('API call error updating application status:', error);
+        }
+      });
+  }
+  
+  
+  
 
-  shortlistApplicant(): void {
-    const applicantId = this.data._id; // from CV data
-    const jobId = this.data.jobId; // should be passed from parent component
-
-    if (!applicantId || !jobId) {
-      alert('Missing job or applicant ID.');
-      return;
-    }
-
-    const url = `http://127.0.0.1:3000/api/v1/job/${jobId}/shortlist`;
-    const payload = { applicantId };
-
-    this.http.put(url, payload).subscribe({
-      next: () => {
-        alert('Applicant shortlisted successfully.');
-        this.closeDialog();
-      },
-      error: (err) => {
-        console.error('Failed to shortlist applicant:', err);
-        alert('Error shortlisting applicant.');
-      }
-    });
+  // In case you need a simple close without updating status:
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

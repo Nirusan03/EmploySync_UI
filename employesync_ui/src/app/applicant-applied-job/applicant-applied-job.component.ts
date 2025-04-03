@@ -12,6 +12,7 @@ import { ApplicantSidebarComponent } from '../applicant-sidebar/applicant-sideba
 })
 export class ApplicantAppliedJobComponent implements OnInit {
   appliedJobDetails: any[] = [];
+  currentUser: any; // Will store the logged-in user's data
 
   constructor(private http: HttpClient) {}
 
@@ -27,15 +28,17 @@ export class ApplicantAppliedJobComponent implements OnInit {
       return;
     }
 
+    // Fetch all users to find the current user's document.
     this.http.get<any[]>('http://127.0.0.1:3000/api/v1/users').subscribe({
       next: (users) => {
         const currentUser = users.find(u => u._id === currentUserId);
-
+        this.currentUser = currentUser;
         if (!currentUser || !currentUser.appliedjobs?.length) {
           console.warn('No applied jobs found.');
           return;
         }
 
+        // Fetch all jobs and filter to only those the current user applied to.
         this.http.get<any[]>('http://127.0.0.1:3000/api/v1/job').subscribe({
           next: (allJobs) => {
             this.appliedJobDetails = allJobs.filter(job =>
@@ -51,5 +54,19 @@ export class ApplicantAppliedJobComponent implements OnInit {
         console.error('Failed to fetch users:', err);
       }
     });
+  }
+
+  // Helper method that returns the application status for a given job.
+  getApplicationStatus(jobId: string): string {
+    if (!this.currentUser) return 'N/A';
+    // Check if job is in the shortlisted array (accepted)
+    if (this.currentUser.shortlistedjobs && this.currentUser.shortlistedjobs.includes(jobId)) {
+      return 'Accepted';
+    }
+    // Check if job is in the rejected array
+    if (this.currentUser.rejectedjobs && this.currentUser.rejectedjobs.includes(jobId)) {
+      return 'Rejected';
+    }
+    return 'N/A';
   }
 }

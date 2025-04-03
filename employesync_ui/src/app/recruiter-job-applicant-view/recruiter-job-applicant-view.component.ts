@@ -92,23 +92,50 @@ export class RecruiterJobApplicantViewComponent implements OnInit {
   viewApplicantProfile(applicantId: string) {
     const jobId = this.route.snapshot.paramMap.get('jobId'); // get job ID from route
   
-    const cvApiUrl = `http://127.0.0.1:3000/api/v1/users/${applicantId}/cv`;
-  
-    this.http.get<any>(cvApiUrl).subscribe({
-      next: (cvData) => {
-        this.dialog.open(RecruiterApplicantCvDialogComponent, {
-          width: '700px',
-          data: {
-            ...cvData,
-            _id: applicantId, // include applicant ID
-            jobId: jobId      // include job ID
-          }
-        });
-      },
-      error: (error) => {
-        console.error('Error fetching CV:', error);
-      }
-    });
+    // Patch the job status first
+    this.http.patch(`http://127.0.0.1:3000/api/v1/organization/jobs/${jobId}/status`, { status: 'Reviewed' })
+      .subscribe({
+        next: (patchResponse) => {
+          console.log('Job status updated successfully:', patchResponse);
+          // Now, fetch the applicant's CV
+          const cvApiUrl = `http://127.0.0.1:3000/api/v1/users/${applicantId}/cv`;
+          this.http.get<any>(cvApiUrl).subscribe({
+            next: (cvData) => {
+              this.dialog.open(RecruiterApplicantCvDialogComponent, {
+                width: '700px',
+                data: {
+                  ...cvData,
+                  _id: applicantId, // include applicant ID
+                  jobId: jobId      // include job ID
+                }
+              });
+            },
+            error: (error) => {
+              console.error('Error fetching CV:', error);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error updating job status:', error);
+          // Optionally, proceed with fetching the CV even if the patch fails
+          const cvApiUrl = `http://127.0.0.1:3000/api/v1/users/${applicantId}/cv`;
+          this.http.get<any>(cvApiUrl).subscribe({
+            next: (cvData) => {
+              this.dialog.open(RecruiterApplicantCvDialogComponent, {
+                width: '700px',
+                data: {
+                  ...cvData,
+                  _id: applicantId,
+                  jobId: jobId
+                }
+              });
+            },
+            error: (error) => {
+              console.error('Error fetching CV:', error);
+            }
+          });
+        }
+      });
   }
   
 

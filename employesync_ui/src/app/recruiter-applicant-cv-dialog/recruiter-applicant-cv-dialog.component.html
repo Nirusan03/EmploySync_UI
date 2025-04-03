@@ -52,7 +52,12 @@
 
   <!-- Action Buttons -->
   <div class="button-row">
-    <button mat-button color="primary" (click)="shortlistApplicant()">Shortlist CV</button>
-    <button mat-button (click)="closeDialog()">Close</button>
+    <button mat-button color="primary" (click)="shortlistApplicant()" style="margin-right: 5px;">
+      Shortlist CV
+    </button>
+    <button mat-button color="warn" (click)="rejectApplicant()">
+      Pass
+    </button>
   </div>
+  
 </div>
