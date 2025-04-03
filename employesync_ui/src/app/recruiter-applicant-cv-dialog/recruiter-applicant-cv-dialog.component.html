@@ -52,25 +52,36 @@
 
   <mat-divider></mat-divider>
 
-  <!-- Recruiting Message Section -->
-  <h3>Recruiting Message</h3>
-  <textarea [(ngModel)]="recruitingMessage"
-            placeholder="Enter recruiting message"
-            rows="3"
-            class="w-full p-2 border rounded"></textarea>
-  <button mat-button color="primary" (click)="saveRecruitingMessage()" style="margin-top: 10px;">
-    Add Message
-  </button>
+  <!-- Recruiter Note Section -->
+<div class="mb-4">
+  <label class="block text-gray-800 font-semibold mb-2" for="recruiterNote">Recruiter Note</label>
+  <textarea
+    id="recruiterNote"
+    [(ngModel)]="recruitingMessage"
+    placeholder="Enter note"
+    rows="2"
+    class="w-full p-2 rounded  border border-gray-200 focus:outline-none"
+  ></textarea>
+</div>
+
+<!-- Add Button -->
+<button
+  (click)="saveRecruitingMessage()"
+  class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 transition-colors"
+>
+  Add
+</button>
+
 
   <mat-divider></mat-divider>
 
   <!-- Action Buttons -->
   <div class="button-row">
     <button mat-button color="primary" (click)="shortlistApplicant()" style="margin-right: 5px;">
-      Shortlist CV
+      SELECTED
     </button>
     <button mat-button color="warn" (click)="rejectApplicant()">
-      Pass
+      REJECTED
     </button>
   </div>
   
