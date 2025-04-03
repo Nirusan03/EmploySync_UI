@@ -7,11 +7,12 @@
       <mat-icon class="cursor-pointer text-gray-500">apps</mat-icon> 
       <span class="font-bold text-blue-900" [ngClass]="{ 'hidden': isCollapsed }">{{ organizationName }}</span>
     </div>
-    
+
     <button class="toggle-btn" (click)="toggleSidebar()">
       <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
     </button>
   </div>
+
 
   <!-- Navigation -->
   <ul class="space-y-1">
@@ -56,21 +57,22 @@
     
   </div>
 
-  <!-- Profile Section -->
+  <!-- Profile Section (cleaned) -->
   <div class="profile-container flex items-center justify-between">
     <div class="flex items-center space-x-2">
-      <img [src]="userProfileImage" alt="User Profile" class="profile-img">
+      <img [src]="userProfileImage" alt="User Profile" class="profile-img" />
       <span class="ml-2" [ngClass]="{ 'hidden': isCollapsed }">{{ userName }}</span>
     </div>
-    
+  
     <button mat-icon-button [matMenuTriggerFor]="profileMenu" *ngIf="!isCollapsed">
       <mat-icon>more_vert</mat-icon>
     </button>
-
+  
     <mat-menu #profileMenu="matMenu">
       <button mat-menu-item (click)="selectProfileImage()">
         <mat-icon>photo_camera</mat-icon> Change Profile Picture
       </button>
     </mat-menu>
   </div>
+  
 </div>
