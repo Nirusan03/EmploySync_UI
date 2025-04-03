@@ -10,13 +10,13 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   standalone: true,
   imports: [CommonModule, FormsModule, MatIconModule, SidebarComponent],
   templateUrl: './company.component.html',
-  styleUrls: ['./company.component.css']
+  styleUrls: ['./company.component.css'],
 })
 export class CompanyComponent implements OnInit {
   constructor(public companyService: CompanyService) {}
 
   ngOnInit(): void {
-    // Nothing needed here, service handles persistence
+    this.companyService.fetchOrganizationDetails();
   }
 
   triggerFileInput(): void {
@@ -33,11 +33,25 @@ export class CompanyComponent implements OnInit {
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.companyService.companyLogo = reader.result as string;
-      };
-      reader.readAsDataURL(file);
+      // Use a temporary URL for preview
+      const objectUrl = URL.createObjectURL(file);
+      this.companyService.previewLogo = objectUrl;
+
+      // Save only the filename to backend (assuming it's manually copied to assets/images/)
+      this.companyService.companyLogo = file.name;
     }
+  }
+
+  async onSaveChanges(): Promise<void> {
+    try {
+      await this.companyService.updateOrganizationDetails();
+      alert('Company details updated successfully!');
+    } catch {
+      alert('Failed to update company details.');
+    }
+  }
+
+  onDiscardChanges(): void {
+    this.companyService.fetchOrganizationDetails();
   }
 }

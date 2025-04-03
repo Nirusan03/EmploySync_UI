@@ -1,83 +1,58 @@
-// src/app/services/company.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CompanyService {
-  private readonly STORAGE_KEY = 'companyData';
   private readonly API_BASE_URL = 'http://127.0.0.1:3000/api/v1/organization';
 
-  private _companyName = 'Ascentic AB';
-  private _companyUrl = 'sales.vouch.global/ascenticse';
-  private _companyLogo = 'assets/company-logo.png';
+  organizationId = '';
+  companyName = '';
+  companyUrl = '';
+  companyLogo = '';       // Only stores the filename e.g. "logo.png"
+  previewLogo = '';       // Full path for <img> tag e.g. "/assets/images/logo.png"
 
   constructor(private http: HttpClient) {
-    const saved = localStorage.getItem(this.STORAGE_KEY);
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      this._companyName = parsed.companyName || this._companyName;
-      this._companyUrl = parsed.companyUrl || this._companyUrl;
-      this._companyLogo = parsed.companyLogo || this._companyLogo;
-    }
-
-    this.fetchOrganizationDetails(); // Fetch updated values on init
-  }
-
-  private saveToStorage() {
-    const data = {
-      companyName: this._companyName,
-      companyUrl: this._companyUrl,
-      companyLogo: this._companyLogo
-    };
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.organizationId = user.organization || '';
   }
 
   async fetchOrganizationDetails() {
     try {
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
-      const organizationId = user.organization;
-      if (!organizationId) throw new Error('No organization ID found.');
+      const response: any = await firstValueFrom(
+        this.http.get(`${this.API_BASE_URL}/${this.organizationId}`)
+      );
 
-      const response: any = await firstValueFrom(this.http.get(`${this.API_BASE_URL}/${organizationId}`));
+      this.companyName = response.name || '';
+      this.companyUrl = response.url || '';
+      this.companyLogo = response.image || '';
 
-      // Update company values from API
-      this._companyName = response.name || this._companyName;
-      this._companyUrl = response.url || this._companyUrl;
-      this._companyLogo = response.image || this._companyLogo;
-
-      this.saveToStorage();
+      // Construct preview path if image is valid
+      this.previewLogo = this.companyLogo.includes('/assets/')
+      ? this.companyLogo
+      : `/assets/images/${this.companyLogo}`;
+    // fallback image
     } catch (error) {
       console.error('Error fetching organization data:', error);
     }
   }
 
-  get companyName() {
-    return this._companyName;
-  }
+  async updateOrganizationDetails() {
+    const payload = {
+      name: this.companyName,
+      url: this.companyUrl,
+      image: this.companyLogo, // only the filename like "logo.png"
+    };
 
-  set companyName(value: string) {
-    this._companyName = value;
-    this.saveToStorage();
-  }
-
-  get companyUrl() {
-    return this._companyUrl;
-  }
-
-  set companyUrl(value: string) {
-    this._companyUrl = value;
-    this.saveToStorage();
-  }
-
-  get companyLogo() {
-    return this._companyLogo;
-  }
-
-  set companyLogo(value: string) {
-    this._companyLogo = value;
-    this.saveToStorage();
+    try {
+      return await firstValueFrom(
+        this.http.put(`${this.API_BASE_URL}/${this.organizationId}`, payload)
+      );
+    } catch (error) {
+      console.error('Error updating organization:', error);
+      throw error;
+    }
   }
 }
