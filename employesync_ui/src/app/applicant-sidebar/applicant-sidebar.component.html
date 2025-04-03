@@ -33,6 +33,10 @@
           Notifications
         </span>
       </li>
+      <li class="flex items-center space-x-2 menu-item" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <span [ngClass]="{ 'hidden': isCollapsed }">Logout</span>
+      </li>
     </ul>
   </div>
 

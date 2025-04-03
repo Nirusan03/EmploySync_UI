@@ -81,4 +81,10 @@ export class SidebarComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  logout() {
+    localStorage.clear(); // Clear all localStorage items
+    this.router.navigate(['/login']); // Redirect to login page
+  }
+  
 }

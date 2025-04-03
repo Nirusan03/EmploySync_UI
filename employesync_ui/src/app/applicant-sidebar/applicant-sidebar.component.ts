@@ -117,4 +117,9 @@ export class ApplicantSidebarComponent implements OnInit {
       data: { jobs: this.shortlistedJobs }
     });
   }
+  logout() {
+    localStorage.clear(); // Clear all localStorage items
+    this.router.navigate(['/login']); // Redirect to login page
+  }
+  
 }
