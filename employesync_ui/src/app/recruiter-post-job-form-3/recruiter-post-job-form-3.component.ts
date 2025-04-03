@@ -28,20 +28,20 @@ import { RecruiterPostJobService } from '../services/recruiter-post-job.service'
 })
 export class RecruiterPostJobForm3Component {
   yearOfExperience = 0;
-  responsibilities: string[] = [];
+  responsibilities: { text: string }[] = [];
 
   constructor(private router: Router, private jobService: RecruiterPostJobService) {
     const savedData = this.jobService.getJobData();
     this.yearOfExperience = savedData.yearOfExperience || 0;
-    this.responsibilities = savedData.responsibilities || [];
+    this.responsibilities = savedData.responsibilities?.map((r: string) => ({ text: r })) || [];
   }
 
   addResponsibility() {
-    this.responsibilities.push('');
+    this.responsibilities.push({ text: '' });
   }
 
   updateResponsibility(index: number, value: string) {
-    this.responsibilities[index] = value;
+    this.responsibilities[index].text = value;
   }
 
   removeResponsibility(index: number) {
@@ -51,12 +51,16 @@ export class RecruiterPostJobForm3Component {
   nextStep() {
     this.jobService.updateJobData({
       yearOfExperience: this.yearOfExperience,
-      responsibilities: this.responsibilities
+      responsibilities: this.responsibilities.map(r => r.text)
     });
     this.router.navigate(['/post-job/step-4']);
   }
 
   previousStep() {
     this.router.navigate(['/post-job/step-2']);
+  }
+
+  trackByIndex(index: number, item: any): number {
+    return index;
   }
 }

@@ -14,14 +14,16 @@
 
     <h3>Responsibilities</h3>
     <button mat-button color="primary" (click)="addResponsibility()">+ Add Responsibility</button>
-    <div *ngFor="let item of responsibilities; let i = index" class="question-container">
+    
+    <div *ngFor="let item of responsibilities; let i = index; trackBy: trackByIndex" class="question-container">
       <mat-form-field class="full-width">
-        <input matInput [(ngModel)]="responsibilities[i]" placeholder="e.g. Collaborate with design team" />
+        <input matInput [(ngModel)]="item.text" placeholder="e.g. Collaborate with design team" />
       </mat-form-field>
       <button mat-icon-button color="warn" (click)="removeResponsibility(i)">
         <mat-icon>delete</mat-icon>
       </button>
     </div>
+    
 
     <div class="button-group">
       <button mat-button (click)="previousStep()">Previous</button>
