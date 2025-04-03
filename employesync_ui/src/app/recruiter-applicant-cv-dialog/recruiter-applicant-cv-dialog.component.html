@@ -50,6 +50,20 @@
     </li>
   </ul>
 
+  <mat-divider></mat-divider>
+
+  <!-- Recruiting Message Section -->
+  <h3>Recruiting Message</h3>
+  <textarea [(ngModel)]="recruitingMessage"
+            placeholder="Enter recruiting message"
+            rows="3"
+            class="w-full p-2 border rounded"></textarea>
+  <button mat-button color="primary" (click)="saveRecruitingMessage()" style="margin-top: 10px;">
+    Add Message
+  </button>
+
+  <mat-divider></mat-divider>
+
   <!-- Action Buttons -->
   <div class="button-row">
     <button mat-button color="primary" (click)="shortlistApplicant()" style="margin-right: 5px;">

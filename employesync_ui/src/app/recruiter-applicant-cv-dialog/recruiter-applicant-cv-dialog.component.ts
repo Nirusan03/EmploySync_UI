@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-recruiter-applicant-cv-dialog',
@@ -20,40 +21,18 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatCardModule,
     MatChipsModule,
-    MatDividerModule
+    MatDividerModule,
+    FormsModule
   ]
 })
 export class RecruiterApplicantCvDialogComponent {
+  recruitingMessage: string = '';
+
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<RecruiterApplicantCvDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-
-
-  // shortlistApplicant(): void {
-  //   const applicantId = this.data._id; // from CV data
-  //   const jobId = this.data.jobId; // should be passed from parent component
-
-  //   if (!applicantId || !jobId) {
-  //     alert('Missing job or applicant ID.');
-  //     return;
-  //   }
-
-  //   const url = `http://127.0.0.1:3000/api/v1/job/${jobId}/shortlist`;
-  //   const payload = { applicantId };
-
-  //   this.http.put(url, payload).subscribe({
-  //     next: () => {
-  //       alert('Applicant shortlisted successfully.');
-  //       this.closeDialog();
-  //     },
-  //     error: (err) => {
-  //       console.error('Failed to shortlist applicant:', err);
-  //       alert('Error shortlisting applicant.');
-  //     }
-  //   });
-  // }
 
   shortlistApplicant() {
     console.log('shortlistApplicant() called, data:', this.data);
@@ -87,10 +66,18 @@ export class RecruiterApplicantCvDialogComponent {
       });
   }
   
-  
-  
+  saveRecruitingMessage() {
+    if (!this.recruitingMessage.trim()) {
+      alert('Please enter a recruiting message.');
+      return;
+    }
+    const key = `recruitingMessage_${this.data._id}_${this.data.jobId}`;
+    localStorage.setItem(key, this.recruitingMessage);
+    alert('Recruiting message added!');
+    // Optionally clear the input field after saving.
+    this.recruitingMessage = '';
+  }
 
-  // In case you need a simple close without updating status:
   closeDialog() {
     this.dialogRef.close();
   }
