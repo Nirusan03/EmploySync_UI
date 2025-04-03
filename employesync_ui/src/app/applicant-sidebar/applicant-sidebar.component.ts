@@ -5,11 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ApplicantNotificationComponent } from '../applicant-notification/applicant-notification.component';
-import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-applicant-sidebar',
@@ -31,11 +30,14 @@ export class ApplicantSidebarComponent implements OnInit {
   isCollapsed: boolean = false;
   userProfileImage: string = '';
   userName: string = '';
-  organizationName: string = '';
+  headerUserName: string = '';
   hasShortlistNotifications: boolean = false;
   shortlistedJobs: string[] = [];
+  private userId: string = '';
 
-  constructor(private router: Router, private dialog: MatDialog, private userService: UserService) {}
+  private readonly USER_API = 'http://127.0.0.1:3000/api/v1/users';
+
+  constructor(private router: Router, private dialog: MatDialog, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadUserData();
@@ -44,10 +46,15 @@ export class ApplicantSidebarComponent implements OnInit {
 
   loadUserData(): void {
     const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
-    this.userName = storedUser.userName || localStorage.getItem('userName') || 'Default User';
-    this.organizationName = localStorage.getItem('organizationName') || 'Independent User';
-    this.userProfileImage =
-      storedUser.profileImage || localStorage.getItem('profileImage') || 'https://via.placeholder.com/150';
+
+    this.userId = storedUser._id || '';
+    this.userName = storedUser.userName || 'Digital Recruiterz';
+    this.headerUserName = this.userName;
+    this.userProfileImage = this.resolveImagePath(storedUser.profileImage || 'https://via.placeholder.com/150');
+  }
+
+  resolveImagePath(image: string): string {
+    return image.startsWith('/assets') ? image : image;
   }
 
   checkShortlistedStatus(): void {
@@ -83,28 +90,32 @@ export class ApplicantSidebarComponent implements OnInit {
     input.type = 'file';
     input.accept = 'image/*';
 
-    input.addEventListener('change', (event: any) => {
+    input.addEventListener('change', async (event: any) => {
       const file = event.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64Image = reader.result as string;
-          this.userProfileImage = base64Image;
+        const objectUrl = URL.createObjectURL(file);
+        this.userProfileImage = objectUrl;
 
-          const user = JSON.parse(localStorage.getItem('user') || '{}');
-          user.profileImage = base64Image;
-          localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem('profileImage', base64Image);
+        const fileName = file.name;
+        const finalImagePath = `/assets/images/${fileName}`;
 
-          // Update in backend
-          if (user._id) {
-            this.userService.updateUserProfileImage(user._id, base64Image).subscribe({
-              next: () => console.log('Profile image updated on server.'),
-              error: (err) => console.error('Image update failed', err)
-            });
-          }
-        };
-        reader.readAsDataURL(file);
+        try {
+          const payload = {
+            userId: this.userId,
+            profileImage: finalImagePath
+          };
+
+          await this.http.put(this.USER_API, payload).toPromise();
+
+          const currentUser = JSON.parse(localStorage.getItem('user') || '{}');
+          currentUser.profileImage = finalImagePath;
+          localStorage.setItem('user', JSON.stringify(currentUser));
+
+          this.userProfileImage = finalImagePath;
+        } catch (err) {
+          alert('Failed to update profile image');
+          console.error(err);
+        }
       }
     });
 
@@ -117,9 +128,9 @@ export class ApplicantSidebarComponent implements OnInit {
       data: { jobs: this.shortlistedJobs }
     });
   }
-  logout() {
-    localStorage.clear(); // Clear all localStorage items
-    this.router.navigate(['/login']); // Redirect to login page
+
+  logout(): void {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
-  
 }
